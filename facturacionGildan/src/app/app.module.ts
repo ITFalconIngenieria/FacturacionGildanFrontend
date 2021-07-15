@@ -12,6 +12,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IconsProviderModule } from './icons-provider.module';
 
+import { ChartsModule } from 'ng2-charts';
+
 // Importaciones de componentes ng-zorro
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzGridModule } from 'ng-zorro-antd/grid';
@@ -51,6 +53,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 ///////////////////////////////////
 import { MenuComponent } from './pages/menu/menu.component';
 import { LoginComponent } from './login/login.component';
+import { FacturaComponent } from './pages/factura/factura.component';
+import { ResumenFacturacionComponent } from './pages/resumenFacturacion/resumenFacturacion.component';
 
 
 registerLocaleData(en);
@@ -59,7 +63,9 @@ registerLocaleData(en);
   declarations: [
     AppComponent,
     MenuComponent,
-    LoginComponent
+    LoginComponent,
+    FacturaComponent,
+    ResumenFacturacionComponent
   ],
   imports: [
     BrowserModule,
@@ -69,6 +75,7 @@ registerLocaleData(en);
     IconsProviderModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    ChartsModule,
     /////////////////////////
     // NgZorroAntdModule,
     NzTabsModule,

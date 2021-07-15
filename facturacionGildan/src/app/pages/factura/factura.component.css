@@ -1,0 +1,103 @@
+.logo {
+    width: 15%;
+}
+
+.container-filtros {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 0.5fr;
+    grid-template-rows: 1fr;
+    gap: 0px 10px;
+    grid-auto-flow: row;
+    grid-template-areas: ". . . . . .";
+}
+
+nz-input-group {
+    margin-bottom: 5px;
+}
+
+nz-select {
+    width: 100%;
+}
+
+.filtros {
+    display: flex;
+    flex-direction: column;
+}
+
+.titulo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container-datos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0px 20px;
+    grid-auto-flow: row;
+    grid-template-areas: ". ."". .";
+}
+
+.container-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas: ". .";
+    background-color: #f9f9f9;
+    margin-left: 10px;
+}
+
+.container-consumo {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 10px;
+    grid-auto-flow: row;
+    grid-template-areas: ". . .";
+}
+
+.nombre-dato {
+    font-weight: bold;
+    font-size: 11px;
+    margin: 0;
+}
+
+.container-grafico {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas: ". .";
+}
+
+.titulos-datos {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    font-size: 11px;
+}
+
+p {
+    font-size: 11px;
+    margin: 0;
+}
+
+.titulo-separador {
+    background-color: #f2f2f2;
+    text-align: center;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+th,
+td {
+    width: 20%;
+    font-size: 10px;
+}
+
+th {
+    background-color: #f2f2f2;
+}

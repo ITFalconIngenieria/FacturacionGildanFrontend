@@ -8,24 +8,24 @@
         </div>
         <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
             <li nz-menu-item nz-tooltip nzTooltipPlacement="right" nzSelected>
-                <a [routerLink]="['/Inicio']">
+                <a [routerLink]="['/inicio']">
                     <i nz-icon nzType="home"></i>
                     <span>Inicio</span>
                 </a>
             </li>
             <li nz-menu-item nz-tooltip nzTooltipPlacement="right">
-                <a [routerLink]="['/medidor']">
+                <a [routerLink]="['/factura']">
                     <i nz-icon nzType="dashboard"></i>
-                    <span>Medidores</span>
+                    <span>Factura</span>
                 </a>
             </li>
             <li nz-menu-item nz-tooltip nzTooltipPlacement="right">
-                <a [routerLink]="['/jerarquia']">
-                    <i nz-icon nzType="cluster"></i>
-                    <span>Jerarquias</span>
+                <a [routerLink]="['/resumen']">
+                    <i nz-icon nzType="file-text"></i>
+                    <span>Resumen Facturacion</span>
                 </a>
             </li>
-            <li nz-menu-item nz-tooltip nzTooltipPlacement="right">
+            <!--  <li nz-menu-item nz-tooltip nzTooltipPlacement="right">
                 <a [routerLink]="['/entrada']">
                     <i nz-icon nzType="thunderbolt"></i>
                     <span>Entrada Energia</span>
@@ -58,7 +58,7 @@
             <li nz-menu-item nz-tooltip nzTooltipPlacement="right">
                 <i nz-icon nzType="question-circle"></i>
                 <span>Ayuda</span>
-            </li>
+            </li> -->
         </ul>
     </nz-sider>
     <nz-layout>
@@ -81,5 +81,5 @@
     </nz-layout>
 </nz-layout>
 <div class="footer">
-    <label style="color: white;">© INHDELVA, TODOS LOS DERECHOS RESERVADOS</label>
+    <label style="color: white;">© GILDAN, TODOS LOS DERECHOS RESERVADOS</label>
 </div>
