@@ -4,11 +4,22 @@
 
 .container-filtros {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 0.5fr;
+    grid-template-columns: 0.5fr 0.6fr 0.5fr 0.7fr 1fr;
     grid-template-rows: 1fr;
-    gap: 0px 10px;
+    gap: 0px 6px;
     grid-auto-flow: row;
-    grid-template-areas: ". . . . . .";
+    grid-template-areas: ". . . . . ";
+}
+
+.filtros {
+    display: flex;
+    flex-direction: column;
+}
+
+.botones {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 nz-input-group {
@@ -17,11 +28,6 @@ nz-input-group {
 
 nz-select {
     width: 100%;
-}
-
-.filtros {
-    display: flex;
-    flex-direction: column;
 }
 
 .titulo {
@@ -100,4 +106,13 @@ td {
 
 th {
     background-color: #f2f2f2;
+}
+
+.valores {
+    font-size: 15px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
