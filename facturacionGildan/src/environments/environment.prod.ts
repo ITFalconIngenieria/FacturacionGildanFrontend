@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  apiUrl: 'https://backend-facturacion-gildan.herokuapp.com'
+
 };

@@ -2,69 +2,95 @@
     <div class="filtros">
         <h6>Precios </h6>
         <nz-input-group nzAddOnBefore="kWh" nzSize="small">
-            <input type="text" nz-input [(ngModel)]="inputValue" />
+            <input type="text" nz-input [(ngModel)]="preciokwh" />
         </nz-input-group>
         <nz-input-group nzAddOnBefore="kW" nzSize="small">
-            <input type="text" nz-input [(ngModel)]="inputValue" />
+            <input type="text" nz-input [(ngModel)]="preciokw" />
         </nz-input-group>
     </div>
     <div class="filtros">
         <h6>Cargos </h6>
         <nz-input-group nzAddOnBefore="Alumbrado" nzSize="small">
-            <input type="text" nz-input [(ngModel)]="inputValue" />
+            <input type="text" nz-input [(ngModel)]="alumbrado" />
         </nz-input-group>
         <nz-input-group nzAddOnBefore="Otros" nzSize="small">
-            <input type="text" nz-input [(ngModel)]="inputValue" />
+            <input type="text" nz-input [(ngModel)]="otro" />
         </nz-input-group>
     </div>
     <div class="filtros">
         <h6>Cambio dólar </h6>
         <nz-input-group nzAddOnBefore="BCH" nzSize="small">
-            <input type="text" nz-input [(ngModel)]="inputValue" />
+            <input type="text" nz-input [(ngModel)]="bch" />
         </nz-input-group>
         <nz-input-group nzAddOnBefore="Gildan" nzSize="small">
-            <input type="text" nz-input [(ngModel)]="inputValue" />
+            <input type="text" nz-input [(ngModel)]="gildan" />
         </nz-input-group>
     </div>
     <div class="filtros">
         <h6>Facturar a</h6>
         <nz-input-group nzAddOnBefore="Planta" nzSize="small">
-            <input type="text" nz-input [(ngModel)]="inputValue" />
+            <nz-select [(ngModel)]="planta" nzSize="small" nzMode="multiple" nzPlaceHolder="Please select">
+                <nz-option *ngFor="let planta of plantas" [nzLabel]="planta.nombre" [nzValue]="planta.id"></nz-option>
+            </nz-select>
+            <nz-select [(ngModel)]="multipleValue" nzSize="small" nzMode="multiple" nzPlaceHolder="Please select">
+                <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+            </nz-select>
         </nz-input-group>
+
         <nz-input-group nzAddOnBefore="Medidor" nzSize="small">
-            <input type="text" nz-input [(ngModel)]="inputValue" />
+            <nz-select nzSize="small" [(ngModel)]="medidor">
+                <nz-option nzLabel="1" nzValue="1"></nz-option>
+                <nz-option nzLabel="2" nzValue="1"></nz-option>
+                <nz-option nzLabel="3" nzValue="1"></nz-option>
+                <nz-option nzLabel="4" nzValue="1"></nz-option>
+            </nz-select>
+
+            <nz-select [(ngModel)]="medidor" nzAllowClear nzPlaceHolder="Choose" nzShowSearch>
+                <nz-option-group nzLabel="Manager">
+                    <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
+                    <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+                </nz-option-group>
+                <nz-option-group nzLabel="Engineer">
+                    <nz-option nzValue="tom" nzLabel="Tom"></nz-option>
+                </nz-option-group>
+            </nz-select>
         </nz-input-group>
     </div>
     <div class="filtros">
         <nz-input-group nzAddOnBefore="Rango tiempo" nzSize="small">
-            <nz-select nzSize="small">
-                <nz-option [nzLabel]="1" [nzValue]="1"></nz-option>
-                <nz-option [nzLabel]="2" [nzValue]="1"></nz-option>
-                <nz-option [nzLabel]="3" [nzValue]="1"></nz-option>
-                <nz-option [nzLabel]="4" [nzValue]="1"></nz-option>
+            <nz-select nzSize="small" [(ngModel)]="tiempo">
+                <nz-option nzLabel="Hoy" nzValue="1"></nz-option>
+                <nz-option nzLabel="Ayer" nzValue="2"></nz-option>
+                <nz-option nzLabel="Desde ayer" nzValue="3"></nz-option>
+                <nz-option nzLabel="Semana hasta la fecha" nzValue="4"></nz-option>
+                <nz-option nzLabel="Año hasta la fecha" nzValue="5"></nz-option>
+                <nz-option nzLabel="Ultima semana" nzValue="6"></nz-option>
+                <nz-option nzLabel="Ultimas 2 semanas" nzValue="7"></nz-option>
+                <nz-option nzLabel="Ultimo mes" nzValue="8"></nz-option>
+                <nz-option nzLabel="Ultimo año" nzValue="9"></nz-option>
             </nz-select>
         </nz-input-group>
         <nz-input-group nzAddOnBefore="Fecha 1" nzSize="small">
-            <nz-date-picker nzSize="small"></nz-date-picker>
+            <nz-date-picker nzSize="small" [(ngModel)]="fecha1"></nz-date-picker>
         </nz-input-group>
         <nz-input-group nzAddOnBefore="Fecha 2" nzSize="small">
-            <nz-date-picker nzSize="small"></nz-date-picker>
+            <nz-date-picker nzSize="small" [(ngModel)]="fecha2"></nz-date-picker>
         </nz-input-group>
     </div>
-    <div class="filtros">
-        <button nz-button nzType="primary" nzSize="small" style="margin-bottom: 5px; background-color: #009bca; border-color: #009bca;">
-          <i nz-icon nzType="search"></i>
-          Mostrar
-        </button>
-        <button nz-button nzType="primary" nzSize="small" style="margin-bottom: 5px; background-color: #439d16; border-color: #439d16;">
-          <i nz-icon nzType="file-excel"></i>
-          Excel
-        </button>
-        <button nz-button nzType="primary" nzSize="small" style="margin-bottom: 5px; background-color: #c41a1a; border-color: #c41a1a;">
-          <i nz-icon nzType="printer"></i>
-          Imprimir
-        </button>
-    </div>
+</div>
+<div class="botones">
+    <button nz-button nzType="primary" nzSize="small" (click)="mostrar()" style="margin-bottom: 5px; background-color: #009bca; border-color: #009bca; margin: 5px;">
+        <i nz-icon nzType="search"></i>
+        Mostrar
+      </button>
+    <button nz-button nzType="primary" nzSize="small" (click)="excel()" style="margin-bottom: 5px; background-color: #439d16; border-color: #439d16; margin: 5px;">
+        <i nz-icon nzType="file-excel"></i>
+        Excel
+      </button>
+    <button nz-button nzType="primary" nzSize="small" (click)="imprimir()" style="margin-bottom: 5px; background-color: #c41a1a; border-color: #c41a1a; margin: 5px;">
+        <i nz-icon nzType="printer"></i>
+        Imprimir
+      </button>
 </div>
 <div class="titulo">
     <img src="assets/Gildan-Logo.svg" class="logo">
@@ -278,7 +304,7 @@
                     COSTOS PLANTAS GILDAN
                 </div>
                 <div class="card-body">
-                    <div>
+                    <div style="width: 100%; height: 100%;">
                         <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"></canvas>
                     </div>
                 </div>
