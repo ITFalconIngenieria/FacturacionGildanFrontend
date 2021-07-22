@@ -1,5 +1,5 @@
 
-import { NgModule } from '@angular/core';
+import {  NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,7 +12,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IconsProviderModule } from './icons-provider.module';
-
+// Import library module
+import { NgxSpinnerModule } from "ngx-spinner";
 import { ChartsModule } from 'ng2-charts';
 
 // Importaciones de componentes ng-zorro
@@ -55,8 +56,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MenuComponent } from './pages/menu/menu.component';
 import { LoginComponent } from './login/login.component';
 import { FacturaComponent } from './pages/factura/factura.component';
-import { ResumenFacturacionComponent } from './pages/resumenFacturacion/resumenFacturacion.component';
-
+import { ResumenFacturacionComponent } from './pages/resumenFacturacion/resumenFacturacion.component'
 
 registerLocaleData(en);
 
@@ -77,6 +77,7 @@ registerLocaleData(en);
     HttpClientModule,
     BrowserAnimationsModule,
     ChartsModule,
+    NgxSpinnerModule,
     /////////////////////////
     // NgZorroAntdModule,
     NzTabsModule,
@@ -115,7 +116,11 @@ registerLocaleData(en);
     NzSkeletonModule,
     ScrollingModule
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [
+    { provide: NZ_I18N, useValue: en_US },
+    // { provide: LOCALE_ID, useValue: 'es' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -29,19 +29,17 @@
     <div class="filtros">
         <h6>Facturar a</h6>
         <nz-input-group nzAddOnBefore="Planta" nzSize="small">
-            <nz-select nzSize="small" [(ngModel)]="planta">
-                <nz-option nzLabel="1" nzValue="1"></nz-option>
-                <nz-option nzLabel="2" nzValue="1"></nz-option>
-                <nz-option nzLabel="3" nzValue="1"></nz-option>
-                <nz-option nzLabel="4" nzValue="1"></nz-option>
+            <nz-select [(ngModel)]="plantas" nzSize="small" (ngModelChange)="changeMedidores($event)" nzMode="multiple" nzPlaceHolder="Seleccione...">
+                <nz-option *ngFor="let planta of listPlantas" [nzLabel]="planta.codigo + ' - ' + planta.nombre" [nzValue]="planta.id"></nz-option>
             </nz-select>
         </nz-input-group>
+
         <nz-input-group nzAddOnBefore="Medidor" nzSize="small">
-            <nz-select nzSize="small" [(ngModel)]="medidor">
-                <nz-option nzLabel="1" nzValue="1"></nz-option>
-                <nz-option nzLabel="2" nzValue="1"></nz-option>
-                <nz-option nzLabel="3" nzValue="1"></nz-option>
-                <nz-option nzLabel="4" nzValue="1"></nz-option>
+            <nz-select [(ngModel)]="medidores" nzAllowClear nzSize="small" nzMode="multiple" nzPlaceHolder="Seleccione..." nzShowSearch>
+                <nz-option-group *ngFor="let op of medidoresPlanta" [nzLabel]="op.codigo + ' - ' + op.nombre">
+                    <nz-option *ngFor="let med of op.detalleMedidors" [nzValue]="med.id" [nzLabel]="med.medidor.codigo">
+                    </nz-option>
+                </nz-option-group>
             </nz-select>
         </nz-input-group>
     </div>
@@ -49,21 +47,23 @@
         <nz-input-group nzAddOnBefore="Rango tiempo" nzSize="small">
             <nz-select nzSize="small" [(ngModel)]="tiempo">
                 <nz-option nzLabel="Hoy" nzValue="1"></nz-option>
-                <nz-option nzLabel="Ayer" nzValue="1"></nz-option>
-                <nz-option nzLabel="Desde ayer" nzValue="1"></nz-option>
-                <nz-option nzLabel="Semana hasta la fecha" nzValue="1"></nz-option>
-                <nz-option nzLabel="Año hasta la fecha" nzValue="1"></nz-option>
-                <nz-option nzLabel="Ultima semana" nzValue="1"></nz-option>
-                <nz-option nzLabel="Ultimas 2 semanas" nzValue="1"></nz-option>
-                <nz-option nzLabel="Ultimo mes" nzValue="1"></nz-option>
-                <nz-option nzLabel="Ultimo año" nzValue="1"></nz-option>
+                <nz-option nzLabel="Ayer" nzValue="2"></nz-option>
+                <nz-option nzLabel="Desde ayer" nzValue="3"></nz-option>
+                <nz-option nzLabel="Semana hasta la fecha" nzValue="4"></nz-option>
+                <nz-option nzLabel="Año hasta la fecha" nzValue="5"></nz-option>
+                <nz-option nzLabel="Ultima semana" nzValue="6"></nz-option>
+                <nz-option nzLabel="Ultimas 2 semanas" nzValue="7"></nz-option>
+                <nz-option nzLabel="Ultimo mes" nzValue="8"></nz-option>
+                <nz-option nzLabel="Ultimo año" nzValue="9"></nz-option>
             </nz-select>
         </nz-input-group>
         <nz-input-group nzAddOnBefore="Fecha 1" nzSize="small">
-            <nz-date-picker nzSize="small" [(ngModel)]="fecha1"></nz-date-picker>
+            <nz-date-picker nzFormat="yyyy-MM-dd HH:mm:ss" nzShowTime nzSize="small" [(ngModel)]="fecha1">
+            </nz-date-picker>
         </nz-input-group>
         <nz-input-group nzAddOnBefore="Fecha 2" nzSize="small">
-            <nz-date-picker nzSize="small" [(ngModel)]="fecha2"></nz-date-picker>
+            <nz-date-picker nzFormat="yyyy-MM-dd HH:mm:ss" nzShowTime nzSize="small" [(ngModel)]="fecha2">
+            </nz-date-picker>
         </nz-input-group>
     </div>
 </div>
@@ -71,22 +71,21 @@
     <button nz-button nzType="primary" nzSize="small" (click)="mostrar()" style="margin-bottom: 5px; background-color: #009bca; border-color: #009bca; margin: 5px;">
         <i nz-icon nzType="search"></i>
         Mostrar
-      </button>
+    </button>
     <button nz-button nzType="primary" nzSize="small" (click)="excel()" style="margin-bottom: 5px; background-color: #439d16; border-color: #439d16; margin: 5px;">
         <i nz-icon nzType="file-excel"></i>
         Excel
-      </button>
+    </button>
     <button nz-button nzType="primary" nzSize="small" (click)="imprimir()" style="margin-bottom: 5px; background-color: #c41a1a; border-color: #c41a1a; margin: 5px;">
         <i nz-icon nzType="printer"></i>
         Imprimir
-      </button>
+    </button>
 </div>
-<div>
-    <div class="titulo">
-        <img src="assets/Gildan-Logo.svg" class="logo">
-        <h5> FACTURACIÓN </h5>
-    </div>
-
+<div class="titulo">
+    <img src="assets/Gildan-Logo.svg" class="logo">
+    <h5> FACTURACIÓN </h5>
+</div>
+<div *ngIf="visible">
     <p class="titulo-separador"> DATOS DEL CLIENTE </p>
 
     <div class="container-datos">
@@ -98,7 +97,7 @@
 
             </div>
             <div>
-                <p> RN6-MAYAN TEXTILES </p>
+                <p> <span *ngFor="let pl of plantasOP"> {{ pl.codigo   }}   </span> </p>
                 <p> 54 </p>
                 <p> 00000 </p>
             </div>
@@ -110,26 +109,28 @@
                 <p class="nombre-dato"> DÍAS DE FACTURACÓN: </p>
             </div>
             <div>
-                <p> 2021-07-01 10:00 AM </p>
-                <p> 2021-07-01 10:00 AM al 2021-07-01 11:00 AM </p>
-                <p> 30 </p>
+                <p> {{ fechaDia | date: 'yyyy-MM-dd HH:mm a'}} </p>
+                <p> {{ fecha1 | date: 'yyyy-MM-dd HH:mm a'}} al {{ fecha2 | date: 'yyyy-MM-dd HH:mm a'}}</p>
+                <p> {{ diasPeriodo }} </p>
             </div>
         </div>
         <div>
-            <div style="display: flex; flex-direction: row; justify-content: space-around; background-color: #f2f2f2;">
+            <div style="display: flex; flex-direction: row; justify-content: space-around; background-color: #e2e2e2;">
                 <p class="titulos-datos"> CONSUMO (kWh) </p>
                 <p class="titulos-datos"> MES A FACTURAR </p>
                 <p class="titulos-datos"> TOTAL A PAGAR (L.) </p>
             </div>
             <div class="container-consumo">
                 <div style="background-color: #ffcfcf; border-radius: 7%; height:55px; width: 83%; margin: auto;">
-                    <p class="valores"> 0.00 </p>
+                    <p class="valores"> {{totalConsumo | number:'1.2-2':'en_US'}} </p>
                 </div>
                 <div style="background-color: #ffffc8; border-radius: 7%; height:55px;  width: 83%; margin: auto;">
-                    <p class="valores">Julio</p>
+                    <p *ngIf="diasPeriodo < 30" class="valores"> {{ fecha2 | date:'MMMM' }} </p>
+                    <p *ngIf="diasPeriodo > 30" class="valores"> {{ fecha1 | date:'MMMM' }} a {{ fecha2 | date:'MMMM' }}
+                    </p>
                 </div>
                 <div style="background-color: #dfffdf; border-radius: 7% ; height:55px;  width: 83%; margin: auto;">
-                    <p class="valores">Lps. 0.00</p>
+                    <p class="valores">Lps. {{totalApagar | number:'1.2-2':'en_US'}} </p>
                 </div>
             </div>
         </div>
@@ -152,38 +153,28 @@
     <br>
     <p class="titulo-separador"> DETALLE DE CONSUMO DE ENERGÍA </p>
     <div>
-        <div>
-
-        </div>
         <table class="table table-sm">
-            <tr>
+            <tr style="text-align: center;">
                 <th></th>
                 <th>LECTURA ACTUAL</th>
                 <th>LECTURA ANTERIOR</th>
                 <th></th>
                 <th></th>
             </tr>
-            <tr>
+            <tr style="text-align: center;">
                 <th>MEDIDOR</th>
-                <th>2021-07-01 10:00 am</th>
-                <th>2020-07-01 11:00 am</th>
+                <th> {{ fecha1 | date: 'yyyy-MM-dd HH:mm a'}} </th>
+                <th> {{ fecha1 | date: 'yyyy-MM-dd HH:mm a'}} </th>
                 <th>DIFERENCIA</th>
                 <th>CONSUMO</th>
             </tr>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>2021-07-01</td>
-                    <td>2021-07-01</td>
-                    <td>0.00</td>
-                    <td>0.00</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>2021-07-01</td>
-                    <td>2021-07-01</td>
-                    <td>0.00</td>
-                    <td>0.00</td>
+                <tr *ngFor="let detalle of detalleConsumo">
+                    <td> {{detalle.medidor}} </td>
+                    <td style="text-align: right;"> {{detalle.lecturaActual | number:'1.2-2':'en_US'}} </td>
+                    <td style="text-align: right;"> {{detalle.lecturaAnterior | number:'1.2-2':'en_US'}} </td>
+                    <td style="text-align: right;"> {{detalle.diferencia | number:'1.2-2':'en_US'}} </td>
+                    <td style="text-align: right;"> {{detalle.consumo | number:'1.2-2':'en_US'}} kWh</td>
                 </tr>
             </tbody>
             <tfoot>
@@ -191,15 +182,16 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>TOTAL ENERGIA ACTIVA </td>
-                    <td> 0.00 kWh</td>
+                    <td style="text-align: right; font-weight: bold;">TOTAL ENERGIA ACTIVA </td>
+                    <td style="text-align: right; font-weight: bold;"> {{totalConsumo | number:'1.2-2':'en_US'}} kWh
+                    </td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td> DEMANDA MÁXIMA PLANTA </td>
-                    <td> 0.00 kWh</td>
+                    <td style="text-align: right; font-weight: bold;"> DEMANDA MÁXIMA PLANTA </td>
+                    <td style="text-align: right; font-weight: bold;"> 0.00 kWh</td>
                 </tr>
             </tfoot>
         </table>
@@ -219,40 +211,40 @@
                     <tr>
                         <td>ENERGÍA ACTIVA</td>
                         <td></td>
-                        <td></td>
+                        <td>{{totalConsumo | number:'1.2-2':'en_US'}} </td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>PERDIDAS</td>
                         <td></td>
-                        <td></td>
+                        <td> {{calculoConsumo[0]?.perdidas | number:'1.2-2':'en_US'}} </td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>COSTO ENERGIA</td>
+                        <td>{{calculoConsumo[0]?.rateConsumoEnergia | number:'1.2-2':'en_US'}}</td>
                         <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{{calculoConsumo[0]?.rateConsumoEnergia * totalConsumo | number:'1.2-2':'en_US'}}</td>
                     </tr>
                     <tr>
                         <td>DEMANDA</td>
+                        <td>{{calculoConsumo[0]?.rateDemanda | number:'1.2-2':'en_US'}}</td>
                         <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{{calculoConsumo[0]?.totalDemanda | number:'1.2-2':'en_US'}}</td>
                     </tr>
                     <tr>
                         <td>OTROS CARGOS/CRÉDITOS</td>
+                        <td>{{calculoConsumo[0]?.rateOtrosCargos | number:'1.2-2':'en_US'}}</td>
                         <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{{calculoConsumo[0]?.totalOtrosCargos | number:'1.2-2':'en_US'}}</td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr>
                         <th>TOTAL A PAGAR</th>
                         <th></th>
-                        <th>kWh</th>
-                        <th>0.00 L.</th>
+                        <th> {{ totalConsumo | number:'1.2-2':'en_US'}} kWh</th>
+                        <th> L. {{ totalApagar | number:'1.2-2':'en_US'}}</th>
                     </tr>
                 </tfoot>
             </table>
@@ -261,8 +253,11 @@
         width: 555px;
         height: 313px;">
             <canvas baseChart [datasets]="ChartData" [labels]="ChartLabels" [options]="ChartOptions" [legend]="ChartLegend" [chartType]="ChartType">
-              </canvas>
+            </canvas>
         </div>
     </div>
-
 </div>
+
+<ngx-spinner bdColor="rgba(187,218,255,0.8)" size="medium" color="#0061aa" type="triangle-skew-spin" [fullScreen]="true">
+    <p style="color: white"> Cargando datos... </p>
+</ngx-spinner>
