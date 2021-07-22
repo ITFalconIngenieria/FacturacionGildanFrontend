@@ -2,13 +2,51 @@ import { Component, OnInit } from '@angular/core';
 import { MedidorService } from '../../Servicios/medidor.service';
 import { PlantasService } from './../../Servicios/plantas.service';
 
+interface medidorPlanta {
+  id: number;
+  nombre: string;
+  codigo: string;
+  estado: boolean;
+  detalleMedidors?: DetalleMedidor[];
+}
+
+interface DetalleMedidor {
+  id: number;
+  operacion: boolean;
+  unidad: string;
+  unidadConversion: number;
+  porcentaje: number;
+  biomasa: number;
+  fechaInicial: string;
+  fechaFinal: string;
+  estado: boolean;
+  medidorId: number;
+  jerarquiaId: number;
+  plantaId: number;
+  consumibleId: number;
+  centroCostosId: number;
+  medidor: Medidor;
+}
+
+interface Medidor {
+  id: number;
+  codigo: string;
+  referenciaId: number;
+  descripcion: string;
+  ubicacion: string;
+  multiplicador: number;
+  formula: string;
+  estado: boolean;
+  servidorId: number;
+  sourceTypeId: number;
+}
+
 @Component({
   selector: 'app-resumenFacturacion',
   templateUrl: './resumenFacturacion.component.html',
   styleUrls: ['./resumenFacturacion.component.css']
 })
 export class ResumenFacturacionComponent implements OnInit {
-  inputValue = '';
   doughnutChartLabels: any;
   doughnutChartData: any;
   doughnutChartType: any;
@@ -19,24 +57,16 @@ export class ResumenFacturacionComponent implements OnInit {
   otro: number = 0;
   bch: number = 0;
   gildan: number = 0;
-  planta: any[]=[];
-  medidor: number = 0;
-  tiempo: string = '';
-  fecha1: any = new Date;
-  fecha2: any = new Date;
-
+  plantas: any[] = [];
   medidores: any[] = [];
-  plantas: Array<{
-    id: 0;
-    nombre: string;
-    codigo: string;
-    estado: true
-  }> = [];
+  tiempo: string = '';
+  fecha1: Date = new Date;
+  fecha2: Date = new Date;
 
-  listOfOption: any[] = [];
-  singleValue = 'a10';
-  multipleValue = ['a10', 'c12'];
-  tagValue = ['a10', 'c12', 'tag'];
+  listMedidores: any[] = [];
+  medidoresPlanta: medidorPlanta[] = [];
+  plantasOP: any[] = [];
+  listPlantas: any[] = [];
 
   constructor(
     private servicePlanta: PlantasService,
@@ -45,27 +75,15 @@ export class ResumenFacturacionComponent implements OnInit {
 
   ngOnInit() {
 
-    const children: Array<{ label: string; value: string }> = [];
-    for (let i = 10; i < 36; i++) {
-      children.push({ label: i.toString(36) + i, value: i.toString(36) + i });
-    }
-    this.listOfOption = children;
-
-    this.plantas = [];
     this.serviceMedidor.getMedidor()
       .toPromise()
       .then((data: any) => {
-        this.medidores = [...data]
+        this.listMedidores = [...data]
 
         this.servicePlanta.getPlanta()
           .toPromise()
           .then((datos: any) => {
-            console.log(datos);
-            
-            this.plantas = [...datos]
-            console.log(this.plantas, this.medidores);
-
-
+            this.listPlantas = [...datos]
           })
       });
 
@@ -85,49 +103,51 @@ export class ResumenFacturacionComponent implements OnInit {
 
   mostrar() {
     console.log('mostrar');
+    console.log(this.fecha1.toISOString(), this.fecha2.toISOString(), this.medidores);
+    
 
-    switch (this.tiempo) {
-      case '1': {
+    // switch (this.tiempo) {
+    //   case '1': {
 
 
 
-        break;
-      }
-      case '2': {
+    //     break;
+    //   }
+    //   case '2': {
 
-        break;
-      }
-      case '3': {
+    //     break;
+    //   }
+    //   case '3': {
 
-        break;
-      }
-      case '4': {
+    //     break;
+    //   }
+    //   case '4': {
 
-        break;
-      }
-      case '5': {
+    //     break;
+    //   }
+    //   case '5': {
 
-        break;
-      }
-      case '6': {
+    //     break;
+    //   }
+    //   case '6': {
 
-        break;
-      }
-      case '7': {
+    //     break;
+    //   }
+    //   case '7': {
 
-        break;
-      }
-      case '8': {
+    //     break;
+    //   }
+    //   case '8': {
 
-        break;
-      }
-      case '9': {
+    //     break;
+    //   }
+    //   case '9': {
 
-        break;
-      }
-      default:
-        break;
-    }
+    //     break;
+    //   }
+    //   default:
+    //     break;
+    // }
 
   }
 
@@ -141,6 +161,17 @@ export class ResumenFacturacionComponent implements OnInit {
 
   }
 
+  changeMedidores(event: any[]) {
+    console.log(event);
+    this.medidoresPlanta = [];
+    event.forEach(id => {
+      this.plantasOP.push(...this.listPlantas.filter(x => x.id === id));
+      this.medidoresPlanta.push(...this.listMedidores.filter(y => y.id === id));
 
+    });
+    console.log(this.medidoresPlanta);
+
+
+  }
 
 }

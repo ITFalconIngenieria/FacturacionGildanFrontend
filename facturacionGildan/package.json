@@ -20,8 +20,10 @@
         "@angular/platform-browser-dynamic": "~11.2.14",
         "@angular/router": "~11.2.14",
         "chart.js": "^2.9.3",
+        "moment": "^2.29.1",
         "ng-zorro-antd": "^10.2.2",
         "ng2-charts": "^2.3.0",
+        "ngx-spinner": "^8.1.0",
         "rxjs": "~6.6.0",
         "tslib": "^2.0.0",
         "zone.js": "~0.11.3"

@@ -11,7 +11,24 @@ export class MedidorService {
   constructor(private http: HttpClient) { }
 
   getMedidor() {
-    return this.http.get(`${apiUrl}/medidors/`);
+    return this.http.get(`${apiUrl}/plantas?filter={ 
+      "include": [
+        {
+          "relation": "detalleMedidors",
+          "scope": {
+            "where":{"estado":true},     
+            "include": [
+              {
+                "relation":"medidor",
+                "scope": {
+                  "where":{"estado":true}
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }`);
   }
 
   postMedidor(medidor: any) {

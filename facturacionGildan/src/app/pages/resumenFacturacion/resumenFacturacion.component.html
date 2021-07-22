@@ -29,29 +29,15 @@
     <div class="filtros">
         <h6>Facturar a</h6>
         <nz-input-group nzAddOnBefore="Planta" nzSize="small">
-            <nz-select [(ngModel)]="planta" nzSize="small" nzMode="multiple" nzPlaceHolder="Please select">
-                <nz-option *ngFor="let planta of plantas" [nzLabel]="planta.nombre" [nzValue]="planta.id"></nz-option>
-            </nz-select>
-            <nz-select [(ngModel)]="multipleValue" nzSize="small" nzMode="multiple" nzPlaceHolder="Please select">
-                <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+            <nz-select [(ngModel)]="plantas" nzSize="small" (ngModelChange)="changeMedidores($event)" nzMode="multiple" nzPlaceHolder="Seleccione...">
+                <nz-option *ngFor="let planta of listPlantas" [nzLabel]="planta.codigo + ' - ' + planta.nombre" [nzValue]="planta.id"></nz-option>
             </nz-select>
         </nz-input-group>
 
         <nz-input-group nzAddOnBefore="Medidor" nzSize="small">
-            <nz-select nzSize="small" [(ngModel)]="medidor">
-                <nz-option nzLabel="1" nzValue="1"></nz-option>
-                <nz-option nzLabel="2" nzValue="1"></nz-option>
-                <nz-option nzLabel="3" nzValue="1"></nz-option>
-                <nz-option nzLabel="4" nzValue="1"></nz-option>
-            </nz-select>
-
-            <nz-select [(ngModel)]="medidor" nzAllowClear nzPlaceHolder="Choose" nzShowSearch>
-                <nz-option-group nzLabel="Manager">
-                    <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-                    <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
-                </nz-option-group>
-                <nz-option-group nzLabel="Engineer">
-                    <nz-option nzValue="tom" nzLabel="Tom"></nz-option>
+            <nz-select [(ngModel)]="medidores" nzAllowClear nzSize="small" nzMode="multiple" nzPlaceHolder="Seleccione..." nzShowSearch>
+                <nz-option-group *ngFor="let op of medidoresPlanta" [nzLabel]="op.codigo + ' - ' + op.nombre">
+                    <nz-option *ngFor="let med of op.detalleMedidors" [nzValue]="med.id" [nzLabel]="med.medidor.codigo"></nz-option>
                 </nz-option-group>
             </nz-select>
         </nz-input-group>
@@ -71,10 +57,10 @@
             </nz-select>
         </nz-input-group>
         <nz-input-group nzAddOnBefore="Fecha 1" nzSize="small">
-            <nz-date-picker nzSize="small" [(ngModel)]="fecha1"></nz-date-picker>
+            <nz-date-picker nzFormat="yyyy-MM-dd HH:mm:ss" nzShowTime nzSize="small" [(ngModel)]="fecha1"></nz-date-picker>
         </nz-input-group>
         <nz-input-group nzAddOnBefore="Fecha 2" nzSize="small">
-            <nz-date-picker nzSize="small" [(ngModel)]="fecha2"></nz-date-picker>
+            <nz-date-picker nzFormat="yyyy-MM-dd HH:mm:ss" nzShowTime nzSize="small" [(ngModel)]="fecha2"></nz-date-picker>
         </nz-input-group>
     </div>
 </div>
