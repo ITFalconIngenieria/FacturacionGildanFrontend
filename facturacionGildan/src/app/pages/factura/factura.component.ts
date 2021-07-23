@@ -4,6 +4,7 @@ import { PlantasService } from './../../Servicios/plantas.service';
 import { FacturaService } from '../../Servicios/factura.service';
 import { NgxSpinnerService } from "ngx-spinner";
 import * as moment from 'moment';
+moment.locale('es')
 
 interface medidorPlanta {
   id: number;
@@ -51,7 +52,7 @@ interface Medidor {
 })
 export class FacturaComponent implements OnInit {
 
-  ChartLabels: any;
+  ChartLabels: any[] = [];
   ChartType: any
   ChartLegend: any
   ChartData: any;
@@ -127,27 +128,6 @@ export class FacturaComponent implements OnInit {
       }
     };
 
-    this.ChartLabels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-    this.ChartType = 'bar';
-    this.ChartLegend = true;
-
-    this.ChartData = [
-      {
-        data: [65, 59, 80, 81, 56, 55, 40],
-        label: 'kWh',
-        type: 'bar',
-        backgroundColor: ['#0289e259', '#0289e259', '#0289e259', '#0289e259', '#0289e259', '#0289e259', '#fa4646'],
-        borderColor: '#0289e259'
-      },
-      {
-        data: [28, 48, 40, 19, 86, 27, 90],
-        label: 'kW',
-        type: 'line',
-        backgroundColor: '#ffcfcfb6',
-        borderColor: '#f50b0b'
-      }
-    ];
-
   }
 
   mostrar() {
@@ -165,12 +145,31 @@ export class FacturaComponent implements OnInit {
         console.log(data);
         this.detalleConsumo = data[0];
         this.calculoConsumo = data[1];
-        this.historicoConsumo = { ...data[2] };
-
+        this.historicoConsumo = [...data[2]];        
 
         this.detalleConsumo.forEach(y => {
           this.totalConsumo += y.consumo;
-        })
+        });
+
+        this.ChartType = 'bar';
+        this.ChartLegend = true;
+        this.ChartLabels = [...this.historicoConsumo.map(m => moment(m.fecha).format('MMMM'))].reverse();
+        this.ChartData = [
+          {
+            data: [...this.historicoConsumo.map(v => v.energiaActiva)].reverse(),
+            label: 'kWh',
+            type: 'bar',
+            backgroundColor: ['#0289e259', '#0289e259', '#0289e259', '#0289e259', '#0289e259', '#0289e259', '#fa4646'],
+            borderColor: '#0289e259'
+          },
+          {
+            data: [...this.historicoConsumo.map(v => v.demanda)].reverse(),
+            label: 'kW',
+            type: 'line',
+            backgroundColor: '#ffcfcfb6',
+            borderColor: '#f50b0b'
+          }
+        ];
 
         this.totalApagar = (this.totalConsumo * this.calculoConsumo[0].rateConsumoEnergia) + this.calculoConsumo[0].totalOtrosCargos + this.calculoConsumo[0].totalDemanda
         this.visible = true;
