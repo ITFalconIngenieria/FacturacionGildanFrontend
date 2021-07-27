@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MedidorService } from '../../Servicios/medidor.service';
 import { PlantasService } from './../../Servicios/plantas.service';
 import { FacturaService } from '../../Servicios/factura.service';
-import { NgxSpinnerService } from "ngx-spinner";
+import { NgxSpinnerService } from 'ngx-spinner';
 import * as moment from 'moment';
-moment.locale('es')
+moment.locale('es');
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
-interface medidorPlanta {
+interface MedidorPlanta {
   id: number;
   nombre: string;
   codigo: string;
@@ -51,13 +53,14 @@ interface Medidor {
   styleUrls: ['./factura.component.css']
 })
 export class FacturaComponent implements OnInit {
+  @ViewChild('content', { static: true }) content!: ElementRef;
 
   ChartLabels: any[] = [];
-  ChartType: any
-  ChartLegend: any
+  ChartType: any;
+  ChartLegend: any;
   ChartData: any;
   ChartData2: any;
-  ChartOptions: any
+  ChartOptions: any;
   fechaDia: Date = new Date();
   diasPeriodo: any;
   preciokwh: number = 0;
@@ -72,7 +75,7 @@ export class FacturaComponent implements OnInit {
   fecha1: Date = new Date;
   fecha2: Date = new Date;
   listMedidores: any[] = [];
-  medidoresPlanta: medidorPlanta[] = [];
+  medidoresPlanta: MedidorPlanta[] = [];
   plantasOP: any[] = [];
   listPlantas: any[] = [];
   visible: boolean = false;
@@ -81,6 +84,8 @@ export class FacturaComponent implements OnInit {
   calculoConsumo: any[] = [];
   totalApagar: number = 0;
   totalConsumo: number = 0;
+  dataExport: any[] = [];
+
   constructor(
     private servicePlanta: PlantasService,
     private serviceMedidor: MedidorService,
@@ -89,21 +94,21 @@ export class FacturaComponent implements OnInit {
   ) { }
 
 
-  ngOnInit() {
+  ngOnInit(): void {
 
     this.serviceMedidor.getMedidor()
       .toPromise()
       .then((data: any) => {
         this.listMedidores = [...data];
-        console.log(this.listMedidores);
-
-
         this.servicePlanta.getPlanta()
           .toPromise()
           .then((datos: any) => {
-            this.listPlantas = [...datos]
-          })
+            this.listPlantas = [...datos];
+          });
       });
+
+    this.ChartType = 'bar';
+    this.ChartLegend = true;
 
     this.ChartOptions = {
       responsive: true,
@@ -112,26 +117,52 @@ export class FacturaComponent implements OnInit {
         text: 'HISTORICO DE CONSUMO/DEMANDA'
       },
       scales: {
-        y: {
-          type: 'linear',
-          display: true,
-          position: 'left',
-        },
-        y1: {
-          type: 'linear',
-          display: true,
-          position: 'right',
-          grid: {
-            drawOnChartArea: false, // only want the grid lines for one axis to show up
+        xAxes: [{
+          barPercentage: 0.8,
+          gridLines: {
+            display: false,
+          },
+          ticks: {
+            minRotation: 0,
+            maxRotation: 0,
+            autoSkip: true
           }
-        }
+        }],
+        yAxes: [{
+          id: 'A',
+          type: 'linear',
+          position: 'left',
+          ticks: {
+            beginAtZero: true,
+            callback: (label: any, index: any, labels: any) => {
+              return Intl.NumberFormat().format(label);
+            }
+          }
+        }, {
+          id: 'B',
+          type: 'linear',
+          position: 'right',
+          ticks: {
+            beginAtZero: true,
+            callback: (label: any, index: any, labels: any) => {
+              return Intl.NumberFormat().format(label);
+            }
+          }
+        }]
+      },
+      legend: {
+        display: true
+      },
+      tooltips: {
+        enabled: true
       }
     };
 
   }
 
-  mostrar() {
+  mostrar(): void {
     this.spinner.show();
+    this.dataExport = [];
 
     this.serviceFactura.getDatosFactura(
       this.fecha1.toISOString(),
@@ -140,38 +171,139 @@ export class FacturaComponent implements OnInit {
     )
       .toPromise()
       .then((data: any) => {
-        this.diasPeriodo = moment(this.fecha2).diff(moment(this.fecha1), 'days')
+        this.diasPeriodo = moment(this.fecha2).diff(moment(this.fecha1), 'days');
 
         console.log(data);
         this.detalleConsumo = data[0];
         this.calculoConsumo = data[1];
-        this.historicoConsumo = [...data[2]];        
+        this.historicoConsumo = [...data[2]];
 
         this.detalleConsumo.forEach(y => {
           this.totalConsumo += y.consumo;
         });
 
-        this.ChartType = 'bar';
-        this.ChartLegend = true;
         this.ChartLabels = [...this.historicoConsumo.map(m => moment(m.fecha).format('MMMM'))].reverse();
         this.ChartData = [
           {
             data: [...this.historicoConsumo.map(v => v.energiaActiva)].reverse(),
             label: 'kWh',
             type: 'bar',
-            backgroundColor: ['#0289e259', '#0289e259', '#0289e259', '#0289e259', '#0289e259', '#0289e259', '#fa4646'],
-            borderColor: '#0289e259'
+            backgroundColor: ['#4799dc', '#4799dc', '#4799dc', '#4799dc', '#4799dc', '#4799dc', '#fa4646'],
+            borderColor: '#003d6f',
+            yAxisID: 'A'
           },
           {
             data: [...this.historicoConsumo.map(v => v.demanda)].reverse(),
             label: 'kW',
             type: 'line',
             backgroundColor: '#ffcfcfb6',
-            borderColor: '#f50b0b'
+            borderColor: '#f50b0b',
+            yAxisID: 'B',
           }
         ];
 
-        this.totalApagar = (this.totalConsumo * this.calculoConsumo[0].rateConsumoEnergia) + this.calculoConsumo[0].totalOtrosCargos + this.calculoConsumo[0].totalDemanda
+        // tslint:disable-next-line: max-line-length
+        this.totalApagar = (this.totalConsumo * this.calculoConsumo[0].rateConsumoEnergia) + this.calculoConsumo[0].totalOtrosCargos + this.calculoConsumo[0].totalDemanda;
+        this.dataExport = [
+          {
+            ' ': 'Medidor',
+            'LECTURA ACTUAL': moment(this.fecha1).format('YYYY-MM-DD HH:mm a'),
+            'LECTURA ANTERIOR': moment(this.fecha2).format('YYYY-MM-DD HH:mm a'),
+            '  ': 'Diferencia',
+            '   ': 'Consumo',
+          }];
+
+        this.detalleConsumo.forEach(m => {
+          this.dataExport = [...this.dataExport,
+          {
+            ' ': m.medidor,
+            // tslint:disable-next-line: max-line-length
+            'LECTURA ACTUAL': this.formatearNumber(m.lecturaActual),
+            // tslint:disable-next-line: max-line-length
+            'LECTURA ANTERIOR': this.formatearNumber(m.lecturaAnterior),
+            '  ': this.formatearNumber(m.diferencia),
+            '   ': this.formatearNumber(m.consumo),
+          }];
+        });
+
+        this.dataExport = [...this.dataExport,
+        {
+          ' ': '',
+          'LECTURA ACTUAL': '',
+          'LECTURA ANTERIOR': '',
+          '  ': 'TOTAL ENERGIA ACTIVA',
+          '   ': this.formatearNumber(this.totalConsumo),
+        },
+        {
+          ' ': '',
+          'LECTURA ACTUAL': '',
+          'LECTURA ANTERIOR': '',
+          '  ': 'TOTAL ENERGIA ACTIVA',
+          '   ': this.formatearNumber(1234),
+        },
+        {
+          ' ': '',
+          'LECTURA ACTUAL': '',
+          'LECTURA ANTERIOR': '',
+          '  ': '',
+          '   ': '',
+        },
+        {
+          ' ': 'CARGO',
+          'LECTURA ACTUAL': 'RATE (L.)',
+          'LECTURA ANTERIOR': 'CONSUMO (KwH)',
+          '  ': 'TOTAL (L.)',
+          '   ': '',
+        },
+        {
+          ' ': 'ENERGÍA ACTIVA',
+          'LECTURA ACTUAL': '',
+          'LECTURA ANTERIOR': this.formatearNumber(this.totalConsumo),
+          '  ': '',
+          '   ': '',
+        },
+        {
+          ' ': 'PERDIDAS',
+          'LECTURA ACTUAL': '',
+          'LECTURA ANTERIOR': this.formatearNumber(this.calculoConsumo[0].perdidas),
+          '  ': '',
+          '   ': '',
+        },
+        {
+          ' ': 'COSTO ENERGIA',
+          // tslint:disable-next-line: max-line-length
+          'LECTURA ACTUAL': new Intl.NumberFormat('en-us', { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(this.calculoConsumo[0].rateConsumoEnergia),
+          'LECTURA ANTERIOR': '',
+          '  ': this.formatearNumber(this.calculoConsumo[0].rateConsumoEnergia * this.totalConsumo),
+          '   ': '',
+        },
+        {
+          ' ': 'DEMANDA',
+          // tslint:disable-next-line: max-line-length
+          'LECTURA ACTUAL': new Intl.NumberFormat('en-us', { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(this.calculoConsumo[0].rateDemanda),
+          'LECTURA ANTERIOR': '',
+          '  ': this.formatearNumber(this.calculoConsumo[0].totalDemanda),
+          '   ': '',
+        },
+        {
+          ' ': 'OTROS CARGOS/CRÉDITOS',
+          // tslint:disable-next-line: max-line-length
+          'LECTURA ACTUAL': new Intl.NumberFormat('en-us', { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(this.calculoConsumo[0].rateOtrosCargos),
+          'LECTURA ANTERIOR': '',
+          '  ': this.formatearNumber(this.calculoConsumo[0].totalOtrosCargos),
+          '   ': ''
+        },
+        {
+          ' ': 'TOTAL A PAGAR',
+          'LECTURA ACTUAL': '',
+          'LECTURA ANTERIOR': this.formatearNumber(this.totalConsumo + this.calculoConsumo[0]?.perdidas),
+          '  ': this.formatearNumber(this.totalApagar),
+          '   ': ''
+        },
+        ];
+
+        console.log(this.dataExport);
+
         this.visible = true;
         this.spinner.hide();
 
@@ -181,31 +313,75 @@ export class FacturaComponent implements OnInit {
 
           this.visible = false;
           this.spinner.hide();
-        })
+        });
   }
 
-  excel() {
+  formatearNumber(numero: number) {
+    return new Intl.NumberFormat('en-us', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(numero);
+  }
+
+  excel(): void {
     console.log('excel');
+    import('xlsx').then(xlsx => {
+      const worksheet = xlsx.utils.json_to_sheet(this.dataExport);
 
+      const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
+      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+      this.saveAsExcelFile(excelBuffer, `Factura ${moment(this.fechaDia).format('YYYY-MM-DD')}`);
+    });
   }
 
-  imprimir() {
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    import('file-saver').then(FileSaver => {
+      const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+      const EXCEL_EXTENSION = '.xlsx';
+      const data: Blob = new Blob([buffer], {
+        type: EXCEL_TYPE
+      });
+      FileSaver.saveAs(data, fileName + '_export_' + EXCEL_EXTENSION);
+    });
+  }
+
+
+  imprimir(): void {
+    this.spinner.show();
     console.log('imprimir');
+    const div: any = document.getElementById('content');
+
+    const options = {
+      background: 'white',
+      scale: 3
+    };
+
+    // const divs: any[] = [div, anexo];
+    const doc = new jsPDF('p', 'mm', 'a4', true);
+
+    html2canvas(div, options).then((canvas) => {
+      const img = canvas.toDataURL('image/PNG');
+      // Add image Canvas to PDF
+      const bufferX = 5;
+      const bufferY = 5;
+      const imgProps = (<any>doc).getImageProperties(img);
+      const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      (doc as any).addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
+
+      return doc;
+    }).then((doc) => {
+      doc.save(`factura.pdf`);
+      this.spinner.hide();
+    });
 
   }
 
-  changeMedidores(event: any[]) {
+  changeMedidores(event: any[]): void {
     this.medidoresPlanta = [];
     this.plantasOP = [];
     event.forEach(id => {
       this.plantasOP.push(...this.listPlantas.filter(x => x.id === id));
       this.medidoresPlanta.push(...this.listMedidores.filter(y => y.id === id));
-      console.log();
-
     });
-    console.log(this.medidoresPlanta, this.plantasOP);
-
-
   }
 
 }

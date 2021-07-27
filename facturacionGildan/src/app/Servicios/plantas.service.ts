@@ -11,8 +11,6 @@ export class PlantasService {
   constructor(private http: HttpClient) { }
 
   getPlanta() {
-    console.log(`${apiUrl}/plantas/`);
-    
     return this.http.get(`${apiUrl}/plantas/`);
   }
 

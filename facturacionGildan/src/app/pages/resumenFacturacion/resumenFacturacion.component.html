@@ -27,22 +27,6 @@
         </nz-input-group>
     </div>
     <div class="filtros">
-        <h6>Facturar a</h6>
-        <nz-input-group nzAddOnBefore="Planta" nzSize="small">
-            <nz-select [(ngModel)]="plantas" nzSize="small" (ngModelChange)="changeMedidores($event)" nzMode="multiple" nzPlaceHolder="Seleccione...">
-                <nz-option *ngFor="let planta of listPlantas" [nzLabel]="planta.codigo + ' - ' + planta.nombre" [nzValue]="planta.id"></nz-option>
-            </nz-select>
-        </nz-input-group>
-
-        <nz-input-group nzAddOnBefore="Medidor" nzSize="small">
-            <nz-select [(ngModel)]="medidores" nzAllowClear nzSize="small" nzMode="multiple" nzPlaceHolder="Seleccione..." nzShowSearch>
-                <nz-option-group *ngFor="let op of medidoresPlanta" [nzLabel]="op.codigo + ' - ' + op.nombre">
-                    <nz-option *ngFor="let med of op.detalleMedidors" [nzValue]="med.id" [nzLabel]="med.medidor.codigo"></nz-option>
-                </nz-option-group>
-            </nz-select>
-        </nz-input-group>
-    </div>
-    <div class="filtros">
         <nz-input-group nzAddOnBefore="Rango tiempo" nzSize="small">
             <nz-select nzSize="small" [(ngModel)]="tiempo">
                 <nz-option nzLabel="Hoy" nzValue="1"></nz-option>
@@ -57,10 +41,12 @@
             </nz-select>
         </nz-input-group>
         <nz-input-group nzAddOnBefore="Fecha 1" nzSize="small">
-            <nz-date-picker nzFormat="yyyy-MM-dd HH:mm:ss" nzShowTime nzSize="small" [(ngModel)]="fecha1"></nz-date-picker>
+            <nz-date-picker nzFormat="yyyy-MM-dd HH:mm:ss" nzShowTime nzSize="small" [(ngModel)]="fecha1">
+            </nz-date-picker>
         </nz-input-group>
         <nz-input-group nzAddOnBefore="Fecha 2" nzSize="small">
-            <nz-date-picker nzFormat="yyyy-MM-dd HH:mm:ss" nzShowTime nzSize="small" [(ngModel)]="fecha2"></nz-date-picker>
+            <nz-date-picker nzFormat="yyyy-MM-dd HH:mm:ss" nzShowTime nzSize="small" [(ngModel)]="fecha2">
+            </nz-date-picker>
         </nz-input-group>
     </div>
 </div>
@@ -68,235 +54,194 @@
     <button nz-button nzType="primary" nzSize="small" (click)="mostrar()" style="margin-bottom: 5px; background-color: #009bca; border-color: #009bca; margin: 5px;">
         <i nz-icon nzType="search"></i>
         Mostrar
-      </button>
+    </button>
     <button nz-button nzType="primary" nzSize="small" (click)="excel()" style="margin-bottom: 5px; background-color: #439d16; border-color: #439d16; margin: 5px;">
         <i nz-icon nzType="file-excel"></i>
         Excel
-      </button>
+    </button>
     <button nz-button nzType="primary" nzSize="small" (click)="imprimir()" style="margin-bottom: 5px; background-color: #c41a1a; border-color: #c41a1a; margin: 5px;">
         <i nz-icon nzType="printer"></i>
         Imprimir
-      </button>
+    </button>
 </div>
-<div class="titulo">
-    <img src="assets/Gildan-Logo.svg" class="logo">
-    <h5> FACTURACIÓN </h5>
-</div>
-<div>
-    <div class="card" style="width: 100%;">
-        <div class="card-header" style="background-color: #aad6fd;">
-            ENERGÍA CONSUMIDA GILDAN (kWh)
-        </div>
-        <div class="card-body">
-            <table class="table table-striped table-sm">
-                <thead>
-                    <tr>
-                        <th>PLANTA</th>
-                        <th>ENERGÍA (kWh) = <span style="color: #439d16;"> 99.00 </span> %</th>
-                        <th>PERDIDAD (kWh) = <span style="color: #439d16;"> 99.00 </span> %</th>
-                        <th>ENERGÍA + PERDIDAD (kWh) = <span style="color: #439d16;"> 99.00 </span> %</th>
-                        <th>COSTO ENERGÍA (Lps) = <span style="color: #439d16;"> 99.00 </span> % </th>
-                        <th>PERDIDAD (Lps) = <span style="color: #439d16;"> 99.00 </span> %</th>
-                        <th>COSTO + PERDIDAD (Lps) = <span style="color: #439d16;"> 99.00 </span> %</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>Rio 1</th>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                    </tr>
-                    <tr>
-                        <th>Rio 1</th>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                    </tr>
-                    <tr>
-                        <th>Rio 1</th>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                    </tr>
-                    <tr>
-                        <th>Rio 1</th>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                    </tr>
-                    <tr>
-                        <th>Rio 1</th>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                    </tr>
-                    <tr>
-                        <th>Rio 1</th>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr class="table-secondary">
-                        <th>TOTAL ENERGIA ACTIVA </th>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                        <td>0.00</td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-    </div>
-    <hr>
-    <div class="container-grafico">
-        <div class="container3">
-            <div>
-                <div class="card">
-                    <div class="card-header" style="background-color: #67c575;">
-                        ENERGÍA SUMISTRADA
-                    </div>
-                    <div class="card-body">
-                        <table class="table  table-sm">
-                            <tbody>
-                                <tr class="table-secondary">
-                                    <th>BECO</th>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th><span style="margin-left: 20px;"> Energía </span></th>
-                                    <td></td>
-                                    <td>0.00 kWh</td>
-                                    <td>Lps. <span style="color: #009bca;"> 0.00 </span></td>
-                                </tr>
-                                <tr>
-                                    <th><span style="margin-left: 20px;"> Energía </span>Demanda</th>
-                                    <td>0.00 kW</td>
-                                    <td></td>
-                                    <td>Lps. <span style="color: #009bca;"> 0.00 </span></td>
-                                </tr>
-                                <tr class="table-secondary">
-                                    <th>ENEE</th>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th><span style="margin-left: 20px;"> Energía </span></th>
-                                    <td></td>
-                                    <td>0.00 kWh</td>
-                                    <td>Lps. 0.00</td>
-                                </tr>
-                                <tr>
-                                    <th><span style="margin-left: 20px;"> Energía </span></th>
-                                    <td>0.00 kW</td>
-                                    <td></td>
-                                    <td>Lps. 0.00</td>
-                                </tr>
-                                <tr>
-                                    <th><span style="margin-left: 20px;"> Otros cargos </span></th>
-                                    <td></td>
-                                    <td></td>
-                                    <td>Lps.<span style="color: #009bca;"> 0.00 </span></td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr class="table-secondary">
-                                    <th>TOTAL </th>
-                                    <td>0.00 kW</td>
-                                    <td>0.00 kWh</td>
-                                    <td>Lps. 0.00</td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div class="containerRow3">
-                <div class="card">
-                    <div class="card-header" style="background-color: #aad6fd; ">
-                        <span style="font-size: 10px;"> RATE ENERGÍA CÁLCULADOS </span>
-                    </div>
-                    <div class="card-body">
-                        <p class="valores">L. 0.00 </p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header" style="background-color: #67c575; ">
-                        <span style="font-size: 10px;"> RATE DEMANDA CÁLCULADA </span>
-                    </div>
-                    <div class="card-body">
-                        <p class="valores">L. 0.00 </p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-header" style="background-color: #d06058; ">
-                        <span style="font-size: 10px;"> RATE OTROS CARGOS CÁLCULADOS </span>
-                    </div>
-                    <div class="card-body">
-                        <p class="valores">L. 0.00 </p>
-                    </div>
-                </div>
-            </div>
 
-            <div>
-                <div class="card">
-                    <div class="card-header" style="background-color: #d06058;">
-                        BALANCE
-                    </div>
-                    <div class="card-body row">
-                        <div class="col">
-                            <p style="text-align: center; font-size: 11px;">BECO/ENEE</p>
-                            <p class="valores"> 0.00 kWh</p>
-                            <p class="valores">Lps. 65,018.00</p>
+<div id="content">
+    <div class="titulo">
+        <img src="assets/Gildan_logo.png" class="logo">
+        <h5> RESUMEN FACTURACIÓN </h5>
+    </div>
+    <div *ngIf="visible">
+        <div class="card" style="width: 100%;">
+            <div class="card-header" style="background-color: #aad6fd;">
+                ENERGÍA CONSUMIDA GILDAN (kWh)
+            </div>
+            <div class="card-body">
+                <table class="table table-striped table-sm">
+                    <thead>
+                        <tr>
+                            <th>PLANTA</th>
+                            <th>ENERGÍA (kWh) = <span style="color: #439d16;"> 99.00 </span> %</th>
+                            <th>PERDIDAD (kWh) = <span style="color: #439d16;"> 99.00 </span> %</th>
+                            <th>ENERGÍA + PERDIDAD (kWh) = <span style="color: #439d16;"> 99.00 </span> %</th>
+                            <th>COSTO ENERGÍA (Lps) = <span style="color: #439d16;"> 99.00 </span> % </th>
+                            <th>PERDIDAD (Lps) = <span style="color: #439d16;"> 99.00 </span> %</th>
+                            <th>COSTO + PERDIDAD (Lps) = <span style="color: #439d16;"> 99.00 </span> %</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let energia of energiaConsumida">
+                            <th> {{ energia.nombrePlanta }} </th>
+                            <td> {{ energia.energiaConsumida | number:'1.2-2':'en_US'}} </td>
+                            <td> {{ energia.perdidas | number:'1.2-2':'en_US'}} </td>
+                            <td> {{ energia.energiaConsumida + energia.perdidas | number:'1.2-2':'en_US'}} </td>
+                            <td> 00.00 </td>
+                            <td> 00.00 </td>
+                            <td style="text-align: right; padding-right: 20px;"> 00.00 </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="table-secondary">
+                            <th>TOTAL ENERGIA ACTIVA </th>
+                            <td *ngFor="let tot of totalesEnergia" style="text-align: right;">{{ tot | number:'1.2-2':'en_US'}}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <hr>
+        <div class="container-grafico">
+            <div class="container3">
+                <div>
+                    <div class="card">
+                        <div class="card-header" style="background-color: #67c575;">
+                            ENERGÍA SUMISTRADA
                         </div>
-                        <div class="col">
-                            <p style="text-align: center; font-size: 11px;">GILDAN</p>
-                            <p class="valores"> 0.00 kWh</p>
-                            <p class="valores">Lps. 65,018.00</p>
+                        <div class="card-body">
+                            <table class="table  table-sm">
+                                <tbody>
+                                    <tr class="table-secondary">
+                                        <th>BECO</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th><span style="margin-left: 20px;"> Energía </span></th>
+                                        <td></td>
+                                        <td> {{ energiaSumistrada[0]?.energia | number:'1.2-2':'en_US'}} kWh</td>
+                                        <td>Lps. <span style="color: #009bca;"> 0.00 </span></td>
+                                    </tr>
+                                    <tr>
+                                        <th><span style="margin-left: 20px;">Demanda </span></th>
+                                        <td>{{ energiaSumistrada[0]?.demanda | number:'1.2-2':'en_US'}} kW</td>
+                                        <td></td>
+                                        <td>Lps. <span style="color: #009bca;"> 0.00 </span></td>
+                                    </tr>
+                                    <tr class="table-secondary">
+                                        <th>ENEE</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th><span style="margin-left: 20px;"> Energía </span></th>
+                                        <td></td>
+                                        <td>{{ energiaSumistrada[1]?.energia | number:'1.2-2':'en_US'}} kWh</td>
+                                        <td>Lps. 0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <th><span style="margin-left: 20px;"> Demanda </span></th>
+                                        <td>{{ energiaSumistrada[1]?.demanda | number:'1.2-2':'en_US'}} kW</td>
+                                        <td></td>
+                                        <td>Lps. 0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <th><span style="margin-left: 20px;"> Otros cargos </span></th>
+                                        <td></td>
+                                        <td></td>
+                                        <td>Lps.<span style="color: #009bca;"> 0.00 </span></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr class="table-secondary">
+                                        <th>TOTAL </th>
+                                        <td>{{ totalDemBECO | number:'1.2-2':'en_US' }} kW</td>
+                                        <td> {{ totalEneBECO | number:'1.2-2':'en_US' }} kWh</td>
+                                        <td>Lps. 0.00</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="containerRow3">
+                    <div class="card">
+                        <div class="card-header" style="background-color: #aad6fd; ">
+                            <span style="font-size: 10px;"> RATE ENERGÍA CÁLCULADOS </span>
+                        </div>
+                        <div class="card-body">
+                            <p class="valores">L. {{ rateEnergia | number:'1.4-4':'en_US' }} </p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" style="background-color: #67c575; ">
+                            <span style="font-size: 10px;"> RATE DEMANDA CÁLCULADA </span>
+                        </div>
+                        <div class="card-body">
+                            <p class="valores">L. {{ rateDemanda | number:'1.4-4':'en_US' }} </p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" style="background-color: #d06058; ">
+                            <span style="font-size: 10px;"> RATE OTROS CARGOS CÁLCULADOS </span>
+                        </div>
+                        <div class="card-body">
+                            <p class="valores">L. {{ rateOtrosCargos | number:'1.4-4':'en_US' }} </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card">
+                        <div class="card-header" style="background-color: #d06058;">
+                            BALANCE
+                        </div>
+                        <div class="card-body row">
+                            <div class="col">
+                                <p style="text-align: center; font-size: 11px;">BECO/ENEE</p>
+                                <p class="valores"> {{ totalEneBECO | number:'1.2-2':'en_US' }} kWh</p>
+                                <p class="valores">Lps. 123.00</p>
+                            </div>
+                            <div class="col">
+                                <p style="text-align: center; font-size: 11px;">GILDAN</p>
+                                <p class="valores"> {{totalesEnergia[2] | number:'1.2-2':'en_US'}} kWh</p>
+                                <p class="valores">Lps. 123.00</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div>
+                <div class="card" style="height: 100%;">
+                    <div class="card-header" style="background-color: #aad6fd;">
+                        COSTOS PLANTAS GILDAN
+                    </div>
+                    <div class="card-body">
+                        <div style="width: 100%; height: 100%;">
+                            <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"></canvas>
                         </div>
                     </div>
                 </div>
 
             </div>
         </div>
-        <div>
-            <div class="card" style="height: 100%;">
-                <div class="card-header" style="background-color: #aad6fd;">
-                    COSTOS PLANTAS GILDAN
-                </div>
-                <div class="card-body">
-                    <div style="width: 100%; height: 100%;">
-                        <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType"></canvas>
-                    </div>
-                </div>
-            </div>
 
-        </div>
     </div>
-
 </div>
+
+
+
+<ngx-spinner bdColor="rgba(187,218,255,0.8)" size="medium" color="#0061aa" type="triangle-skew-spin" [fullScreen]="true">
+    <p style="color: white"> Preparando... </p>
+</ngx-spinner>
