@@ -53,8 +53,9 @@
                 <nz-option nzLabel="Año hasta la fecha" nzValue="5"></nz-option>
                 <nz-option nzLabel="Ultima semana" nzValue="6"></nz-option>
                 <nz-option nzLabel="Ultimas 2 semanas" nzValue="7"></nz-option>
-                <nz-option nzLabel="Ultimo mes" nzValue="8"></nz-option>
-                <nz-option nzLabel="Ultimo año" nzValue="9"></nz-option>
+                <nz-option nzLabel="Este mes" nzValue="8"></nz-option>
+                <nz-option nzLabel="Ultimo mes" nzValue="9"></nz-option>
+                <nz-option nzLabel="Ultimo año" nzValue="10"></nz-option>
             </nz-select>
         </nz-input-group>
         <nz-input-group nzAddOnBefore="Fecha 1" nzSize="small">
@@ -81,183 +82,210 @@
         Imprimir
     </button>
 </div>
-<div class="titulo">
-    <img src="assets/Gildan-Logo.svg" class="logo">
-    <h5> FACTURACIÓN </h5>
-</div>
-<div *ngIf="visible">
-    <p class="titulo-separador"> DATOS DEL CLIENTE </p>
+<div id="content">
+    <div class="titulo">
+        <img src="assets/Gildan_logo.png" class="logo">
+        <h5> FACTURACIÓN </h5>
+    </div>
 
-    <div class="container-datos">
-        <div class="container-info">
-            <div>
-                <p class="nombre-dato"> NOMBRE: </p>
-                <p class="nombre-dato"> NÚMERO DE COMPAÑIA: </p>
-                <p class="nombre-dato"> NÚMERO DE FACTURA: </p>
+    <div *ngIf="visible">
+        <p class="titulo-separador"> DATOS DEL CLIENTE </p>
 
-            </div>
-            <div>
-                <p> <span *ngFor="let pl of plantasOP"> {{ pl.codigo   }}   </span> </p>
-                <p> 54 </p>
-                <p> 00000 </p>
-            </div>
-        </div>
-        <div class="container-info">
-            <div>
-                <p class="nombre-dato"> FECHA EMISIÓN: </p>
-                <p class="nombre-dato"> PERIODO: </p>
-                <p class="nombre-dato"> DÍAS DE FACTURACÓN: </p>
-            </div>
-            <div>
-                <p> {{ fechaDia | date: 'yyyy-MM-dd HH:mm a'}} </p>
-                <p> {{ fecha1 | date: 'yyyy-MM-dd HH:mm a'}} al {{ fecha2 | date: 'yyyy-MM-dd HH:mm a'}}</p>
-                <p> {{ diasPeriodo }} </p>
-            </div>
-        </div>
-        <div>
-            <div style="display: flex; flex-direction: row; justify-content: space-around; background-color: #e2e2e2;">
-                <p class="titulos-datos"> CONSUMO (kWh) </p>
-                <p class="titulos-datos"> MES A FACTURAR </p>
-                <p class="titulos-datos"> TOTAL A PAGAR (L.) </p>
-            </div>
-            <div class="container-consumo">
-                <div style="background-color: #ffcfcf; border-radius: 7%; height:55px; width: 83%; margin: auto;">
-                    <p class="valores"> {{totalConsumo | number:'1.2-2':'en_US'}} </p>
-                </div>
-                <div style="background-color: #ffffc8; border-radius: 7%; height:55px;  width: 83%; margin: auto;">
-                    <p *ngIf="diasPeriodo < 30" class="valores"> {{ fecha2 | date:'MMMM' }} </p>
-                    <p *ngIf="diasPeriodo > 30" class="valores"> {{ fecha1 | date:'MMMM' }} a {{ fecha2 | date:'MMMM' }}
-                    </p>
-                </div>
-                <div style="background-color: #dfffdf; border-radius: 7% ; height:55px;  width: 83%; margin: auto;">
-                    <p class="valores">Lps. {{totalApagar | number:'1.2-2':'en_US'}} </p>
-                </div>
-            </div>
-        </div>
-        <div>
-            <p class="titulos-datos"> DATOS TÉCNICOS </p>
+        <div class="container-datos">
             <div class="container-info">
                 <div>
-                    <p class="nombre-dato"> TARIFA: </p>
-                    <p class="nombre-dato"> TIPO DE CONSUMO: </p>
-                    <p class="nombre-dato"> OFICINA COMERCIAL: </p>
+                    <p class="nombre-dato"> NOMBRE: </p>
+                    <p class="nombre-dato"> NÚMERO DE COMPAÑIA: </p>
+                    <p class="nombre-dato"> NÚMERO DE FACTURA: </p>
+
                 </div>
                 <div>
-                    <p> 401 </p>
-                    <p> INDUSTRIAL </p>
-                    <p> RIO NANCE </p>
+                    <p> <span *ngFor="let pl of plantasOP"> {{ pl.codigo }} </span> </p>
+                    <p> 54 </p>
+                    <p> 00000 </p>
+                </div>
+            </div>
+            <div class="container-info">
+                <div>
+                    <p class="nombre-dato"> FECHA EMISIÓN: </p>
+                    <p class="nombre-dato"> PERIODO: </p>
+                    <p class="nombre-dato"> DÍAS DE FACTURACÓN: </p>
+                </div>
+                <div>
+                    <p> {{ fechaDia | date: 'yyyy-MM-dd HH:mm a'}} </p>
+                    <p> {{ fecha1 | date: 'yyyy-MM-dd HH:mm a'}} al {{ fecha2 | date: 'yyyy-MM-dd HH:mm a'}}</p>
+                    <p> {{ diasPeriodo }} </p>
+                </div>
+            </div>
+            <div>
+                <div style="display: flex; flex-direction: row; justify-content: space-around; background-color: #e2e2e2;">
+                    <p class="titulos-datos"> CONSUMO (kWh) </p>
+                    <p class="titulos-datos"> MES A FACTURAR </p>
+                    <p class="titulos-datos"> TOTAL A PAGAR (L.) </p>
+                </div>
+                <div class="container-consumo">
+                    <div style="background-color: #ffcfcf; border-radius: 7%; height:55px; width: 83%; margin: auto; margin-top: 9px;">
+                        <p style="font-size: 15px;
+                        font-weight: bold;
+                        display: flex;
+                        justify-content: center;
+                        height: 100%;
+                        align-items: center;
+                        color: #af0606;"> {{totalConsumo + calculoConsumo[0]?.perdidas| number:'1.2-2':'en_US'}} </p>
+                    </div>
+                    <div style="background-color: #ffffc8; border-radius: 7%; height:55px;  width: 83%; margin: auto; margin-top: 9px;">
+                        <p *ngIf="diasPeriodo < 30" style="font-size: 15px;
+                        font-weight: bold;
+                        display: flex;
+                        justify-content: center;
+                        height: 100%;
+                        align-items: center;
+                        color: #fa9314;"> {{ fecha2 | date:'MMMM' }} </p>
+                        <p *ngIf="diasPeriodo > 30" style="font-size: 15px;
+                            font-weight: bold;
+                            display: flex;
+                            justify-content: center;
+                            height: 100%;
+                            align-items: center;
+                            color: #fa9314;"> {{ fecha1 | date:'MMMM' }} a {{ fecha2 | date:'MMMM' }}
+                        </p>
+                    </div>
+                    <div style="background-color: #dfffdf; border-radius: 7% ; height:55px;  width: 83%; margin: auto; margin-top: 9px;">
+                        <p style="font-size: 15px;
+                        font-weight: bold;
+                        display: flex;
+                        justify-content: center;
+                        height: 100%;
+                        align-items: center;
+                        color: #007900;">Lps. {{totalApagar | number:'1.2-2':'en_US'}} </p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <p class="titulos-datos"> DATOS TÉCNICOS </p>
+                <div class="container-info">
+                    <div>
+                        <p class="nombre-dato"> TARIFA: </p>
+                        <p class="nombre-dato"> TIPO DE CONSUMO: </p>
+                        <p class="nombre-dato"> OFICINA COMERCIAL: </p>
+                    </div>
+                    <div>
+                        <p> 401 </p>
+                        <p> INDUSTRIAL </p>
+                        <p> RIO NANCE </p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <br>
-    <p class="titulo-separador"> DETALLE DE CONSUMO DE ENERGÍA </p>
-    <div>
-        <table class="table table-sm">
-            <tr style="text-align: center;">
-                <th></th>
-                <th>LECTURA ACTUAL</th>
-                <th>LECTURA ANTERIOR</th>
-                <th></th>
-                <th></th>
-            </tr>
-            <tr style="text-align: center;">
-                <th>MEDIDOR</th>
-                <th> {{ fecha1 | date: 'yyyy-MM-dd HH:mm a'}} </th>
-                <th> {{ fecha1 | date: 'yyyy-MM-dd HH:mm a'}} </th>
-                <th>DIFERENCIA</th>
-                <th>CONSUMO</th>
-            </tr>
-            <tbody>
-                <tr *ngFor="let detalle of detalleConsumo">
-                    <td> {{detalle.medidor}} </td>
-                    <td style="text-align: right;"> {{detalle.lecturaActual | number:'1.2-2':'en_US'}} </td>
-                    <td style="text-align: right;"> {{detalle.lecturaAnterior | number:'1.2-2':'en_US'}} </td>
-                    <td style="text-align: right;"> {{detalle.diferencia | number:'1.2-2':'en_US'}} </td>
-                    <td style="text-align: right;"> {{detalle.consumo | number:'1.2-2':'en_US'}} kWh</td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td style="text-align: right; font-weight: bold;">TOTAL ENERGIA ACTIVA </td>
-                    <td style="text-align: right; font-weight: bold;"> {{totalConsumo | number:'1.2-2':'en_US'}} kWh
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td style="text-align: right; font-weight: bold;"> DEMANDA MÁXIMA PLANTA </td>
-                    <td style="text-align: right; font-weight: bold;"> 0.00 kWh</td>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
-    <p class="titulo-separador"> CÁLCULO DE CONSUMO DE ENERGÍA </p>
-    <br>
-    <div class="container-grafico">
+        <br>
+        <p class="titulo-separador"> DETALLE DE CONSUMO DE ENERGÍA </p>
         <div>
             <table class="table table-sm">
-                <tr>
-                    <th>CARGO</th>
-                    <th> RATE (L.) </th>
-                    <th>CONSUMO (KwH)</th>
-                    <th>TOTAL (L.)</th>
+                <tr style="text-align: center;">
+                    <th></th>
+                    <th>LECTURA ACTUAL</th>
+                    <th>LECTURA ANTERIOR</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr style="text-align: center;">
+                    <th>MEDIDOR</th>
+                    <th> {{ fecha2 | date: 'yyyy-MM-dd HH:mm a'}} </th>
+                    <th> {{ fecha1 | date: 'yyyy-MM-dd HH:mm a'}} </th>
+                    <th>DIFERENCIA</th>
+                    <th>CONSUMO</th>
                 </tr>
                 <tbody>
-                    <tr>
-                        <td>ENERGÍA ACTIVA</td>
-                        <td></td>
-                        <td>{{totalConsumo | number:'1.2-2':'en_US'}} </td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>PERDIDAS</td>
-                        <td></td>
-                        <td> {{calculoConsumo[0]?.perdidas | number:'1.2-2':'en_US'}} </td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>COSTO ENERGIA</td>
-                        <td>{{calculoConsumo[0]?.rateConsumoEnergia | number:'1.2-2':'en_US'}}</td>
-                        <td></td>
-                        <td>{{calculoConsumo[0]?.rateConsumoEnergia * totalConsumo | number:'1.2-2':'en_US'}}</td>
-                    </tr>
-                    <tr>
-                        <td>DEMANDA</td>
-                        <td>{{calculoConsumo[0]?.rateDemanda | number:'1.2-2':'en_US'}}</td>
-                        <td></td>
-                        <td>{{calculoConsumo[0]?.totalDemanda | number:'1.2-2':'en_US'}}</td>
-                    </tr>
-                    <tr>
-                        <td>OTROS CARGOS/CRÉDITOS</td>
-                        <td>{{calculoConsumo[0]?.rateOtrosCargos | number:'1.2-2':'en_US'}}</td>
-                        <td></td>
-                        <td>{{calculoConsumo[0]?.totalOtrosCargos | number:'1.2-2':'en_US'}}</td>
+                    <tr *ngFor="let detalle of detalleConsumo">
+                        <td style="width: 30%;"> {{detalle.medidor}} </td>
+                        <td style="text-align: right;"> {{detalle.lecturaActual | number:'1.2-2':'en_US'}} </td>
+                        <td style="text-align: right;"> {{detalle.lecturaAnterior | number:'1.2-2':'en_US'}} </td>
+                        <td style="text-align: right;"> {{detalle.diferencia | number:'1.2-2':'en_US'}} </td>
+                        <td style="text-align: right; padding-right: 20px;"> {{detalle.consumo | number:'1.2-2':'en_US'}} kWh</td>
                     </tr>
                 </tbody>
                 <tfoot>
-                    <tr>
-                        <th>TOTAL A PAGAR</th>
-                        <th></th>
-                        <th> {{ totalConsumo | number:'1.2-2':'en_US'}} kWh</th>
-                        <th> L. {{ totalApagar | number:'1.2-2':'en_US'}}</th>
+                    <tr style="background-color: #e2e2e2; text-align: right; font-weight: bold;">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>TOTAL ENERGIA ACTIVA </td>
+                        <td style="text-align: right; padding-right: 20px;"> {{totalConsumo | number:'1.2-2':'en_US'}} kWh
+                        </td>
+                    </tr>
+                    <tr style="background-color: #e2e2e2; text-align: right; font-weight: bold;">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td> DEMANDA MÁXIMA PLANTA </td>
+                        <td style="text-align: right; padding-right: 20px;"> 0.00 kWh</td>
                     </tr>
                 </tfoot>
             </table>
         </div>
-        <div style="display: block;
-        width: 555px;
-        height: 313px;">
-            <canvas baseChart [datasets]="ChartData" [labels]="ChartLabels" [options]="ChartOptions" [legend]="ChartLegend" [chartType]="ChartType">
-            </canvas>
+        <p class="titulo-separador"> CÁLCULO DE CONSUMO DE ENERGÍA </p>
+        <br>
+        <div class="container-grafico">
+            <div style="height: 100%; display: flex; align-items: center;">
+                <table class="table table-sm">
+                    <tr style="height: 50px;">
+                        <th>CARGO</th>
+                        <th style="text-align: right;"> RATE (L.) </th>
+                        <th style="text-align: right;">CONSUMO (KwH)</th>
+                        <th style="text-align: right;">TOTAL (L.)</th>
+                    </tr>
+                    <tbody>
+                        <tr>
+                            <td>ENERGÍA ACTIVA</td>
+                            <td></td>
+                            <td style="text-align: right;">{{totalConsumo | number:'1.2-2':'en_US'}} </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>PÉRDIDAS</td>
+                            <td></td>
+                            <td style="text-align: right;"> {{calculoConsumo[0]?.perdidas | number:'1.2-2':'en_US'}} </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>COSTO ENERGIA</td>
+                            <td style="text-align: right;">{{calculoConsumo[0]?.rateConsumoEnergia | number:'1.4-4':'en_US'}}</td>
+                            <td></td>
+                            <td style="text-align: right;">{{calculoConsumo[0]?.rateConsumoEnergia * totalConsumo | number:'1.2-2':'en_US'}}</td>
+                        </tr>
+                        <tr>
+                            <td>DEMANDA</td>
+                            <td style="text-align: right;">{{calculoConsumo[0]?.rateDemanda | number:'1.4-4':'en_US'}}</td>
+                            <td></td>
+                            <td style="text-align: right;">{{calculoConsumo[0]?.totalDemanda | number:'1.2-2':'en_US'}}</td>
+                        </tr>
+                        <tr>
+                            <td>OTROS CARGOS/CRÉDITOS</td>
+                            <td style="text-align: right;">{{calculoConsumo[0]?.rateOtrosCargos | number:'1.4-4':'en_US'}}</td>
+                            <td></td>
+                            <td style="text-align: right;">{{calculoConsumo[0]?.totalOtrosCargos | number:'1.2-2':'en_US'}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th style="text-align: right;">TOTAL A PAGAR</th>
+                            <th></th>
+                            <th style="text-align: right;"> {{ totalConsumo + calculoConsumo[0]?.perdidas | number:'1.2-2':'en_US'}} kWh</th>
+                            <th style="text-align: right;"> L. {{ totalApagar | number:'1.2-2':'en_US'}}</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div style="display: block;
+            width: 555px;
+            height: 313px;">
+                <canvas baseChart [datasets]="ChartData" [labels]="ChartLabels" [options]="ChartOptions" [legend]="ChartLegend" [chartType]="ChartType">
+                </canvas>
+            </div>
         </div>
     </div>
 </div>
 
 <ngx-spinner bdColor="rgba(187,218,255,0.8)" size="medium" color="#0061aa" type="triangle-skew-spin" [fullScreen]="true">
-    <p style="color: white"> Cargando datos... </p>
+    <p style="color: white"> Preparando... </p>
 </ngx-spinner>
