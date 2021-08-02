@@ -53,7 +53,6 @@ nz-select {
     grid-auto-flow: row;
     grid-template-areas: ". .";
     background-color: #f9f9f9;
-    margin-left: 10px;
 }
 
 .container-consumo {

@@ -72,8 +72,8 @@ export class FacturaComponent implements OnInit {
   plantas: any[] = [];
   medidores: any[] = [];
   tiempo: string = '';
-  fecha1: Date = new Date;
-  fecha2: Date = new Date;
+  fecha1: any = new Date;
+  fecha2: any = new Date;
   listMedidores: any[] = [];
   medidoresPlanta: MedidorPlanta[] = [];
   plantasOP: any[] = [];
@@ -163,6 +163,77 @@ export class FacturaComponent implements OnInit {
   mostrar(): void {
     this.spinner.show();
     this.dataExport = [];
+
+    switch (this.tiempo) {
+      case '1': {
+        console.log(moment().startOf('day').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
+        this.fecha1 = moment().startOf('day').format('YYYY-MM-DD HH:mm');
+        this.fecha2 = moment().format('YYYY-MM-DD HH:mm');
+
+        break;
+      }
+      case '2': {
+        console.log(moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm'), moment().add(-1, 'day').endOf('day').format('YYYY-MM-DD HH:mm'));
+        this.fecha1 = moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
+        this.fecha2 = moment().add(-1, 'day').endOf('day').format('YYYY-MM-DD HH:mm');
+
+        break;
+      }
+      case '3': {
+        console.log(moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
+        this.fecha1 = moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
+        this.fecha2 = moment().format('YYYY-MM-DD HH:mm')
+        break;
+      }
+      case '4': {
+        console.log(moment(moment().startOf('week')).add(1, 'day').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
+        this.fecha1 = moment(moment().startOf('week')).add(1, 'day').format('YYYY-MM-DD HH:mm');
+        this.fecha2 = moment().format('YYYY-MM-DD HH:mm');
+        break;
+      }
+      case '5': {
+        console.log(moment().startOf('year').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
+        this.fecha1 = moment().startOf('year').format('YYYY-MM-DD HH:mm');
+        this.fecha2 = moment().format('YYYY-MM-DD HH:mm');
+        break;
+      }
+      case '6': {
+        console.log(moment(moment().startOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
+        console.log(moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
+        this.fecha1 = moment(moment().startOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm')
+        this.fecha2 = moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm')
+        break;
+      }
+      case '7': {
+        console.log(moment(moment().startOf('week').subtract(2, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
+        console.log(moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
+        this.fecha1 = moment(moment().startOf('week').subtract(2, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm');
+        this.fecha2 = moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm');
+        break;
+      }
+      case '8': {
+        console.log(moment().startOf('month').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
+        this.fecha1 = moment().startOf('month').format('YYYY-MM-DD HH:mm');
+        this.fecha2 = moment().format('YYYY-MM-DD HH:mm');
+        break;
+      }
+      case '9': {
+        console.log(moment(moment().startOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm'));
+        console.log(moment(moment().endOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm'));
+        this.fecha1 = moment(moment().startOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm');
+        this.fecha2 = moment(moment().endOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm');
+        break;
+      }
+      case '10': {
+        console.log(moment(moment().startOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm'));
+        console.log(moment(moment().endOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm'));
+        this.fecha1 = moment(moment().startOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm');
+        this.fecha2 = moment(moment().endOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm');
+        break;
+      }
+      default:
+        break;
+    }
 
     this.serviceFactura.getDatosFactura(
       this.fecha1.toISOString(),

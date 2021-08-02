@@ -53,8 +53,9 @@
                 <nz-option nzLabel="Año hasta la fecha" nzValue="5"></nz-option>
                 <nz-option nzLabel="Ultima semana" nzValue="6"></nz-option>
                 <nz-option nzLabel="Ultimas 2 semanas" nzValue="7"></nz-option>
-                <nz-option nzLabel="Ultimo mes" nzValue="8"></nz-option>
-                <nz-option nzLabel="Ultimo año" nzValue="9"></nz-option>
+                <nz-option nzLabel="Este mes" nzValue="8"></nz-option>
+                <nz-option nzLabel="Ultimo mes" nzValue="9"></nz-option>
+                <nz-option nzLabel="Ultimo año" nzValue="10"></nz-option>
             </nz-select>
         </nz-input-group>
         <nz-input-group nzAddOnBefore="Fecha 1" nzSize="small">
@@ -189,7 +190,7 @@
                 </tr>
                 <tr style="text-align: center;">
                     <th>MEDIDOR</th>
-                    <th> {{ fecha1 | date: 'yyyy-MM-dd HH:mm a'}} </th>
+                    <th> {{ fecha2 | date: 'yyyy-MM-dd HH:mm a'}} </th>
                     <th> {{ fecha1 | date: 'yyyy-MM-dd HH:mm a'}} </th>
                     <th>DIFERENCIA</th>
                     <th>CONSUMO</th>
@@ -229,9 +230,9 @@
                 <table class="table table-sm">
                     <tr style="height: 50px;">
                         <th>CARGO</th>
-                        <th> RATE (L.) </th>
-                        <th>CONSUMO (KwH)</th>
-                        <th>TOTAL (L.)</th>
+                        <th style="text-align: right;"> RATE (L.) </th>
+                        <th style="text-align: right;">CONSUMO (KwH)</th>
+                        <th style="text-align: right;">TOTAL (L.)</th>
                     </tr>
                     <tbody>
                         <tr>
@@ -241,7 +242,7 @@
                             <td></td>
                         </tr>
                         <tr>
-                            <td>PERDIDAS</td>
+                            <td>PÉRDIDAS</td>
                             <td></td>
                             <td style="text-align: right;"> {{calculoConsumo[0]?.perdidas | number:'1.2-2':'en_US'}} </td>
                             <td></td>
