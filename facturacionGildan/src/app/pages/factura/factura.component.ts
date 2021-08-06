@@ -242,9 +242,11 @@ export class FacturaComponent implements OnInit {
     )
       .toPromise()
       .then((data: any) => {
+        console.log(this.fecha1, this.fecha2);
+
         this.diasPeriodo = moment(this.fecha2).diff(moment(this.fecha1), 'days');
 
-        console.log(data);
+        console.log(this.diasPeriodo);
         this.detalleConsumo = data[0];
         this.calculoConsumo = data[1];
         this.historicoConsumo = [...data[2]];
