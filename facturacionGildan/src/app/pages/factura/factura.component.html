@@ -134,14 +134,14 @@
                         color: #af0606;"> {{totalConsumo + calculoConsumo[0]?.perdidas | number:'1.2-2':'en_US'}} </p>
                     </div>
                     <div style="background-color: #ffffc8; border-radius: 7%; height:55px;  width: 83%; margin: auto; margin-top: 9px;">
-                        <p *ngIf="diasPeriodo < 30" style="font-size: 15px;
+                        <p *ngIf="diasPeriodo <= 31" style="font-size: 15px;
                         font-weight: bold;
                         display: flex;
                         justify-content: center;
                         height: 100%;
                         align-items: center;
                         color: #fa9314;"> {{ fecha2 | date:'MMMM' }} </p>
-                        <p *ngIf="diasPeriodo > 30" style="font-size: 15px;
+                        <p *ngIf="diasPeriodo > 31" style="font-size: 15px;
                             font-weight: bold;
                             display: flex;
                             justify-content: center;
