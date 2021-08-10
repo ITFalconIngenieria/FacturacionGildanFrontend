@@ -7,6 +7,7 @@ import * as moment from 'moment';
 moment.locale('es');
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 interface MedidorPlanta {
   id: number;
@@ -90,9 +91,13 @@ export class FacturaComponent implements OnInit {
     private servicePlanta: PlantasService,
     private serviceMedidor: MedidorService,
     private serviceFactura: FacturaService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private message: NzMessageService
   ) { }
 
+  createMessage(): void {
+    this.message.create('error', `No se puedo extraer los datos para factura`);
+  }
 
   ngOnInit(): void {
 
@@ -231,13 +236,17 @@ export class FacturaComponent implements OnInit {
         this.fecha2 = moment(moment().endOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm');
         break;
       }
-      default:
+      default: {
+
         break;
+      }
     }
 
+    console.log(this.medidores);
+    
     this.serviceFactura.getDatosFactura(
-      this.fecha1.toISOString(),
-      this.fecha2.toISOString(),
+      new Date(moment(this.fecha1).format()).toISOString(),
+      new Date(moment(this.fecha2).format()).toISOString(),
       this.medidores
     )
       .toPromise()
@@ -246,7 +255,6 @@ export class FacturaComponent implements OnInit {
 
         this.diasPeriodo = moment(this.fecha2).diff(moment(this.fecha1), 'days');
 
-        console.log(this.diasPeriodo);
         this.detalleConsumo = data[0];
         this.calculoConsumo = data[1];
         this.historicoConsumo = [...data[2]];
@@ -383,7 +391,7 @@ export class FacturaComponent implements OnInit {
       },
         (error) => {
           console.log(error);
-
+          this.createMessage();
           this.visible = false;
           this.spinner.hide();
         });
