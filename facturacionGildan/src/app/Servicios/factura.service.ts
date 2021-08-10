@@ -21,6 +21,8 @@ export class FacturaService {
   }
 
   getDatosFactura(fechai: any, fechaf: any, medidores: any[]): Observable<any> {
+    console.log(`${apiUrl}/detalleConsumoEnergia/?fechai=${fechai}&fechaf=${fechaf}`);
+    
     return forkJoin(
       this.http.post(`${apiUrl}/detalleConsumoEnergia/?fechai=${fechai}&fechaf=${fechaf}`, medidores),
       this.http.post(`${apiUrl}/calculoConsumoEnergia/?fechai=${fechai}&fechaf=${fechaf}`, medidores),
