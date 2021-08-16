@@ -44,8 +44,9 @@
         </nz-input-group>
     </div>
     <div class="filtros">
+        <h6>Tiempo a facturar</h6>
         <nz-input-group nzAddOnBefore="Rango tiempo" nzSize="small">
-            <nz-select nzSize="small" [(ngModel)]="tiempo">
+            <nz-select nzSize="small" [(ngModel)]="tiempo" (ngModelChange)="changeFecha($event)">
                 <nz-option nzLabel="Hoy" nzValue="1"></nz-option>
                 <nz-option nzLabel="Ayer" nzValue="2"></nz-option>
                 <nz-option nzLabel="Desde ayer" nzValue="3"></nz-option>
@@ -56,16 +57,13 @@
                 <nz-option nzLabel="Este mes" nzValue="8"></nz-option>
                 <nz-option nzLabel="Ultimo mes" nzValue="9"></nz-option>
                 <nz-option nzLabel="Ultimo año" nzValue="10"></nz-option>
+                <nz-option nzLabel="Rango de fecha" nzValue="11"></nz-option>
             </nz-select>
         </nz-input-group>
-        <nz-input-group nzAddOnBefore="Fecha 1" nzSize="small">
-            <nz-date-picker nzFormat="yyyy-MM-dd HH:mm:ss" nzShowTime nzSize="small" [(ngModel)]="fecha1">
-            </nz-date-picker>
+        <nz-input-group nzAddOnBefore="Fechas" nzSize="small">
+            <nz-range-picker [nzShowTime]="true" [disabled]="habilitarfecha" [(ngModel)]="fechas" nzFormat="yyyy-MM-dd HH:mm" nzSize="small"></nz-range-picker>
         </nz-input-group>
-        <nz-input-group nzAddOnBefore="Fecha 2" nzSize="small">
-            <nz-date-picker nzFormat="yyyy-MM-dd HH:mm:ss" nzShowTime nzSize="small" [(ngModel)]="fecha2">
-            </nz-date-picker>
-        </nz-input-group>
+
     </div>
 </div>
 <div class="botones">
@@ -113,7 +111,7 @@
                 </div>
                 <div>
                     <p> {{ fechaDia | date: 'yyyy-MM-dd HH:mm a'}} </p>
-                    <p> {{ fecha1 | date: 'yyyy-MM-dd HH:mm a'}} al {{ fecha2 | date: 'yyyy-MM-dd HH:mm a'}}</p>
+                    <p> {{ fechaInicio | date: 'yyyy-MM-dd HH:mm a'}} al {{ fechaFin | date: 'yyyy-MM-dd HH:mm a'}}</p>
                     <p> {{ diasPeriodo }} </p>
                 </div>
             </div>
@@ -140,14 +138,14 @@
                         justify-content: center;
                         height: 100%;
                         align-items: center;
-                        color: #fa9314;"> {{ fecha2 | date:'MMMM' }} </p>
+                        color: #fa9314;"> {{ fechaFin | date:'MMMM' }} </p>
                         <p *ngIf="diasPeriodo > 31" style="font-size: 15px;
                             font-weight: bold;
                             display: flex;
                             justify-content: center;
                             height: 100%;
                             align-items: center;
-                            color: #fa9314;"> {{ fecha1 | date:'MMMM' }} a {{ fecha2 | date:'MMMM' }}
+                            color: #fa9314;"> {{ fechaInicio | date:'MMMM' }} a {{ fechaFin | date:'MMMM' }}
                         </p>
                     </div>
                     <div style="background-color: #dfffdf; border-radius: 7% ; height:55px;  width: 83%; margin: auto; margin-top: 9px;">
@@ -190,8 +188,8 @@
                 </tr>
                 <tr style="text-align: center;">
                     <th>MEDIDOR</th>
-                    <th> {{ fecha2 | date: 'yyyy-MM-dd HH:mm a'}} </th>
-                    <th> {{ fecha1 | date: 'yyyy-MM-dd HH:mm a'}} </th>
+                    <th> {{ fechaFin | date: 'yyyy-MM-dd HH:mm a'}} </th>
+                    <th> {{ fechaInicio | date: 'yyyy-MM-dd HH:mm a'}} </th>
                     <th>DIFERENCIA</th>
                     <th>CONSUMO</th>
                 </tr>
