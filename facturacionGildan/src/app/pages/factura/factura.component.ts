@@ -8,6 +8,7 @@ moment.locale('es');
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 interface MedidorPlanta {
   id: number;
@@ -73,8 +74,6 @@ export class FacturaComponent implements OnInit {
   plantas: any[] = [];
   medidores: any[] = [];
   tiempo: string = '';
-  fecha1: any = new Date;
-  fecha2: any = new Date;
   listMedidores: any[] = [];
   medidoresPlanta: MedidorPlanta[] = [];
   plantasOP: any[] = [];
@@ -86,13 +85,18 @@ export class FacturaComponent implements OnInit {
   totalApagar: number = 0;
   totalConsumo: number = 0;
   dataExport: any[] = [];
+  habilitarfecha: boolean = true;
+  fechaInicio: any;
+  fechaFin: any;
+  fechas: any = null;
 
   constructor(
     private servicePlanta: PlantasService,
     private serviceMedidor: MedidorService,
     private serviceFactura: FacturaService,
     private spinner: NgxSpinnerService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private notification: NzNotificationService
   ) { }
 
   createMessage(): void {
@@ -165,236 +169,261 @@ export class FacturaComponent implements OnInit {
 
   }
 
+  createNotification(): void {
+    this.notification.create(
+      'warning',
+      'Falla en generación de datos',
+      'Debe seleccionar todos los parámetros requeridos'
+    );
+
+  }
+
   mostrar(): void {
     this.spinner.show();
     this.dataExport = [];
-
-    switch (this.tiempo) {
-      case '1': {
-        console.log(moment().startOf('day').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
-        this.fecha1 = moment().startOf('day').format('YYYY-MM-DD HH:mm');
-        this.fecha2 = moment().format('YYYY-MM-DD HH:mm');
-
-        break;
-      }
-      case '2': {
-        console.log(moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm'), moment().add(-1, 'day').endOf('day').format('YYYY-MM-DD HH:mm'));
-        this.fecha1 = moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
-        this.fecha2 = moment().add(-1, 'day').endOf('day').format('YYYY-MM-DD HH:mm');
-
-        break;
-      }
-      case '3': {
-        console.log(moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
-        this.fecha1 = moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
-        this.fecha2 = moment().format('YYYY-MM-DD HH:mm')
-        break;
-      }
-      case '4': {
-        console.log(moment(moment().startOf('week')).add(1, 'day').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
-        this.fecha1 = moment(moment().startOf('week')).add(1, 'day').format('YYYY-MM-DD HH:mm');
-        this.fecha2 = moment().format('YYYY-MM-DD HH:mm');
-        break;
-      }
-      case '5': {
-        console.log(moment().startOf('year').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
-        this.fecha1 = moment().startOf('year').format('YYYY-MM-DD HH:mm');
-        this.fecha2 = moment().format('YYYY-MM-DD HH:mm');
-        break;
-      }
-      case '6': {
-        console.log(moment(moment().startOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
-        console.log(moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
-        this.fecha1 = moment(moment().startOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm')
-        this.fecha2 = moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm')
-        break;
-      }
-      case '7': {
-        console.log(moment(moment().startOf('week').subtract(2, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
-        console.log(moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
-        this.fecha1 = moment(moment().startOf('week').subtract(2, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm');
-        this.fecha2 = moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm');
-        break;
-      }
-      case '8': {
-        console.log(moment().startOf('month').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
-        this.fecha1 = moment().startOf('month').format('YYYY-MM-DD HH:mm');
-        this.fecha2 = moment().format('YYYY-MM-DD HH:mm');
-        break;
-      }
-      case '9': {
-        console.log(moment(moment().startOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm'));
-        console.log(moment(moment().endOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm'));
-        this.fecha1 = moment(moment().startOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm');
-        this.fecha2 = moment(moment().endOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm');
-        break;
-      }
-      case '10': {
-        console.log(moment(moment().startOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm'));
-        console.log(moment(moment().endOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm'));
-        this.fecha1 = moment(moment().startOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm');
-        this.fecha2 = moment(moment().endOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm');
-        break;
-      }
-      default: {
-
-        break;
-      }
-    }
-
-    console.log(this.medidores);
+    console.log(this.tiempo);
     
-    this.serviceFactura.getDatosFactura(
-      new Date(moment(this.fecha1).format()).toISOString(),
-      new Date(moment(this.fecha2).format()).toISOString(),
-      this.medidores
-    )
-      .toPromise()
-      .then((data: any) => {
-        console.log(this.fecha1, this.fecha2);
 
-        this.diasPeriodo = moment(this.fecha2).diff(moment(this.fecha1), 'days');
+    if ((this.fechas == null && this.tiempo == '11') || this.medidores.length == 0 || this.tiempo == '') {
+      this.createNotification();
+      this.spinner.hide();
 
-        this.detalleConsumo = data[0];
-        this.calculoConsumo = data[1];
-        this.historicoConsumo = [...data[2]];
+    } else {
 
-        this.detalleConsumo.forEach(y => {
-          this.totalConsumo += y.consumo;
-        });
+      switch (this.tiempo) {
+        case '1': {
+          console.log(moment().startOf('day').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
+          this.fechaInicio = moment().startOf('day').format('YYYY-MM-DD HH:mm');
+          this.fechaFin = moment().format('YYYY-MM-DD HH:mm');
 
-        this.ChartLabels = [...this.historicoConsumo.map(m => moment(m.fecha).format('MMMM'))].reverse();
-        this.ChartData = [
-          {
-            data: [...this.historicoConsumo.map(v => v.energiaActiva)].reverse(),
-            label: 'kWh',
-            type: 'bar',
-            backgroundColor: ['#4799dc', '#4799dc', '#4799dc', '#4799dc', '#4799dc', '#4799dc', '#fa4646'],
-            borderColor: '#003d6f',
-            yAxisID: 'A'
-          },
-          {
-            data: [...this.historicoConsumo.map(v => v.demanda)].reverse(),
-            label: 'kW',
-            type: 'line',
-            backgroundColor: '#ffcfcfb6',
-            borderColor: '#f50b0b',
-            yAxisID: 'B',
-          }
-        ];
+          break;
+        }
+        case '2': {
+          console.log(moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm'), moment().add(-1, 'day').endOf('day').format('YYYY-MM-DD HH:mm'));
+          this.fechaInicio = moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
+          this.fechaFin = moment().add(-1, 'day').endOf('day').format('YYYY-MM-DD HH:mm');
 
-        // tslint:disable-next-line: max-line-length
-        this.totalApagar = (this.totalConsumo * this.calculoConsumo[0].rateConsumoEnergia) + this.calculoConsumo[0].totalOtrosCargos + this.calculoConsumo[0].totalDemanda;
-        this.dataExport = [
-          {
-            ' ': 'Medidor',
-            'LECTURA ACTUAL': moment(this.fecha1).format('YYYY-MM-DD HH:mm a'),
-            'LECTURA ANTERIOR': moment(this.fecha2).format('YYYY-MM-DD HH:mm a'),
-            '  ': 'Diferencia',
-            '   ': 'Consumo',
-          }];
+          break;
+        }
+        case '3': {
+          console.log(moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
+          this.fechaInicio = moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
+          this.fechaFin = moment().format('YYYY-MM-DD HH:mm')
+          break;
+        }
+        case '4': {
+          console.log(moment(moment().startOf('week')).add(1, 'day').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
+          this.fechaInicio = moment(moment().startOf('week')).add(1, 'day').format('YYYY-MM-DD HH:mm');
+          this.fechaFin = moment().format('YYYY-MM-DD HH:mm');
+          break;
+        }
+        case '5': {
+          console.log(moment().startOf('year').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
+          this.fechaInicio = moment().startOf('year').format('YYYY-MM-DD HH:mm');
+          this.fechaFin = moment().format('YYYY-MM-DD HH:mm');
+          break;
+        }
+        case '6': {
+          console.log(moment(moment().startOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
+          console.log(moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
+          this.fechaInicio = moment(moment().startOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm')
+          this.fechaFin = moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm')
+          break;
+        }
+        case '7': {
+          console.log(moment(moment().startOf('week').subtract(2, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
+          console.log(moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
+          this.fechaInicio = moment(moment().startOf('week').subtract(2, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm');
+          this.fechaFin = moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm');
+          break;
+        }
+        case '8': {
+          console.log(moment().startOf('month').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
+          this.fechaInicio = moment().startOf('month').format('YYYY-MM-DD HH:mm');
+          this.fechaFin = moment().format('YYYY-MM-DD HH:mm');
+          break;
+        }
+        case '9': {
+          console.log(moment(moment().startOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm'));
+          console.log(moment(moment().endOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm'));
+          this.fechaInicio = moment(moment().startOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm');
+          this.fechaFin = moment(moment().endOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm');
+          break;
+        }
+        case '10': {
+          console.log(moment(moment().startOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm'));
+          console.log(moment(moment().endOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm'));
+          this.fechaInicio = moment(moment().startOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm');
+          this.fechaFin = moment(moment().endOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm');
+          break;
+        }
+        case '11': {
+          this.fechaInicio = this.fechas[0];
+          this.fechaFin = this.fechas[1];
 
-        this.detalleConsumo.forEach(m => {
+          break;
+        }
+        default: {
+          this.fechaInicio = this.fechas[0];
+          this.fechaFin = this.fechas[1];
+
+          break;
+        }
+      }
+
+      this.serviceFactura.getDatosFactura(
+        new Date(moment(this.fechaInicio).subtract(12,'hours').format()).toISOString(),
+        new Date(moment(this.fechaFin).subtract(12,'hours').format()).toISOString(),
+        this.medidores
+      )
+        .toPromise()
+        .then((data: any) => {
+
+          console.log(data);
+
+          this.diasPeriodo = moment(this.fechaFin).diff(moment(this.fechaInicio), 'days');
+
+          this.detalleConsumo = data[0];
+          this.calculoConsumo = data[1];
+          this.historicoConsumo = [...data[2]];
+
+          this.detalleConsumo.forEach(y => {
+            this.totalConsumo += y.consumo;
+          });
+
+          this.ChartLabels = [...this.historicoConsumo.map(m => moment(m.fecha).format('MMMM'))].reverse();
+          this.ChartData = [
+            {
+              data: [...this.historicoConsumo.map(v => v.energiaActiva)].reverse(),
+              label: 'kWh',
+              type: 'bar',
+              backgroundColor: ['#4799dc', '#4799dc', '#4799dc', '#4799dc', '#4799dc', '#4799dc', '#fa4646'],
+              borderColor: '#003d6f',
+              yAxisID: 'A'
+            },
+            {
+              data: [...this.historicoConsumo.map(v => v.demanda)].reverse(),
+              label: 'kW',
+              type: 'line',
+              backgroundColor: '#ffcfcfb6',
+              borderColor: '#f50b0b',
+              yAxisID: 'B',
+            }
+          ];
+
+          // tslint:disable-next-line: max-line-length
+          this.totalApagar = (this.totalConsumo * this.calculoConsumo[0].rateConsumoEnergia) + this.calculoConsumo[0].totalOtrosCargos + this.calculoConsumo[0].totalDemanda;
+          this.dataExport = [
+            {
+              ' ': 'Medidor',
+              'LECTURA ACTUAL': moment(this.fechas[0]).format('YYYY-MM-DD HH:mm a'),
+              'LECTURA ANTERIOR': moment(this.fechas[1]).format('YYYY-MM-DD HH:mm a'),
+              '  ': 'Diferencia',
+              '   ': 'Consumo',
+            }];
+
+          this.detalleConsumo.forEach(m => {
+            this.dataExport = [...this.dataExport,
+            {
+              ' ': m.medidor,
+              // tslint:disable-next-line: max-line-length
+              'LECTURA ACTUAL': this.formatearNumber(m.lecturaActual),
+              // tslint:disable-next-line: max-line-length
+              'LECTURA ANTERIOR': this.formatearNumber(m.lecturaAnterior),
+              '  ': this.formatearNumber(m.diferencia),
+              '   ': this.formatearNumber(m.consumo),
+            }];
+          });
+
           this.dataExport = [...this.dataExport,
           {
-            ' ': m.medidor,
+            ' ': '',
+            'LECTURA ACTUAL': '',
+            'LECTURA ANTERIOR': '',
+            '  ': 'TOTAL ENERGIA ACTIVA',
+            '   ': this.formatearNumber(this.totalConsumo),
+          },
+          {
+            ' ': '',
+            'LECTURA ACTUAL': '',
+            'LECTURA ANTERIOR': '',
+            '  ': 'TOTAL ENERGIA ACTIVA',
+            '   ': this.formatearNumber(1234),
+          },
+          {
+            ' ': '',
+            'LECTURA ACTUAL': '',
+            'LECTURA ANTERIOR': '',
+            '  ': '',
+            '   ': '',
+          },
+          {
+            ' ': 'CARGO',
+            'LECTURA ACTUAL': 'RATE (L.)',
+            'LECTURA ANTERIOR': 'CONSUMO (KwH)',
+            '  ': 'TOTAL (L.)',
+            '   ': '',
+          },
+          {
+            ' ': 'ENERGÍA ACTIVA',
+            'LECTURA ACTUAL': '',
+            'LECTURA ANTERIOR': this.formatearNumber(this.totalConsumo),
+            '  ': '',
+            '   ': '',
+          },
+          {
+            ' ': 'PERDIDAS',
+            'LECTURA ACTUAL': '',
+            'LECTURA ANTERIOR': this.formatearNumber(this.calculoConsumo[0].perdidas),
+            '  ': '',
+            '   ': '',
+          },
+          {
+            ' ': 'COSTO ENERGIA',
             // tslint:disable-next-line: max-line-length
-            'LECTURA ACTUAL': this.formatearNumber(m.lecturaActual),
+            'LECTURA ACTUAL': new Intl.NumberFormat('en-us', { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(this.calculoConsumo[0].rateConsumoEnergia),
+            'LECTURA ANTERIOR': '',
+            '  ': this.formatearNumber(this.calculoConsumo[0].rateConsumoEnergia * this.totalConsumo),
+            '   ': '',
+          },
+          {
+            ' ': 'DEMANDA',
             // tslint:disable-next-line: max-line-length
-            'LECTURA ANTERIOR': this.formatearNumber(m.lecturaAnterior),
-            '  ': this.formatearNumber(m.diferencia),
-            '   ': this.formatearNumber(m.consumo),
-          }];
-        });
+            'LECTURA ACTUAL': new Intl.NumberFormat('en-us', { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(this.calculoConsumo[0].rateDemanda),
+            'LECTURA ANTERIOR': '',
+            '  ': this.formatearNumber(this.calculoConsumo[0].totalDemanda),
+            '   ': '',
+          },
+          {
+            ' ': 'OTROS CARGOS/CRÉDITOS',
+            // tslint:disable-next-line: max-line-length
+            'LECTURA ACTUAL': new Intl.NumberFormat('en-us', { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(this.calculoConsumo[0].rateOtrosCargos),
+            'LECTURA ANTERIOR': '',
+            '  ': this.formatearNumber(this.calculoConsumo[0].totalOtrosCargos),
+            '   ': ''
+          },
+          {
+            ' ': 'TOTAL A PAGAR',
+            'LECTURA ACTUAL': '',
+            'LECTURA ANTERIOR': this.formatearNumber(this.totalConsumo + this.calculoConsumo[0]?.perdidas),
+            '  ': this.formatearNumber(this.totalApagar),
+            '   ': ''
+          },
+          ];
 
-        this.dataExport = [...this.dataExport,
-        {
-          ' ': '',
-          'LECTURA ACTUAL': '',
-          'LECTURA ANTERIOR': '',
-          '  ': 'TOTAL ENERGIA ACTIVA',
-          '   ': this.formatearNumber(this.totalConsumo),
-        },
-        {
-          ' ': '',
-          'LECTURA ACTUAL': '',
-          'LECTURA ANTERIOR': '',
-          '  ': 'TOTAL ENERGIA ACTIVA',
-          '   ': this.formatearNumber(1234),
-        },
-        {
-          ' ': '',
-          'LECTURA ACTUAL': '',
-          'LECTURA ANTERIOR': '',
-          '  ': '',
-          '   ': '',
-        },
-        {
-          ' ': 'CARGO',
-          'LECTURA ACTUAL': 'RATE (L.)',
-          'LECTURA ANTERIOR': 'CONSUMO (KwH)',
-          '  ': 'TOTAL (L.)',
-          '   ': '',
-        },
-        {
-          ' ': 'ENERGÍA ACTIVA',
-          'LECTURA ACTUAL': '',
-          'LECTURA ANTERIOR': this.formatearNumber(this.totalConsumo),
-          '  ': '',
-          '   ': '',
-        },
-        {
-          ' ': 'PERDIDAS',
-          'LECTURA ACTUAL': '',
-          'LECTURA ANTERIOR': this.formatearNumber(this.calculoConsumo[0].perdidas),
-          '  ': '',
-          '   ': '',
-        },
-        {
-          ' ': 'COSTO ENERGIA',
-          // tslint:disable-next-line: max-line-length
-          'LECTURA ACTUAL': new Intl.NumberFormat('en-us', { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(this.calculoConsumo[0].rateConsumoEnergia),
-          'LECTURA ANTERIOR': '',
-          '  ': this.formatearNumber(this.calculoConsumo[0].rateConsumoEnergia * this.totalConsumo),
-          '   ': '',
-        },
-        {
-          ' ': 'DEMANDA',
-          // tslint:disable-next-line: max-line-length
-          'LECTURA ACTUAL': new Intl.NumberFormat('en-us', { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(this.calculoConsumo[0].rateDemanda),
-          'LECTURA ANTERIOR': '',
-          '  ': this.formatearNumber(this.calculoConsumo[0].totalDemanda),
-          '   ': '',
-        },
-        {
-          ' ': 'OTROS CARGOS/CRÉDITOS',
-          // tslint:disable-next-line: max-line-length
-          'LECTURA ACTUAL': new Intl.NumberFormat('en-us', { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(this.calculoConsumo[0].rateOtrosCargos),
-          'LECTURA ANTERIOR': '',
-          '  ': this.formatearNumber(this.calculoConsumo[0].totalOtrosCargos),
-          '   ': ''
-        },
-        {
-          ' ': 'TOTAL A PAGAR',
-          'LECTURA ACTUAL': '',
-          'LECTURA ANTERIOR': this.formatearNumber(this.totalConsumo + this.calculoConsumo[0]?.perdidas),
-          '  ': this.formatearNumber(this.totalApagar),
-          '   ': ''
-        },
-        ];
-
-        console.log(this.dataExport);
-
-        this.visible = true;
-        this.spinner.hide();
-
-      },
-        (error) => {
-          console.log(error);
-          this.createMessage();
-          this.visible = false;
+          this.visible = true;
           this.spinner.hide();
-        });
+
+        },
+          (error) => {
+            console.log(error);
+            this.createMessage();
+            this.visible = false;
+            this.spinner.hide();
+          });
+
+    }
+
   }
 
   formatearNumber(numero: number) {
@@ -463,6 +492,10 @@ export class FacturaComponent implements OnInit {
       this.plantasOP.push(...this.listPlantas.filter(x => x.id === id));
       this.medidoresPlanta.push(...this.listMedidores.filter(y => y.id === id));
     });
+  }
+
+  changeFecha(event: any) {
+    this.habilitarfecha = (event == 11) ? false : true;
   }
 
 }
