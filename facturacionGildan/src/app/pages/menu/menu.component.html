@@ -2,8 +2,9 @@
     <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
         <div class="sidebar-logo">
             <a target="_blank">
-                <img src="assets/Gildan-Logo.svg">
-                <h1> GILDAN </h1>
+                <img src="assets/logoGildan.png">
+                <img style="display: inline-block; height: 40px; width: 150px; margin: 0 0 0 10px; vertical-align: middle;" src="assets/nombreGildan.png">
+                <!-- <h1> GILDAN </h1> -->
             </a>
         </div>
         <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
@@ -25,13 +26,41 @@
                     <span>Resumen Facturacion</span>
                 </a>
             </li>
-            <!--  <li nz-menu-item nz-tooltip nzTooltipPlacement="right">
-                <a [routerLink]="['/entrada']">
-                    <i nz-icon nzType="thunderbolt"></i>
-                    <span>Entrada Energia</span>
-                </a>
+            <li nz-submenu nzTitle="Mantenimiento" nzIcon="form">
+                <ul>
+                    <li nz-menu-item nzMatchRouter>
+                        <a [routerLink]="['/servidor']" routerLinkActive="router-link-active" >Servidores</a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a [routerLink]="['/plantas']" routerLinkActive="router-link-active" >Plantas</a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a [routerLink]="['/medidores']" routerLinkActive="router-link-active" >Medidores</a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a [routerLink]="['/jerarquia']" routerLinkActive="router-link-active" >Jerarquias</a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a [routerLink]="['/medidor']" routerLinkActive="router-link-active" >Clasificacion</a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a [routerLink]="['/centro-costos']" routerLinkActive="router-link-active" >Centro de Costos</a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a [routerLink]="['/cuentas']" routerLinkActive="router-link-active" >Cuentas</a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a [routerLink]="['/medidor']" routerLinkActive="router-link-active" >Relacion</a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a [routerLink]="['/rollOver']" routerLinkActive="router-link-active" >RollOver</a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a [routerLink]="['/lecturas']" routerLinkActive="router-link-active" >Lecturas</a>
+                    </li>
+                </ul>
             </li>
-            <li nz-menu-item nz-tooltip nzTooltipPlacement="right">
+            <!--  <li nz-menu-item nz-tooltip nzTooltipPlacement="right">
                 <a [routerLink]="['/transformadores']">
                     <i nz-icon nzType="api"></i>
                     <span>Transformadores</span>

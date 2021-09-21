@@ -1,0 +1,74 @@
+<nz-layout>
+    <nz-header>
+        <div nz-row>
+            <div nz-col nzSpan="20">
+                <h1> Servidores </h1>
+            </div>
+            <div nz-col nzSpan="4">
+                <button nz-button nzType="primary" nzShape="round"><i nz-icon nzType="plus"
+                        nzTheme="outline"></i>Nuevo Servidor</button>
+
+            </div>
+        </div>
+    </nz-header>
+    <nz-content>
+        <div class="tabla">
+            <nz-table #nzTable [nzData]="listOfData" nzTableLayout="fixed" nzShowSizeChanger >
+                <thead>
+                    <tr>
+                        <th nzWidth="60px" colspan="2">
+                            <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0"
+                                [nzDropdownMenu]="menu">
+                                <i nz-icon nzType="search"></i>
+                            </nz-filter-trigger>
+                        </th>
+                        <th *ngFor="let column of listOfColumns" [nzSortOrder]="column.sortOrder"
+                            [nzSortFn]="column.sortFn" [nzSortDirections]="column.sortDirections">{{column.name}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of nzTable.data">
+                        <td nzWidth="30px">
+                            <button class="icono" nz-button nzType="primary" nzShape="circle">
+                                <i nz-icon nzType="edit" nzTheme="outline"></i>
+                            </button>
+                        </td>
+                        <td nzWidth="30px">
+                            <button nz-button nzType="primary" nz-popconfirm
+                                nzPopconfirmTitle="¿Está seguro de borrar el registro?" nzPopconfirmPlacement="bottom"
+                                nzShape="circle" nzCancelText="No" nzOkText="Si">
+                                <i nz-icon nzType="delete" nzTheme="outline"></i>
+                            </button>
+                        </td>
+                        <td>{{data.nombre}}</td>
+                        <td>{{data.baseDatos}}</td>
+                        <td>
+                            <div *ngIf="data.estado; else estadoFalse"><i nz-icon nzType="check-circle"
+                                    nzTheme="twotone"></i></div>
+                            <ng-template #estadoFalse><i nz-icon nzType="close-circle" nzTheme="twotone"></i>
+                            </ng-template>
+                        </td>
+                        <!-- <td nzWidth="30px">
+                            <button nz-button nzType="primary" nzSize="small"
+                                nzShape="round">Rollover</button>
+                            <button nz-button nzType="primary" nzGhost nzSize="small" nzShape="round">Variable</button>
+                        </td> -->
+                    </tr>
+                </tbody>
+            </nz-table>
+        </div>
+    </nz-content>
+</nz-layout>
+
+<nz-dropdown-menu #menu="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+        <div class="search-box">
+            <input type="text" nz-input placeholder="Descripción" [(ngModel)]="searchValue"
+                 />
+            <button nz-button nzSize="small" nzType="primary"  class="search-button">
+                Buscar
+            </button>
+            <button nz-button nzSize="small">Limpiar</button>
+        </div>
+    </div>
+</nz-dropdown-menu>

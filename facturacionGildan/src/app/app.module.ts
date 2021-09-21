@@ -56,7 +56,15 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MenuComponent } from './pages/menu/menu.component';
 import { LoginComponent } from './login/login.component';
 import { FacturaComponent } from './pages/factura/factura.component';
-import { ResumenFacturacionComponent } from './pages/resumenFacturacion/resumenFacturacion.component'
+import { ResumenFacturacionComponent } from './pages/resumenFacturacion/resumenFacturacion.component';
+import { ServidorComponent } from './pages/servidor/servidor.component';
+import { PlantaComponent } from './pages/planta/planta.component';
+import { MedidorComponent } from './pages/medidor/medidor.component';
+import { JerarquiaComponent } from './pages/jerarquia/jerarquia.component';
+import { CentroCostoComponent } from './pages/centro-costo/centro-costo.component';
+import { CuentaComponent } from './pages/cuenta/cuenta.component';
+import { RolloverComponent } from './pages/rollover/rollover.component';
+import { LecturasComponent } from './pages/lecturas/lecturas.component'
 
 registerLocaleData(en);
 
@@ -66,7 +74,15 @@ registerLocaleData(en);
     MenuComponent,
     LoginComponent,
     FacturaComponent,
-    ResumenFacturacionComponent
+    ResumenFacturacionComponent,
+    ServidorComponent,
+    PlantaComponent,
+    MedidorComponent,
+    JerarquiaComponent,
+    CentroCostoComponent,
+    CuentaComponent,
+    RolloverComponent,
+    LecturasComponent
   ],
   imports: [
     BrowserModule,
