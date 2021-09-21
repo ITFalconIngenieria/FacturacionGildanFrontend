@@ -65,11 +65,11 @@ export class FacturaComponent implements OnInit {
   ChartOptions: any;
   fechaDia: Date = new Date();
   diasPeriodo: any;
-  preciokwh: number = 0;
-  preciokw: number = 0;
-  alumbrado: number = 0;
-  otro: number = 0;
-  bch: number = 0;
+  preciokwh: number = 2.95905;
+  preciokw: number = 252.462;
+  alumbrado: number = 9319.15;
+  otro: number = 25103.42;
+  bch: number = 24.0940;
   gildan: number = 0;
   plantas: any[] = [];
   medidores: any[] = [];
@@ -182,7 +182,6 @@ export class FacturaComponent implements OnInit {
     this.spinner.show();
     this.dataExport = [];
     console.log(this.tiempo);
-    
 
     if ((this.fechas == null && this.tiempo == '11') || this.medidores.length == 0 || this.tiempo == '') {
       this.createNotification();
@@ -272,9 +271,9 @@ export class FacturaComponent implements OnInit {
       }
 
       this.serviceFactura.getDatosFactura(
-        new Date(moment(this.fechaInicio).subtract(12,'hours').format()).toISOString(),
-        new Date(moment(this.fechaFin).subtract(12,'hours').format()).toISOString(),
-        this.medidores
+        new Date(moment(this.fechaInicio).subtract(6,'hours').format()).toISOString(),
+        new Date(moment(this.fechaFin).subtract(6,'hours').format()).toISOString(),
+        this.medidores, this.preciokwh, this.preciokw, this.alumbrado, this.otro, this.bch, this.gildan
       )
         .toPromise()
         .then((data: any) => {
@@ -374,16 +373,16 @@ export class FacturaComponent implements OnInit {
           {
             ' ': 'PERDIDAS',
             'LECTURA ACTUAL': '',
-            'LECTURA ANTERIOR': this.formatearNumber(this.calculoConsumo[0].perdidas),
+            'LECTURA ANTERIOR': this.formatearNumber(this.calculoConsumo[0].consumoPerdidas),
             '  ': '',
             '   ': '',
           },
           {
             ' ': 'COSTO ENERGIA',
             // tslint:disable-next-line: max-line-length
-            'LECTURA ACTUAL': new Intl.NumberFormat('en-us', { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(this.calculoConsumo[0].rateConsumoEnergia),
+            'LECTURA ACTUAL': new Intl.NumberFormat('en-us', { minimumFractionDigits: 4, maximumFractionDigits: 4 }).format(this.calculoConsumo[0].rateCostoEnergia),
             'LECTURA ANTERIOR': '',
-            '  ': this.formatearNumber(this.calculoConsumo[0].rateConsumoEnergia * this.totalConsumo),
+            '  ': this.formatearNumber(this.calculoConsumo[0].rateCostoEnergia * this.totalConsumo),
             '   ': '',
           },
           {
@@ -405,7 +404,7 @@ export class FacturaComponent implements OnInit {
           {
             ' ': 'TOTAL A PAGAR',
             'LECTURA ACTUAL': '',
-            'LECTURA ANTERIOR': this.formatearNumber(this.totalConsumo + this.calculoConsumo[0]?.perdidas),
+            'LECTURA ANTERIOR': this.formatearNumber(this.totalConsumo + this.calculoConsumo[0]?.consumoPerdidas),
             '  ': this.formatearNumber(this.totalApagar),
             '   ': ''
           },

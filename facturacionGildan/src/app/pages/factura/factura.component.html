@@ -242,14 +242,14 @@
                         <tr>
                             <td>PÉRDIDAS</td>
                             <td></td>
-                            <td style="text-align: right;"> {{calculoConsumo[0]?.perdidas | number:'1.2-2':'en_US'}} </td>
+                            <td style="text-align: right;"> {{calculoConsumo[0]?.consumoPerdidas | number:'1.2-2':'en_US'}} </td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>COSTO ENERGIA</td>
-                            <td style="text-align: right;">{{calculoConsumo[0]?.rateConsumoEnergia | number:'1.4-4':'en_US'}}</td>
+                            <td style="text-align: right;">{{calculoConsumo[0]?.rateCostoEnergia | number:'1.4-4':'en_US'}}</td>
                             <td></td>
-                            <td style="text-align: right;">{{calculoConsumo[0]?.rateConsumoEnergia * totalConsumo | number:'1.2-2':'en_US'}}</td>
+                            <td style="text-align: right;">{{calculoConsumo[0]?.rateCostoEnergia * totalConsumo | number:'1.2-2':'en_US'}}</td>
                         </tr>
                         <tr>
                             <td>DEMANDA</td>
@@ -268,7 +268,7 @@
                         <tr>
                             <th style="text-align: right;">TOTAL A PAGAR</th>
                             <th></th>
-                            <th style="text-align: right;"> {{ totalConsumo + calculoConsumo[0]?.perdidas | number:'1.2-2':'en_US'}} kWh</th>
+                            <th style="text-align: right;"> {{ totalConsumo + calculoConsumo[0]?.consumoPerdidas | number:'1.2-2':'en_US'}} kWh</th>
                             <th style="text-align: right;"> L. {{ totalApagar | number:'1.2-2':'en_US'}}</th>
                         </tr>
                     </tfoot>

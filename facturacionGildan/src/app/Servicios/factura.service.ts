@@ -20,12 +20,12 @@ export class FacturaService {
     return this.http.post(`${apiUrl}/calculoConsumoEnergia/?fechai=${fechai}&fechaf=${fechaf}`, medidores);
   }
 
-  getDatosFactura(fechai: any, fechaf: any, medidores: any[]): Observable<any> {
+  getDatosFactura(fechai: any, fechaf: any, medidores: any[], kwh: number, kw: number, alumbrado: number, otros: number, bch: number, gildan: number): Observable<any> {
     console.log(`${apiUrl}/detalleConsumoEnergia/?fechai=${fechai}&fechaf=${fechaf}`);
     
     return forkJoin(
       this.http.post(`${apiUrl}/detalleConsumoEnergia/?fechai=${fechai}&fechaf=${fechaf}`, medidores),
-      this.http.post(`${apiUrl}/calculoConsumoEnergia/?fechai=${fechai}&fechaf=${fechaf}`, medidores),
+      this.http.post(`${apiUrl}/calculoConsumoEnergia/?fechai=${fechai}&fechaf=${fechaf}&kwh=${kwh}&kw=${kw}&alumbrado=${alumbrado}&otros=${otros}&bch=${bch}&gildan=${gildan}`, medidores),
       this.http.post(`${apiUrl}/historicoConsumoDemanda/?fechai=${fechai}&fechaf=${fechaf}`, medidores)
 
     );
