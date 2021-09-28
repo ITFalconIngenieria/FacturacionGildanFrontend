@@ -50,6 +50,7 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
 ///////////////////////////////////
@@ -130,7 +131,8 @@ registerLocaleData(en);
     NzCalendarModule,
     NzToolTipModule,
     NzSkeletonModule,
-    ScrollingModule
+    ScrollingModule,
+    NzPopconfirmModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

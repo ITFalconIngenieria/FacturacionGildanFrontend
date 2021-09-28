@@ -1,13 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzTableFilterFn, NzTableFilterList, NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
 import { ColumnItem, NuevoServidorDTO, ServidorModel } from 'src/app/models/servidor';
 import { ServidorService } from 'src/app/Servicios/servidor.service';
+import { UiServiceService } from 'src/app/Servicios/ui-service.service';
 
 interface DataItem {
   name: string;
   chinese: number;
   tipo: boolean;
+}
+
+interface Person {
+  key: string;
+  name: string;
+  age: number;
+  address: string;
 }
 
 @Component({
@@ -19,6 +27,7 @@ export class ServidorComponent implements OnInit {
 
   visible = false;
   searchValue = '';
+  isVisibleModal = false;
   //servidorData: NuevoServidorDTO;
 
   listOfServidor: ServidorModel[] = [];
@@ -28,13 +37,13 @@ export class ServidorComponent implements OnInit {
     {
       name: 'Nombre',
       sortOrder: null,
-      sortFn: (a: any, b: any) => a.nombre.localeCompare(b.nombre),
+      sortFn: (a: ServidorModel, b: ServidorModel) => a.nombre.localeCompare(b.nombre),
       sortDirections: ['ascend', 'descend', null],
     },
     {
-      name: 'Base de Datos',
+      name: 'Base de datos',
       sortOrder: null,
-      sortFn: (a: any, b: any) => a.baseDatos.localeCompare(b.baseDatos),
+      sortFn: (a: ServidorModel, b: ServidorModel) => a.baseDatos.localeCompare(b.baseDatos),
       sortDirections: ['ascend', 'descend', null],
     },
     {
@@ -47,7 +56,7 @@ export class ServidorComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private nzMessageService: NzMessageService,
+    private uiService: UiServiceService,
     private servidorService: ServidorService
   ) { }
 
@@ -63,6 +72,43 @@ export class ServidorComponent implements OnInit {
         this.listOfData = [...this.listOfServidor];
       }
     );
+  }
+
+  reset(): void {
+    this.searchValue = '';
+    this.search();
+  }
+
+  search(): void {
+    this.visible = false;
+    this.listOfData = this.listOfServidor.filter((item: ServidorModel) => item.nombre.indexOf(this.searchValue) !== -1);
+
+    if(this.listOfData.length == 0) {
+      //console.log('Entro al IF');
+      this.listOfData = this.listOfServidor.filter((item: ServidorModel) => item.baseDatos.indexOf(this.searchValue) !== -1);
+    }
+  }
+
+  cancelDeleteItem(): void {
+    this.uiService.createMessage('info', 'Su registro sigue activo.');
+  }
+
+  confirmDeleteItem(): void {
+    this.uiService.createMessage('success', 'El registro fue eliminado con éxito.');
+  }
+
+  showModal(): void {
+    this.isVisibleModal = true;
+  }
+
+  handleOkModalFormServidor(): void {
+    console.log('Button ok clicked!');
+    this.isVisibleModal = false;
+  }
+
+  handleCancelModalFormServidor(): void {
+    console.log('Button cancel clicked!');
+    this.isVisibleModal = false;
   }
 
 }

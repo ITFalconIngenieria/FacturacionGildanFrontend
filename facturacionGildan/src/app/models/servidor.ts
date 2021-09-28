@@ -8,10 +8,10 @@ export interface ColumnItem {
 }
 
 export interface ServidorModel {
-    id?: number;
-    nombre?: string;
-    baseDatos?: string;
-    estado?: boolean;
+    id: number;
+    nombre: string;
+    baseDatos: string;
+    estado: boolean;
 }
 
 export interface NuevoServidorDTO {

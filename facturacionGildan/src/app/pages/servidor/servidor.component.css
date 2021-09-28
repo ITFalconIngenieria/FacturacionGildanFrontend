@@ -6,7 +6,7 @@ nz-header{
     background: #FFFFFF;
     color: #fff;
     text-align: left;
-    padding: 25px;
+    padding: 10px 0;
 }
 
 nz-header h1{
@@ -22,7 +22,7 @@ nz-content {
     color: #fff;
     min-height: 120px;
     line-height: 120px;
-    padding: 30px;
+    padding: 10px 0;
 }
 
 nz-layout {
@@ -36,6 +36,12 @@ nz-layout:last-child {
 .tabla {
     width: 80%;
     margin: auto;
+}
+
+.botonEdit {
+    color: #fff;
+    background-color: #10dc60;
+    border-color: #10dc60;
 }
 
 .search-box {
@@ -54,8 +60,4 @@ nz-layout:last-child {
 
 .search-button {
     margin-right: 8px;
-}
-
-.icono {
-    margin: -5px auto auto auto;
 }
