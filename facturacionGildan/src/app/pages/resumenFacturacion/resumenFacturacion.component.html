@@ -81,12 +81,12 @@
                     <thead>
                         <tr>
                             <th>PLANTA</th>
-                            <th>ENERGÍA (kWh) = <span style="color: #439d16;"> 99.00 </span> %</th>
-                            <th>PERDIDAD (kWh) = <span style="color: #439d16;"> 99.00 </span> %</th>
-                            <th>ENERGÍA + PERDIDAD (kWh) = <span style="color: #439d16;"> 99.00 </span> %</th>
-                            <th>COSTO ENERGÍA (Lps) = <span style="color: #439d16;"> 99.00 </span> % </th>
-                            <th>PERDIDAD (Lps) = <span style="color: #439d16;"> 99.00 </span> %</th>
-                            <th>COSTO + PERDIDAD (Lps) = <span style="color: #439d16;"> 99.00 </span> %</th>
+                            <th>ENERGÍA (kWh) = <span style="color: #439d16;"> {{ (totalesEnergia[0] / totalesEnergia[2]) * 100 | number:'1.2-2':'en_US' }} </span> %</th>
+                            <th>PERDIDAS (kWh) = <span style="color: #439d16;"> {{ (totalesEnergia[1] / totalesEnergia[2]) * 100 | number:'1.2-2':'en_US' }} </span> %</th>
+                            <th>ENERGÍA + PERDIDAS (kWh) = <span style="color: #439d16;"> {{ (totalesEnergia[2] / totalesEnergia[2]) * 100 | number:'1.2-2':'en_US' }} </span> %</th>
+                            <th>COSTO ENERGÍA (Lps) = <span style="color: #439d16;"> {{ (totalesEnergia[3] / totalesEnergia[5]) * 100 | number:'1.2-2':'en_US' }} </span> % </th>
+                            <th>PERDIDAS (Lps) = <span style="color: #439d16;"> {{ (totalesEnergia[4] / totalesEnergia[5]) * 100 | number:'1.2-2':'en_US' }} </span> %</th>
+                            <th>COSTO + PERDIDAS (Lps) = <span style="color: #439d16;"> {{ (totalesEnergia[5] / totalesEnergia[5]) * 100 | number:'1.2-2':'en_US' }} </span> %</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -95,9 +95,9 @@
                             <td> {{ energia.energiaConsumida | number:'1.2-2':'en_US'}} </td>
                             <td> {{ energia.perdidas | number:'1.2-2':'en_US'}} </td>
                             <td> {{ energia.energiaConsumida + energia.perdidas | number:'1.2-2':'en_US'}} </td>
-                            <td> 00.00 </td>
-                            <td> 00.00 </td>
-                            <td style="text-align: right; padding-right: 20px;"> 00.00 </td>
+                            <td> {{ energia.energiaConsumida * ( rateEnergia + rateDemanda + rateOtrosCargos ) | number:'1.2-2':'en_US' }} </td>
+                            <td> {{ energia.perdidas * ( rateEnergia + rateDemanda + rateOtrosCargos ) | number:'1.2-2':'en_US' }} </td>
+                            <td style="text-align: right; padding-right: 20px;"> {{ (energia.energiaConsumida + energia.perdidas) * ( rateEnergia + rateDemanda + rateOtrosCargos ) | number:'1.2-2':'en_US' }} </td>
                         </tr>
                     </tbody>
                     <tfoot>
@@ -130,13 +130,13 @@
                                         <th><span style="margin-left: 20px;"> Energía </span></th>
                                         <td></td>
                                         <td> {{ energiaSumistrada[0]?.energia | number:'1.2-2':'en_US'}} kWh</td>
-                                        <td>Lps. <span style="color: #009bca;"> 0.00 </span></td>
+                                        <td>Lps. <span style="color: #009bca;"> {{ costoEnergiaBeco | number:'1.2-2':'en_US' }} </span></td>
                                     </tr>
                                     <tr>
                                         <th><span style="margin-left: 20px;">Demanda </span></th>
                                         <td>{{ energiaSumistrada[0]?.demanda | number:'1.2-2':'en_US'}} kW</td>
                                         <td></td>
-                                        <td>Lps. <span style="color: #009bca;"> 0.00 </span></td>
+                                        <td>Lps. <span style="color: #009bca;"> {{ costoDemandaBeco | number:'1.2-2':'en_US' }} </span></td>
                                     </tr>
                                     <tr class="table-secondary">
                                         <th>ENEE</th>
@@ -148,19 +148,19 @@
                                         <th><span style="margin-left: 20px;"> Energía </span></th>
                                         <td></td>
                                         <td>{{ energiaSumistrada[1]?.energia | number:'1.2-2':'en_US'}} kWh</td>
-                                        <td>Lps. 0.00</td>
+                                        <td>Lps. {{ costoEnergiaEnee | number:'1.2-2':'en_US'}} </td>
                                     </tr>
                                     <tr>
                                         <th><span style="margin-left: 20px;"> Demanda </span></th>
                                         <td>{{ energiaSumistrada[1]?.demanda | number:'1.2-2':'en_US'}} kW</td>
                                         <td></td>
-                                        <td>Lps. 0.00</td>
+                                        <td>Lps. {{ costoDemandaEnee | number:'1.2-2':'en_US'}} </td>
                                     </tr>
                                     <tr>
                                         <th><span style="margin-left: 20px;"> Otros cargos </span></th>
                                         <td></td>
                                         <td></td>
-                                        <td>Lps.<span style="color: #009bca;"> 0.00 </span></td>
+                                        <td>Lps.<span style="color: #009bca;"> {{ costoOtrosCargos | number:'1.2-2':'en_US'}} </span></td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
@@ -168,7 +168,7 @@
                                         <th>TOTAL </th>
                                         <td>{{ totalDemBECO | number:'1.2-2':'en_US' }} kW</td>
                                         <td> {{ totalEneBECO | number:'1.2-2':'en_US' }} kWh</td>
-                                        <td>Lps. 0.00</td>
+                                        <td>Lps. {{ costoTotalEnergiaSuministrada | number:'1.2-2':'en_US' }}</td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -211,12 +211,12 @@
                             <div class="col">
                                 <p style="text-align: center; font-size: 11px;">BECO/ENEE</p>
                                 <p class="valores"> {{ totalEneBECO | number:'1.2-2':'en_US' }} kWh</p>
-                                <p class="valores">Lps. 123.00</p>
+                                <p class="valores">Lps. {{ costoTotalEnergiaSuministrada | number:'1.2-2':'en_US' }}</p>
                             </div>
                             <div class="col">
                                 <p style="text-align: center; font-size: 11px;">GILDAN</p>
                                 <p class="valores"> {{totalesEnergia[2] | number:'1.2-2':'en_US'}} kWh</p>
-                                <p class="valores">Lps. 123.00</p>
+                                <p class="valores">Lps. {{totalesEnergia[5] | number:'1.2-2':'en_US'}}</p>
                             </div>
                         </div>
                     </div>

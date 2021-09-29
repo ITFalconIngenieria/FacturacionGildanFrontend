@@ -19,11 +19,11 @@ export class ResumenFacturacionComponent implements OnInit {
   doughnutChartData: any;
   doughnutChartType: any;
   colors: any[] = [];
-  preciokwh: number = 0;
-  preciokw: number = 0;
-  alumbrado: number = 0;
-  otro: number = 0;
-  bch: number = 0;
+  preciokwh: number = 2.95905;
+  preciokw: number = 252.462;
+  alumbrado: number = 9319.15;
+  otro: number = 25103.42;
+  bch: number = 24.0940;
   gildan: number = 0;
   tiempo: string = '';
   fecha1: any = new Date;
@@ -37,6 +37,12 @@ export class ResumenFacturacionComponent implements OnInit {
   totalesEnergia: any[] = [];
   totalEneBECO: number = 0;
   totalDemBECO: number = 0;
+  costoTotalEnergiaSuministrada: number = 0.00;
+  costoEnergiaBeco: number = 0.00;
+  costoDemandaBeco: number = 0.00;
+  costoEnergiaEnee: number = 0.00;
+  costoDemandaEnee: number = 0.00;
+  costoOtrosCargos: number = 0.00;
   constructor(
     private serviceResumen: ResumenService,
     private spinner: NgxSpinnerService
@@ -68,6 +74,9 @@ export class ResumenFacturacionComponent implements OnInit {
     let totEnergia: number = 0;
     let totPerdidas: number = 0;
     let difEnerPerd: number = 0;
+    let totalCostoEnergia: number = 0.00;
+    let totalPerdidaLps: number = 0.00;
+    let totalCostoMasPerdidaLps: number = 0.00;
 
     switch (this.tiempo) {
       case '1': {
@@ -141,8 +150,9 @@ export class ResumenFacturacionComponent implements OnInit {
     }
 
     this.serviceResumen.getDetalleResumen(
-      this.fecha1.toISOString(),
-      this.fecha2.toISOString()
+      new Date(moment(this.fecha1).subtract(6,'hours').format()).toISOString(),
+      new Date(moment(this.fecha2).subtract(6,'hours').format()).toISOString(),
+      this.preciokwh, this.preciokw, this.alumbrado, this.otro, this.bch, this.gildan
     )
       .toPromise()
       .then((data: any) => {
@@ -151,14 +161,26 @@ export class ResumenFacturacionComponent implements OnInit {
         this.energiaConsumida = [...data[0].energiaConsumida];
         this.energiaSumistrada = [...data[0].energiaSuministrada];
         this.rateEnergia = data[0].rateEnergiaCalculado;
-        this.rateDemanda = data[0].rateDemandaCalculad;
-        this.rateOtrosCargos = data[0].rateOtrosCargosCalculad;
+        this.rateDemanda = data[0].rateDemandaCalculado;
+        this.rateOtrosCargos = data[0].rateOtrosCargosCalculado;
+
+        this.costoEnergiaBeco = ( this.energiaSumistrada[0].energia * ( ( ( this.preciokwh / this.bch )  - 0.005 ) * this.bch ) );
+        this.costoEnergiaEnee = ( this.energiaSumistrada[1].energia * this.preciokwh );
+
+        this.costoDemandaBeco = ( this.energiaSumistrada[0].demanda * this.preciokw );
+        this.costoDemandaEnee = ( this.energiaSumistrada[1].demanda * this.preciokw );
+
+        this.costoOtrosCargos = this.energiaSumistrada[2].otrosCargos;
+
+        this.costoTotalEnergiaSuministrada = this.costoEnergiaBeco + this.costoEnergiaEnee + this.costoDemandaBeco + this.costoDemandaEnee + this.costoOtrosCargos;
 
         this.energiaConsumida.forEach(y => {
           totEnergia += y.energiaConsumida;
           totPerdidas += y.perdidas;
           difEnerPerd += (y.energiaConsumida + y.perdidas);
-
+          totalCostoEnergia += y.energiaConsumida * ( this.rateEnergia + this.rateDemanda + this.rateOtrosCargos );
+          totalPerdidaLps += y.perdidas * ( this.rateEnergia + this.rateDemanda + this.rateOtrosCargos );
+          totalCostoMasPerdidaLps += (y.energiaConsumida + y.perdidas) * ( this.rateEnergia + this.rateDemanda + this.rateOtrosCargos );
 
           this.dataExport = [...this.dataExport,
           {
@@ -183,9 +205,9 @@ export class ResumenFacturacionComponent implements OnInit {
           'ENERGÍA (kWh)': this.formatearNumber(totEnergia),
           'PERDIDAD (kWh)': this.formatearNumber(totPerdidas),
           'ENERGÍA + PERDIDAD (kWh)': this.formatearNumber(difEnerPerd),
-          'COSTO ENERGÍA (Lps)': 0,
-          'PERDIDAD (Lps)': 0,
-          'COSTO + PERDIDAD (Lps)': 0
+          'COSTO ENERGÍA (Lps)': this.formatearNumber(totalCostoEnergia),
+          'PERDIDAD (Lps)': this.formatearNumber(totalPerdidaLps),
+          'COSTO + PERDIDAD (Lps)': this.formatearNumber(totalCostoMasPerdidaLps)
         }, {
           PLANTA: '',
           'ENERGÍA (kWh)': '',
@@ -265,9 +287,9 @@ export class ResumenFacturacionComponent implements OnInit {
           totEnergia,
           totPerdidas,
           difEnerPerd,
-          0.00,
-          0.00,
-          0.00,
+          totalCostoEnergia,
+          totalPerdidaLps,
+          totalCostoMasPerdidaLps,
         ];
 
         this.visible = true;

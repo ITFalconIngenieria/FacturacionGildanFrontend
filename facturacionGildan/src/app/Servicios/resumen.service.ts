@@ -12,8 +12,8 @@ export class ResumenService {
 
   constructor(private http: HttpClient) { }
 
-  getDetalleResumen(fechai: any, fechaf: any) {
-    return this.http.post(`${apiUrl}/detalleResumen/?fechai=${fechai}&fechaf=${fechaf}`, []);
+  getDetalleResumen(fechai: any, fechaf: any, kwh: number, kw: number, alumbrado: number, otros: number, bch: number, gildan: number) {
+    return this.http.post(`${apiUrl}/detalleResumen/?fechai=${fechai}&fechaf=${fechaf}&kwh=${kwh}&kw=${kw}&alumbrado=${alumbrado}&otros=${otros}&bch=${bch}&gildan=${gildan}`, []);
   }
 
 }
