@@ -311,7 +311,8 @@ export class FacturaComponent implements OnInit {
           ];
 
           // tslint:disable-next-line: max-line-length
-          this.totalApagar = (this.totalConsumo * this.calculoConsumo[0].rateConsumoEnergia) + this.calculoConsumo[0].totalOtrosCargos + this.calculoConsumo[0].totalDemanda;
+          //this.totalApagar = (this.totalConsumo * this.calculoConsumo[0].rateConsumoEnergia) + this.calculoConsumo[0].totalOtrosCargos + this.calculoConsumo[0].totalDemanda;
+          this.totalApagar = this.calculoConsumo[0].totalCostoEnergia + this.calculoConsumo[0].totalDemanda + this.calculoConsumo[0].totalOtrosCargos;
           this.dataExport = [
             {
               ' ': 'Medidor',

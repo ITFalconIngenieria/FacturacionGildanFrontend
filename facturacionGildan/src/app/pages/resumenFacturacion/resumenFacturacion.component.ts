@@ -157,7 +157,7 @@ export class ResumenFacturacionComponent implements OnInit {
       .toPromise()
       .then((data: any) => {
 
-        console.log(data);
+        //console.log(data);
         this.energiaConsumida = [...data[0].energiaConsumida];
         this.energiaSumistrada = [...data[0].energiaSuministrada];
         this.rateEnergia = data[0].rateEnergiaCalculado;
@@ -292,6 +292,8 @@ export class ResumenFacturacionComponent implements OnInit {
           totalCostoMasPerdidaLps,
         ];
 
+        this.rellenarGrafico();
+
         this.visible = true;
         this.spinner.hide();
 
@@ -302,6 +304,40 @@ export class ResumenFacturacionComponent implements OnInit {
           this.visible = false;
           this.spinner.hide();
         });
+  }
+
+  rellenarGrafico(): void {
+    this.doughnutChartLabels = [];
+    this.doughnutChartData = [];
+
+    this.energiaConsumida.forEach( item => {
+      //Se obtiene el valor del costo + perdida en Lempiras por plantas.
+      let costoMasPerdidasLps: number = 0;
+      costoMasPerdidasLps = ( item.energiaConsumida + item.perdidas ) * ( this.rateEnergia + this.rateDemanda + this.rateOtrosCargos );
+
+      this.doughnutChartLabels.push(item.nombrePlanta);
+      this.doughnutChartData.push(costoMasPerdidasLps);
+    });
+    
+    this.doughnutChartType = 'doughnut';
+
+    this.colors = [
+      '#d06058',
+      '#366647',
+      '#f53794',
+      '#537bc4',
+      '#712b3f',
+      '#008c9c',
+      '#72312a',
+      '#66365d',
+      '#6f4a2d',
+      '#40326a',
+      '#244a78',
+      '#712b3f',
+      '#6b5e31',
+      '#00779c',
+      '#712b3f',
+    ];
   }
 
   excel(): void {

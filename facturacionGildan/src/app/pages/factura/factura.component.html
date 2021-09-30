@@ -129,7 +129,7 @@
                         justify-content: center;
                         height: 100%;
                         align-items: center;
-                        color: #af0606;"> {{totalConsumo + calculoConsumo[0]?.perdidas | number:'1.2-2':'en_US'}} </p>
+                        color: #af0606;"> {{ calculoConsumo[0]?.consumoEnergiaActiva + calculoConsumo[0]?.consumoPerdidas | number:'1.2-2':'en_US'}} </p>
                     </div>
                     <div style="background-color: #ffffc8; border-radius: 7%; height:55px;  width: 83%; margin: auto; margin-top: 9px;">
                         <p *ngIf="diasPeriodo <= 31" style="font-size: 15px;
@@ -216,7 +216,7 @@
                         <td></td>
                         <td></td>
                         <td> DEMANDA MÁXIMA PLANTA </td>
-                        <td style="text-align: right; padding-right: 20px;"> 0.00 kWh</td>
+                        <td style="text-align: right; padding-right: 20px;"> {{calculoConsumo[0]?.demandaMaxima | number:'1.2-2':'en_US'}} kWh</td>
                     </tr>
                 </tfoot>
             </table>
@@ -236,7 +236,7 @@
                         <tr>
                             <td>ENERGÍA ACTIVA</td>
                             <td></td>
-                            <td style="text-align: right;">{{totalConsumo | number:'1.2-2':'en_US'}} </td>
+                            <td style="text-align: right;">{{calculoConsumo[0]?.consumoEnergiaActiva | number:'1.2-2':'en_US'}} </td>
                             <td></td>
                         </tr>
                         <tr>
@@ -249,7 +249,7 @@
                             <td>COSTO ENERGIA</td>
                             <td style="text-align: right;">{{calculoConsumo[0]?.rateCostoEnergia | number:'1.4-4':'en_US'}}</td>
                             <td></td>
-                            <td style="text-align: right;">{{calculoConsumo[0]?.rateCostoEnergia * totalConsumo | number:'1.2-2':'en_US'}}</td>
+                            <td style="text-align: right;">{{calculoConsumo[0]?.totalCostoEnergia | number:'1.2-2':'en_US'}}</td>
                         </tr>
                         <tr>
                             <td>DEMANDA</td>
@@ -268,7 +268,7 @@
                         <tr>
                             <th style="text-align: right;">TOTAL A PAGAR</th>
                             <th></th>
-                            <th style="text-align: right;"> {{ totalConsumo + calculoConsumo[0]?.consumoPerdidas | number:'1.2-2':'en_US'}} kWh</th>
+                            <th style="text-align: right;"> {{ calculoConsumo[0]?.consumoEnergiaActiva + calculoConsumo[0]?.consumoPerdidas | number:'1.2-2':'en_US'}} kWh</th>
                             <th style="text-align: right;"> L. {{ totalApagar | number:'1.2-2':'en_US'}}</th>
                         </tr>
                     </tfoot>
