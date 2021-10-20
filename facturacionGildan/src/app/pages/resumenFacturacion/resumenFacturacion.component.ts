@@ -28,6 +28,8 @@ export class ResumenFacturacionComponent implements OnInit {
   tiempo: string = '';
   fecha1: any = new Date;
   fecha2: any = new Date;
+  fechas: any = null;
+  habilitarfecha: boolean = true;
   dataExport: any[] = [];
   energiaConsumida: any[] = [];
   energiaSumistrada: any[] = [];
@@ -78,232 +80,253 @@ export class ResumenFacturacionComponent implements OnInit {
     let totalPerdidaLps: number = 0.00;
     let totalCostoMasPerdidaLps: number = 0.00;
 
-    switch (this.tiempo) {
-      case '1': {
-        console.log(moment().startOf('day').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
-        this.fecha1 = moment().startOf('day').format('YYYY-MM-DD HH:mm');
-        this.fecha2 = moment().format('YYYY-MM-DD HH:mm');
+    if ((this.fechas == null && this.tiempo == '11') || this.tiempo == '') {
+      //this.createNotification();
+      alert('Por favor, ingrese los parametros solicitados');
+      this.spinner.hide();
 
-        break;
-      }
-      case '2': {
-        console.log(moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm'), moment().add(-1, 'day').endOf('day').format('YYYY-MM-DD HH:mm'));
-        this.fecha1 = moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
-        this.fecha2 = moment().add(-1, 'day').endOf('day').format('YYYY-MM-DD HH:mm');
+    } else {
 
-        break;
-      }
-      case '3': {
-        console.log(moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
-        this.fecha1 = moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
-        this.fecha2 = moment().format('YYYY-MM-DD HH:mm')
-        break;
-      }
-      case '4': {
-        console.log(moment(moment().startOf('week')).add(1, 'day').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
-        this.fecha1 = moment(moment().startOf('week')).add(1, 'day').format('YYYY-MM-DD HH:mm');
-        this.fecha2 = moment().format('YYYY-MM-DD HH:mm');
-        break;
-      }
-      case '5': {
-        console.log(moment().startOf('year').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
-        this.fecha1 = moment().startOf('year').format('YYYY-MM-DD HH:mm');
-        this.fecha2 = moment().format('YYYY-MM-DD HH:mm');
-        break;
-      }
-      case '6': {
-        console.log(moment(moment().startOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
-        console.log(moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
-        this.fecha1 = moment(moment().startOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm')
-        this.fecha2 = moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm')
-        break;
-      }
-      case '7': {
-        console.log(moment(moment().startOf('week').subtract(2, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
-        console.log(moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
-        this.fecha1 = moment(moment().startOf('week').subtract(2, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm');
-        this.fecha2 = moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm');
-        break;
-      }
-      case '8': {
-        console.log(moment().startOf('month').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
-        this.fecha1 = moment().startOf('month').format('YYYY-MM-DD HH:mm');
-        this.fecha2 = moment().format('YYYY-MM-DD HH:mm');
-        break;
-      }
-      case '9': {
-        console.log(moment(moment().startOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm'));
-        console.log(moment(moment().endOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm'));
-        this.fecha1 = moment(moment().startOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm');
-        this.fecha2 = moment(moment().endOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm');
-        break;
-      }
-      case '10': {
-        console.log(moment(moment().startOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm'));
-        console.log(moment(moment().endOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm'));
-        this.fecha1 = moment(moment().startOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm');
-        this.fecha2 = moment(moment().endOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm');
-        break;
-      }
-      default:
-        break;
-    }
+      switch (this.tiempo) {
+        case '1': {
+          console.log(moment().startOf('day').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
+          this.fecha1 = moment().startOf('day').format('YYYY-MM-DD HH:mm');
+          this.fecha2 = moment().format('YYYY-MM-DD HH:mm');
+  
+          break;
+        }
+        case '2': {
+          console.log(moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm'), moment().add(-1, 'day').endOf('day').format('YYYY-MM-DD HH:mm'));
+          this.fecha1 = moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
+          this.fecha2 = moment().add(-1, 'day').endOf('day').format('YYYY-MM-DD HH:mm');
+  
+          break;
+        }
+        case '3': {
+          console.log(moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
+          this.fecha1 = moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
+          this.fecha2 = moment().format('YYYY-MM-DD HH:mm')
+          break;
+        }
+        case '4': {
+          console.log(moment(moment().startOf('week')).add(1, 'day').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
+          this.fecha1 = moment(moment().startOf('week')).add(1, 'day').format('YYYY-MM-DD HH:mm');
+          this.fecha2 = moment().format('YYYY-MM-DD HH:mm');
+          break;
+        }
+        case '5': {
+          console.log(moment().startOf('year').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
+          this.fecha1 = moment().startOf('year').format('YYYY-MM-DD HH:mm');
+          this.fecha2 = moment().format('YYYY-MM-DD HH:mm');
+          break;
+        }
+        case '6': {
+          console.log(moment(moment().startOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
+          console.log(moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
+          this.fecha1 = moment(moment().startOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm')
+          this.fecha2 = moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm')
+          break;
+        }
+        case '7': {
+          console.log(moment(moment().startOf('week').subtract(2, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
+          console.log(moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
+          this.fecha1 = moment(moment().startOf('week').subtract(2, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm');
+          this.fecha2 = moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm');
+          break;
+        }
+        case '8': {
+          console.log(moment().startOf('month').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
+          this.fecha1 = moment().startOf('month').format('YYYY-MM-DD HH:mm');
+          this.fecha2 = moment().format('YYYY-MM-DD HH:mm');
+          break;
+        }
+        case '9': {
+          console.log(moment(moment().startOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm'));
+          console.log(moment(moment().endOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm'));
+          this.fecha1 = moment(moment().startOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm');
+          this.fecha2 = moment(moment().endOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm');
+          break;
+        }
+        case '10': {
+          console.log(moment(moment().startOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm'));
+          console.log(moment(moment().endOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm'));
+          this.fecha1 = moment(moment().startOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm');
+          this.fecha2 = moment(moment().endOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm');
+          break;
+        }
+        case '11': {
+          this.fecha1 = this.fechas[0];
+          this.fecha2 = this.fechas[1];
 
-    this.serviceResumen.getDetalleResumen(
-      new Date(moment(this.fecha1).subtract(6,'hours').format()).toISOString(),
-      new Date(moment(this.fecha2).subtract(6,'hours').format()).toISOString(),
-      this.preciokwh, this.preciokw, this.alumbrado, this.otro, this.bch, this.gildan
-    )
-      .toPromise()
-      .then((data: any) => {
+          break;
+        }
+        default: {
+          this.fecha1 = this.fechas[0];
+          this.fecha2 = this.fechas[1];
 
-        //console.log(data);
-        this.energiaConsumida = [...data[0].energiaConsumida];
-        this.energiaSumistrada = [...data[0].energiaSuministrada];
-        this.rateEnergia = data[0].rateEnergiaCalculado;
-        this.rateDemanda = data[0].rateDemandaCalculado;
-        this.rateOtrosCargos = data[0].rateOtrosCargosCalculado;
-
-        this.costoEnergiaBeco = ( this.energiaSumistrada[0].energia * ( ( ( this.preciokwh / this.bch )  - 0.005 ) * this.bch ) );
-        this.costoEnergiaEnee = ( this.energiaSumistrada[1].energia * this.preciokwh );
-
-        this.costoDemandaBeco = ( this.energiaSumistrada[0].demanda * this.preciokw );
-        this.costoDemandaEnee = ( this.energiaSumistrada[1].demanda * this.preciokw );
-
-        this.costoOtrosCargos = this.energiaSumistrada[2].otrosCargos;
-
-        this.costoTotalEnergiaSuministrada = this.costoEnergiaBeco + this.costoEnergiaEnee + this.costoDemandaBeco + this.costoDemandaEnee + this.costoOtrosCargos;
-
-        this.energiaConsumida.forEach(y => {
-          totEnergia += y.energiaConsumida;
-          totPerdidas += y.perdidas;
-          difEnerPerd += (y.energiaConsumida + y.perdidas);
-          totalCostoEnergia += y.energiaConsumida * ( this.rateEnergia + this.rateDemanda + this.rateOtrosCargos );
-          totalPerdidaLps += y.perdidas * ( this.rateEnergia + this.rateDemanda + this.rateOtrosCargos );
-          totalCostoMasPerdidaLps += (y.energiaConsumida + y.perdidas) * ( this.rateEnergia + this.rateDemanda + this.rateOtrosCargos );
-
+          break;
+        }
+      }
+  
+      this.serviceResumen.getDetalleResumen(
+        new Date(moment(this.fecha1).subtract(6,'hours').format()).toISOString(),
+        new Date(moment(this.fecha2).subtract(6,'hours').format()).toISOString(),
+        this.preciokwh, this.preciokw, this.alumbrado, this.otro, this.bch, this.gildan
+      )
+        .toPromise()
+        .then((data: any) => {
+  
+          //console.log(data);
+          this.energiaConsumida = [...data[0].energiaConsumida];
+          this.energiaSumistrada = [...data[0].energiaSuministrada];
+          this.rateEnergia = data[0].rateEnergiaCalculado;
+          this.rateDemanda = data[0].rateDemandaCalculado;
+          this.rateOtrosCargos = data[0].rateOtrosCargosCalculado;
+  
+          this.costoEnergiaBeco = ( this.energiaSumistrada[0].energia * ( ( ( this.preciokwh / this.bch )  - 0.005 ) * this.bch ) );
+          this.costoEnergiaEnee = ( this.energiaSumistrada[1].energia * this.preciokwh );
+  
+          this.costoDemandaBeco = ( this.energiaSumistrada[0].demanda * this.preciokw );
+          this.costoDemandaEnee = ( this.energiaSumistrada[1].demanda * this.preciokw );
+  
+          this.costoOtrosCargos = this.energiaSumistrada[2].otrosCargos;
+  
+          this.costoTotalEnergiaSuministrada = this.costoEnergiaBeco + this.costoEnergiaEnee + this.costoDemandaBeco + this.costoDemandaEnee + this.costoOtrosCargos;
+  
+          this.energiaConsumida.forEach(y => {
+            totEnergia += y.energiaConsumida;
+            totPerdidas += y.perdidas;
+            difEnerPerd += (y.energiaConsumida + y.perdidas);
+            totalCostoEnergia += y.energiaConsumida * ( this.rateEnergia + this.rateDemanda + this.rateOtrosCargos );
+            totalPerdidaLps += y.perdidas * ( this.rateEnergia + this.rateDemanda + this.rateOtrosCargos );
+            totalCostoMasPerdidaLps += (y.energiaConsumida + y.perdidas) * ( this.rateEnergia + this.rateDemanda + this.rateOtrosCargos );
+  
+            this.dataExport = [...this.dataExport,
+            {
+              PLANTA: y.nombrePlanta,
+              'ENERGÍA (kWh)': this.formatearNumber(y.energiaConsumida),
+              'PERDIDAD (kWh)': this.formatearNumber(y.perdidas),
+              'ENERGÍA + PERDIDAD (kWh)': this.formatearNumber((y.energiaConsumida + y.perdidas)),
+              'COSTO ENERGÍA (Lps)': 0,
+              'PERDIDAD (Lps)': 0,
+              'COSTO + PERDIDAD (Lps)': 0
+            }
+            ];
+  
+          });
+  
+          this.totalEneBECO = this.energiaSumistrada[0].energia + this.energiaSumistrada[1].energia;
+          this.totalDemBECO = this.energiaSumistrada[0].demanda + this.energiaSumistrada[1].demanda;
+  
           this.dataExport = [...this.dataExport,
           {
-            PLANTA: y.nombrePlanta,
-            'ENERGÍA (kWh)': this.formatearNumber(y.energiaConsumida),
-            'PERDIDAD (kWh)': this.formatearNumber(y.perdidas),
-            'ENERGÍA + PERDIDAD (kWh)': this.formatearNumber((y.energiaConsumida + y.perdidas)),
-            'COSTO ENERGÍA (Lps)': 0,
-            'PERDIDAD (Lps)': 0,
-            'COSTO + PERDIDAD (Lps)': 0
+            PLANTA: 'TOTAL ENERGIA ACTIVA',
+            'ENERGÍA (kWh)': this.formatearNumber(totEnergia),
+            'PERDIDAD (kWh)': this.formatearNumber(totPerdidas),
+            'ENERGÍA + PERDIDAD (kWh)': this.formatearNumber(difEnerPerd),
+            'COSTO ENERGÍA (Lps)': this.formatearNumber(totalCostoEnergia),
+            'PERDIDAD (Lps)': this.formatearNumber(totalPerdidaLps),
+            'COSTO + PERDIDAD (Lps)': this.formatearNumber(totalCostoMasPerdidaLps)
+          }, {
+            PLANTA: '',
+            'ENERGÍA (kWh)': '',
+            'PERDIDAD (kWh)': '',
+            'ENERGÍA + PERDIDAD (kWh)': '',
+            'COSTO ENERGÍA (Lps)': '',
+            'PERDIDAD (Lps)': '',
+            'COSTO + PERDIDAD (Lps)': ''
+          }, {
+            PLANTA: 'BECO',
+            'ENERGÍA (kWh)': '',
+            'PERDIDAD (kWh)': '',
+            'ENERGÍA + PERDIDAD (kWh)': '',
+            'COSTO ENERGÍA (Lps)': '',
+            'PERDIDAD (Lps)': '',
+            'COSTO + PERDIDAD (Lps)': ''
+          }, {
+            PLANTA: 'Energia',
+            'ENERGÍA (kWh)': '',
+            'PERDIDAD (kWh)': this.formatearNumber(this.energiaSumistrada[0].energia),
+            'ENERGÍA + PERDIDAD (kWh)': 0,
+            'COSTO ENERGÍA (Lps)': '',
+            'PERDIDAD (Lps)': '',
+            'COSTO + PERDIDAD (Lps)': ''
+          }, {
+            PLANTA: 'Demanda',
+            'ENERGÍA (kWh)': this.formatearNumber(this.energiaSumistrada[0].demanda),
+            'PERDIDAD (kWh)': '',
+            'ENERGÍA + PERDIDAD (kWh)': 0,
+            'COSTO ENERGÍA (Lps)': '',
+            'PERDIDAD (Lps)': '',
+            'COSTO + PERDIDAD (Lps)': ''
+          }, {
+            PLANTA: 'GILDAN',
+            'ENERGÍA (kWh)': '',
+            'PERDIDAD (kWh)': '',
+            'ENERGÍA + PERDIDAD (kWh)': '',
+            'COSTO ENERGÍA (Lps)': '',
+            'PERDIDAD (Lps)': '',
+            'COSTO + PERDIDAD (Lps)': ''
+          }, {
+            PLANTA: 'Energia',
+            'ENERGÍA (kWh)': '',
+            'PERDIDAD (kWh)': this.formatearNumber(this.energiaSumistrada[1].energia),
+            'ENERGÍA + PERDIDAD (kWh)': 0,
+            'COSTO ENERGÍA (Lps)': '',
+            'PERDIDAD (Lps)': '',
+            'COSTO + PERDIDAD (Lps)': ''
+          }, {
+            PLANTA: 'Demanda',
+            'ENERGÍA (kWh)': this.formatearNumber(this.energiaSumistrada[1].demanda),
+            'PERDIDAD (kWh)': '',
+            'ENERGÍA + PERDIDAD (kWh)': 0,
+            'COSTO ENERGÍA (Lps)': '',
+            'PERDIDAD (Lps)': '',
+            'COSTO + PERDIDAD (Lps)': ''
+          }, {
+            PLANTA: 'Otros cargos',
+            'ENERGÍA (kWh)': '',
+            'PERDIDAD (kWh)': '',
+            'ENERGÍA + PERDIDAD (kWh)': 0,
+            'COSTO ENERGÍA (Lps)': '',
+            'PERDIDAD (Lps)': '',
+            'COSTO + PERDIDAD (Lps)': ''
+          }, {
+            PLANTA: 'TOTAL',
+            'ENERGÍA (kWh)': this.formatearNumber(this.totalDemBECO),
+            'PERDIDAD (kWh)':  this.formatearNumber(this.totalEneBECO),
+            'ENERGÍA + PERDIDAD (kWh)': 0,
+            'COSTO ENERGÍA (Lps)': '',
+            'PERDIDAD (Lps)': '',
+            'COSTO + PERDIDAD (Lps)': ''
           }
           ];
-
-        });
-
-        this.totalEneBECO = this.energiaSumistrada[0].energia + this.energiaSumistrada[1].energia;
-        this.totalDemBECO = this.energiaSumistrada[0].demanda + this.energiaSumistrada[1].demanda;
-
-        this.dataExport = [...this.dataExport,
-        {
-          PLANTA: 'TOTAL ENERGIA ACTIVA',
-          'ENERGÍA (kWh)': this.formatearNumber(totEnergia),
-          'PERDIDAD (kWh)': this.formatearNumber(totPerdidas),
-          'ENERGÍA + PERDIDAD (kWh)': this.formatearNumber(difEnerPerd),
-          'COSTO ENERGÍA (Lps)': this.formatearNumber(totalCostoEnergia),
-          'PERDIDAD (Lps)': this.formatearNumber(totalPerdidaLps),
-          'COSTO + PERDIDAD (Lps)': this.formatearNumber(totalCostoMasPerdidaLps)
-        }, {
-          PLANTA: '',
-          'ENERGÍA (kWh)': '',
-          'PERDIDAD (kWh)': '',
-          'ENERGÍA + PERDIDAD (kWh)': '',
-          'COSTO ENERGÍA (Lps)': '',
-          'PERDIDAD (Lps)': '',
-          'COSTO + PERDIDAD (Lps)': ''
-        }, {
-          PLANTA: 'BECO',
-          'ENERGÍA (kWh)': '',
-          'PERDIDAD (kWh)': '',
-          'ENERGÍA + PERDIDAD (kWh)': '',
-          'COSTO ENERGÍA (Lps)': '',
-          'PERDIDAD (Lps)': '',
-          'COSTO + PERDIDAD (Lps)': ''
-        }, {
-          PLANTA: 'Energia',
-          'ENERGÍA (kWh)': '',
-          'PERDIDAD (kWh)': this.formatearNumber(this.energiaSumistrada[0].energia),
-          'ENERGÍA + PERDIDAD (kWh)': 0,
-          'COSTO ENERGÍA (Lps)': '',
-          'PERDIDAD (Lps)': '',
-          'COSTO + PERDIDAD (Lps)': ''
-        }, {
-          PLANTA: 'Demanda',
-          'ENERGÍA (kWh)': this.formatearNumber(this.energiaSumistrada[0].demanda),
-          'PERDIDAD (kWh)': '',
-          'ENERGÍA + PERDIDAD (kWh)': 0,
-          'COSTO ENERGÍA (Lps)': '',
-          'PERDIDAD (Lps)': '',
-          'COSTO + PERDIDAD (Lps)': ''
-        }, {
-          PLANTA: 'GILDAN',
-          'ENERGÍA (kWh)': '',
-          'PERDIDAD (kWh)': '',
-          'ENERGÍA + PERDIDAD (kWh)': '',
-          'COSTO ENERGÍA (Lps)': '',
-          'PERDIDAD (Lps)': '',
-          'COSTO + PERDIDAD (Lps)': ''
-        }, {
-          PLANTA: 'Energia',
-          'ENERGÍA (kWh)': '',
-          'PERDIDAD (kWh)': this.formatearNumber(this.energiaSumistrada[1].energia),
-          'ENERGÍA + PERDIDAD (kWh)': 0,
-          'COSTO ENERGÍA (Lps)': '',
-          'PERDIDAD (Lps)': '',
-          'COSTO + PERDIDAD (Lps)': ''
-        }, {
-          PLANTA: 'Demanda',
-          'ENERGÍA (kWh)': this.formatearNumber(this.energiaSumistrada[1].demanda),
-          'PERDIDAD (kWh)': '',
-          'ENERGÍA + PERDIDAD (kWh)': 0,
-          'COSTO ENERGÍA (Lps)': '',
-          'PERDIDAD (Lps)': '',
-          'COSTO + PERDIDAD (Lps)': ''
-        }, {
-          PLANTA: 'Otros cargos',
-          'ENERGÍA (kWh)': '',
-          'PERDIDAD (kWh)': '',
-          'ENERGÍA + PERDIDAD (kWh)': 0,
-          'COSTO ENERGÍA (Lps)': '',
-          'PERDIDAD (Lps)': '',
-          'COSTO + PERDIDAD (Lps)': ''
-        }, {
-          PLANTA: 'TOTAL',
-          'ENERGÍA (kWh)': this.formatearNumber(this.totalDemBECO),
-          'PERDIDAD (kWh)':  this.formatearNumber(this.totalEneBECO),
-          'ENERGÍA + PERDIDAD (kWh)': 0,
-          'COSTO ENERGÍA (Lps)': '',
-          'PERDIDAD (Lps)': '',
-          'COSTO + PERDIDAD (Lps)': ''
-        }
-        ];
-
-        this.totalesEnergia = [
-          totEnergia,
-          totPerdidas,
-          difEnerPerd,
-          totalCostoEnergia,
-          totalPerdidaLps,
-          totalCostoMasPerdidaLps,
-        ];
-
-        this.rellenarGrafico();
-
-        this.visible = true;
-        this.spinner.hide();
-
-      },
-        (error) => {
-          console.log(error);
-
-          this.visible = false;
+  
+          this.totalesEnergia = [
+            totEnergia,
+            totPerdidas,
+            difEnerPerd,
+            totalCostoEnergia,
+            totalPerdidaLps,
+            totalCostoMasPerdidaLps,
+          ];
+  
+          this.rellenarGrafico();
+  
+          this.visible = true;
           this.spinner.hide();
-        });
+  
+        },
+          (error) => {
+            console.log(error);
+  
+            this.visible = false;
+            this.spinner.hide();
+          });
+
+    }
+
+    
   }
 
   rellenarGrafico(): void {
@@ -392,6 +415,11 @@ export class ResumenFacturacionComponent implements OnInit {
       this.spinner.hide();
     });
 
+  }
+
+  changeFecha(event: any) {
+    console.log('Entro Resumen.')
+    this.habilitarfecha = (event == 11) ? false : true;
   }
 
 }

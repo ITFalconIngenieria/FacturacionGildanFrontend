@@ -14,7 +14,7 @@ export interface ServidorModel {
     estado: boolean;
 }
 
-export interface NuevoServidorDTO {
+export interface ServidorDTO {
     nombre?: string;
     baseDatos?: string;
     estado?: boolean;

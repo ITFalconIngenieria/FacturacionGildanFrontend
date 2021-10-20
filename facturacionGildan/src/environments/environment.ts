@@ -4,8 +4,10 @@
 
 export const environment = {
   production: false,
-  //apiUrl: 'https://backend-facturacion-gildan.herokuapp.com'
-  apiUrl: 'http://localhost:3000'
+  //Servidor Gildan
+  //apiUrl: 'http://rio-sppme1:3000/'
+  //Maquina local German
+  apiUrl: 'http://desktop-gnjg7c6:3000'
 };
 
 /*

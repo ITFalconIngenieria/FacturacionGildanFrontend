@@ -278,7 +278,7 @@ export class FacturaComponent implements OnInit {
         .toPromise()
         .then((data: any) => {
 
-          console.log(data);
+          //console.log(data);
 
           this.diasPeriodo = moment(this.fechaFin).diff(moment(this.fechaInicio), 'days');
 
@@ -286,9 +286,16 @@ export class FacturaComponent implements OnInit {
           this.calculoConsumo = data[1];
           this.historicoConsumo = [...data[2]];
 
+          this.totalConsumo = 0;
           this.detalleConsumo.forEach(y => {
             this.totalConsumo += y.consumo;
           });
+
+          let d = new Date();
+          
+          console.log(this.historicoConsumo.map(m => m.fecha));
+          console.log(this.historicoConsumo.map(m => moment(d).format()));
+          console.log(this.historicoConsumo.map(m => moment(m.fecha).format('MMMM')));
 
           this.ChartLabels = [...this.historicoConsumo.map(m => moment(m.fecha).format('MMMM'))].reverse();
           this.ChartData = [
@@ -495,6 +502,7 @@ export class FacturaComponent implements OnInit {
   }
 
   changeFecha(event: any) {
+    console.log('Entro Factura.')
     this.habilitarfecha = (event == 11) ? false : true;
   }
 
