@@ -1,23 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NzTableFilterFn, NzTableFilterList, NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ColumnItem, ServidorDTO, ServidorModel } from 'src/app/models/servidor';
 import { ServidorService } from 'src/app/Servicios/servidor.service';
 import { UiServiceService } from 'src/app/Servicios/ui-service.service';
-
-interface DataItem {
-  name: string;
-  chinese: number;
-  tipo: boolean;
-}
-
-interface Person {
-  key: string;
-  name: string;
-  age: number;
-  address: string;
-}
 
 @Component({
   selector: 'app-servidor',
