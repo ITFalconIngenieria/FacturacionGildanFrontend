@@ -138,11 +138,11 @@ export class JerarquiaComponent implements OnInit {
     this.update = false;
   }
 
-  camposForm( servidor: JerarquiaDTO, estado: any ){
+  camposForm( jerarquia: JerarquiaDTO, estado: any ){
 
     this.validateForm = this.fb.group({
-      nivel: [ servidor.nivel, [Validators.required ]],
-      descripcion: [ servidor.descripcion, [Validators.required ]],
+      nivel: [ jerarquia.nivel, [Validators.required ]],
+      descripcion: [ jerarquia.descripcion, [Validators.required ]],
       estado: [ estado, [Validators.required ]]
     });
   }
