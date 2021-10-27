@@ -14,6 +14,7 @@ import { CentroCostoComponent } from './pages/centro-costo/centro-costo.componen
 import { CuentaComponent } from './pages/cuenta/cuenta.component';
 import { RolloverComponent } from './pages/rollover/rollover.component';
 import { LecturasComponent } from './pages/lecturas/lecturas.component';
+import { ConsumibleComponent } from './pages/consumible/consumible.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/login' },
@@ -30,6 +31,7 @@ const routes: Routes = [
       { path: 'plantas', component: PlantaComponent },
       { path: 'medidores', component: MedidorComponent },
       { path: 'jerarquia', component: JerarquiaComponent },
+      { path: 'consumible', component: ConsumibleComponent },
       { path: 'centro-costos', component: CentroCostoComponent },
       { path: 'cuentas', component: CuentaComponent },
       { path: 'rollOver', component: RolloverComponent },

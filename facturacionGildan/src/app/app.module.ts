@@ -65,7 +65,8 @@ import { JerarquiaComponent } from './pages/jerarquia/jerarquia.component';
 import { CentroCostoComponent } from './pages/centro-costo/centro-costo.component';
 import { CuentaComponent } from './pages/cuenta/cuenta.component';
 import { RolloverComponent } from './pages/rollover/rollover.component';
-import { LecturasComponent } from './pages/lecturas/lecturas.component'
+import { LecturasComponent } from './pages/lecturas/lecturas.component';
+import { ConsumibleComponent } from './pages/consumible/consumible.component'
 
 registerLocaleData(en);
 
@@ -83,7 +84,8 @@ registerLocaleData(en);
     CentroCostoComponent,
     CuentaComponent,
     RolloverComponent,
-    LecturasComponent
+    LecturasComponent,
+    ConsumibleComponent
   ],
   imports: [
     BrowserModule,
