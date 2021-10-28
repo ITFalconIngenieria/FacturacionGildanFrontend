@@ -66,7 +66,8 @@ import { CentroCostoComponent } from './pages/centro-costo/centro-costo.componen
 import { CuentaComponent } from './pages/cuenta/cuenta.component';
 import { RolloverComponent } from './pages/rollover/rollover.component';
 import { LecturasComponent } from './pages/lecturas/lecturas.component';
-import { ConsumibleComponent } from './pages/consumible/consumible.component'
+import { ConsumibleComponent } from './pages/consumible/consumible.component';
+import { MedidorPipe } from './pipes/medidor.pipe';
 
 registerLocaleData(en);
 
@@ -85,7 +86,8 @@ registerLocaleData(en);
     CuentaComponent,
     RolloverComponent,
     LecturasComponent,
-    ConsumibleComponent
+    ConsumibleComponent,
+    MedidorPipe
   ],
   imports: [
     BrowserModule,

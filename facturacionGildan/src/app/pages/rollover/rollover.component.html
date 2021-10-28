@@ -1,1 +1,182 @@
-<p>rollover works!</p>
+<nz-layout>
+    <nz-header>
+        <div nz-row>
+            <div nz-col nzSpan="20">
+                <h1> RollOver's </h1>
+            </div>
+            <div nz-col nzSpan="4">
+                <button nz-button nzType="primary" (click)="showModal()" [disabled]="disableButtom"><i nz-icon nzType="plus"></i>Nueva RollOver</button>
+            </div>
+        </div>
+    </nz-header>
+    <nz-content>
+        <div class="tabla">
+            <nz-table #basicTable [nzData]="listOfData" nzShowSizeChanger nzBordered [nzPageSize]="10">
+                <thead>
+                  <tr>
+                    <th style="text-align: center;" nzWidth="12%">
+                        Acciones
+                        <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+                            <i nz-icon nzType="search"></i>
+                        </nz-filter-trigger>
+                    </th>
+                    <th
+                        *ngFor="let column of listOfColumns"
+                        [nzSortOrder]="column.sortOrder"
+                        [nzSortFn]="column.sortFn"
+                        [nzSortDirections]="column.sortDirections"
+                    >
+                        {{ column.name }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of basicTable.data">
+                    <td>
+                        <div nz-row style="display: flex; justify-content: center;">
+                            <div nz-col nzSpan="8">
+                                <button nz-button class="botonEdit" nzType="primary" [nzSize]="'default'" title="Editar" (click)="selectRollOver( data )">
+                                    <i nz-icon nzType="edit" nzTheme="outline"></i>
+                                </button>
+                            </div>
+                            <div nz-col nzSpan="2"></div>
+                            <div nz-col nzSpan="8">
+                                <button nz-button nzType="primary" [nzSize]="'default'" title="Eliminar" nzDanger
+                                        nz-popconfirm nzPopconfirmTitle="¿Está seguro de borrar el registro?" nzPopconfirmPlacement="bottom" 
+                                        (nzOnConfirm)="confirmDeleteItem( data.id )" (nzOnCancel)="cancelDeleteItem()" nzCancelText="No" nzOkText="Si">
+                                    <i nz-icon nzType="delete" nzTheme="outline"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                    <td>{{ data.fecha }}</td>
+                    <td>{{ data.medidorId | medidor: listOfMedidores }}</td>
+                    <td>{{ data.descripcion }}</td>
+                    <!-- <td>{{ data.lecturaAnterior }}</td>
+                    <td>{{ data.lecturaNueva }}</td> -->
+                    <td>
+                        <div style="display: flex; justify-content: center;">
+                            <div *ngIf="data.estado; else estadoFalse">
+                                <i nz-icon nzType="check-circle" nzTheme="twotone" [nzTwotoneColor]="'#52c41a'" style="font-size: 22px;"></i>
+                            </div>
+                            <ng-template #estadoFalse>
+                                <i nz-icon nzType="close-circle" nzTheme="twotone" [nzTwotoneColor]="'#ff4d4f'" style="font-size: 22px;"></i>
+                            </ng-template>
+                        </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </nz-table>
+        </div>
+    </nz-content>
+</nz-layout>
+
+<!-- Modal Formulario Servidor -->
+<nz-modal [(nzVisible)]="isVisibleModal" nzTitle="Configuración del RollOver" (nzOnCancel)="handleCancelModal()" nzWidth="40%">
+    <ng-container *nzModalContent>
+        <form nz-form nzLayout="vertical" [formGroup]="validateForm" (ngSubmit)="update ? updateRollOver() : saveNewRollOver()">
+
+            <div nz-row>
+
+                <div nz-col nzSpan="8">
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzFor="fecha">Fecha</nz-form-label>
+                        <nz-form-control nzHasFeedback nzErrorTip="Este campo es requerido.">
+                            <!-- <input nz-input autocomplete="off" placeholder="Ingrese la fecha del RollOver." formControlName="fecha" id="fecha" /> -->
+                            <nz-date-picker nzFormat="yyyy-MM-dd HH:mm:ss" nzShowTime formControlName="fecha" id="fecha" ></nz-date-picker>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="1"></div>
+                
+                <div nz-col nzSpan="15">
+                    <nz-form-item>
+                        <nz-form-label nzFor="medidorId" nzRequired>Medidor</nz-form-label>
+                        <nz-form-control nzHasFeedback nzErrorTip="Porfavor seleccione una opcion.">
+                            <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Seleccione una opcion:" id="medidorId" formControlName="medidorId">
+                                <nz-option *ngFor="let medidor of listOfMedidores" [nzLabel]="medidor.codigo" [nzValue]="medidor.id"></nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+
+                    <!-- <nz-form-item>
+                        <nz-form-label nzRequired nzFor="medidorId">Medidor Id</nz-form-label>
+                        <nz-form-control nzHasFeedback nzErrorTip="Este campo es requerido.">
+                            <input nz-input autocomplete="off" placeholder="Ingrese el medidorId." formControlName="medidorId" id="medidorId" />
+                        </nz-form-control>
+                    </nz-form-item> -->
+                </div>
+
+            </div>
+
+            <nz-form-item>
+                <nz-form-label nzRequired nzFor="descripcion">Descripcion</nz-form-label>
+                <nz-form-control nzHasFeedback nzErrorTip="Este campo es requerido.">
+                    <input nz-input autocomplete="off" placeholder="Ingrese la descripcion." formControlName="descripcion" id="descripcion" />
+                </nz-form-control>
+            </nz-form-item>
+
+            <div nz-row>
+
+                <div nz-col nzSpan="11">
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzFor="lecturaAnterior">Lectura Anterior</nz-form-label>
+                        <nz-form-control nzHasFeedback nzErrorTip="Este campo es requerido.">
+                            <input nz-input autocomplete="off" placeholder="Ingrese la Lectura Anerior." formControlName="lecturaAnterior" id="lecturaAnterior" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div nz-col nzSpan="1"></div>
+                
+                <div nz-col nzSpan="12">
+                    <nz-form-item>
+                        <nz-form-label nzRequired nzFor="lecturaNueva">Nueva Lectura</nz-form-label>
+                        <nz-form-control nzHasFeedback nzErrorTip="Este campo es requerido.">
+                            <input nz-input autocomplete="off" placeholder="Ingrese la Nueva Lectura." formControlName="lecturaNueva" id="lecturaNueva" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+            </div>
+
+            <nz-form-item>
+                <nz-form-label nzFor="estado" nzRequired>Estado</nz-form-label>
+                <nz-form-control nzHasFeedback nzErrorTip="Porfavor seleccione una opcion.">
+                    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Seleccione una opcion:" id="estado" formControlName="estado">
+                        <nz-option nzLabel="Activo" nzValue="true"></nz-option>
+                        <nz-option nzLabel="Inactivo" nzValue="false"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-control>
+                    <button *ngIf="update == false" nz-button nzType="primary">Guardar</button>
+                    <button *ngIf="update == true" nz-button class="botonEdit" nzType="default">Actualizar</button>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </ng-container>
+    <div *nzModalFooter>
+        <button nz-button nzType="default" (click)="handleCancelModal()">Cancelar</button>
+    </div>
+</nz-modal>
+
+<!-- Dropdown-Menu para buscar/filtrar por texto -->
+<nz-dropdown-menu #menu="nzDropdownMenu">
+    <div class="ant-table-filter-dropdown">
+      <div class="search-box">
+        <input type="text" nz-input placeholder="Buscar.." [(ngModel)]="searchValue" />
+        <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">
+          Buscar
+        </button>
+        <button nz-button nzSize="small" (click)="reset()">Limpiar</button>
+      </div>
+    </div>
+  </nz-dropdown-menu>
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate-multiple" [fullScreen] = "true">
+    <p style="color: white" > Loading... </p>
+</ngx-spinner>

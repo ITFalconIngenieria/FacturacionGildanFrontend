@@ -43,4 +43,8 @@ export class MedidorService {
     return this.http.patch(`${apiUrl}/medidors/${id}`, medidor);
   }
 
+  getAllMedidores(){
+    return this.http.get(`${ apiUrl }/medidors`);
+  }
+
 }
