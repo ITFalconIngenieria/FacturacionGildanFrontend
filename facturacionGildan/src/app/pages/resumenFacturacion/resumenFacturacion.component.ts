@@ -88,73 +88,73 @@ export class ResumenFacturacionComponent implements OnInit {
     } else {
 
       switch (this.tiempo) {
-        case '1': {
-          console.log(moment().startOf('day').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
-          this.fecha1 = moment().startOf('day').format('YYYY-MM-DD HH:mm');
-          this.fecha2 = moment().format('YYYY-MM-DD HH:mm');
+        // case '1': {
+        //   console.log(moment().startOf('day').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
+        //   this.fecha1 = moment().startOf('day').format('YYYY-MM-DD HH:mm');
+        //   this.fecha2 = moment().format('YYYY-MM-DD HH:mm');
   
+        //   break;
+        // }
+        // case '2': {
+        //   console.log(moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm'), moment().add(-1, 'day').endOf('day').format('YYYY-MM-DD HH:mm'));
+        //   this.fecha1 = moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
+        //   this.fecha2 = moment().add(-1, 'day').endOf('day').format('YYYY-MM-DD HH:mm');
+  
+        //   break;
+        // }
+        case '1': {
+          console.log(moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm'), moment().startOf('day').format('YYYY-MM-DD HH:mm'));
+          this.fecha1 = moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
+          this.fecha2 = moment().startOf('day').format('YYYY-MM-DD HH:mm')
           break;
         }
         case '2': {
-          console.log(moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm'), moment().add(-1, 'day').endOf('day').format('YYYY-MM-DD HH:mm'));
-          this.fecha1 = moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
-          this.fecha2 = moment().add(-1, 'day').endOf('day').format('YYYY-MM-DD HH:mm');
-  
+          console.log(moment(moment().startOf('week')).format('YYYY-MM-DD HH:mm'), moment().startOf('day').format('YYYY-MM-DD HH:mm'));
+          this.fecha1 = moment(moment().startOf('week')).format('YYYY-MM-DD HH:mm');
+          this.fecha2 = moment().startOf('day').format('YYYY-MM-DD HH:mm');
           break;
         }
         case '3': {
-          console.log(moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
-          this.fecha1 = moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
-          this.fecha2 = moment().format('YYYY-MM-DD HH:mm')
+          console.log(moment().startOf('year').format('YYYY-MM-DD HH:mm'), moment().startOf('day').format('YYYY-MM-DD HH:mm'));
+          this.fecha1 = moment().startOf('year').format('YYYY-MM-DD HH:mm');
+          this.fecha2 = moment().startOf('day').format('YYYY-MM-DD HH:mm');
           break;
         }
         case '4': {
-          console.log(moment(moment().startOf('week')).add(1, 'day').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
-          this.fecha1 = moment(moment().startOf('week')).add(1, 'day').format('YYYY-MM-DD HH:mm');
-          this.fecha2 = moment().format('YYYY-MM-DD HH:mm');
+          console.log(moment(moment().startOf('week').subtract(1, 'week')).format('YYYY-MM-DD HH:mm'));
+          console.log(moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm'));
+          this.fecha1 = moment(moment().startOf('week').subtract(1, 'week')).format('YYYY-MM-DD HH:mm');
+          this.fecha2 = moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
           break;
         }
         case '5': {
-          console.log(moment().startOf('year').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
-          this.fecha1 = moment().startOf('year').format('YYYY-MM-DD HH:mm');
-          this.fecha2 = moment().format('YYYY-MM-DD HH:mm');
+          console.log(moment(moment().startOf('week').subtract(2, 'week')).format('YYYY-MM-DD HH:mm'));
+          console.log(moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm'));
+          this.fecha1 = moment(moment().startOf('week').subtract(2, 'week')).format('YYYY-MM-DD HH:mm');
+          this.fecha2 = moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
           break;
         }
         case '6': {
-          console.log(moment(moment().startOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
-          console.log(moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
-          this.fecha1 = moment(moment().startOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm')
-          this.fecha2 = moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm')
+          console.log(moment().startOf('month').format('YYYY-MM-DD HH:mm'), moment().startOf('day').format('YYYY-MM-DD HH:mm'));
+          this.fecha1 = moment().startOf('month').format('YYYY-MM-DD HH:mm');
+          this.fecha2 = moment().startOf('day').format('YYYY-MM-DD HH:mm');
           break;
         }
         case '7': {
-          console.log(moment(moment().startOf('week').subtract(2, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
-          console.log(moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
-          this.fecha1 = moment(moment().startOf('week').subtract(2, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm');
-          this.fecha2 = moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm');
+          console.log(moment(moment().startOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm'));
+          console.log(moment(moment().endOf('month').subtract(1, 'month')).add(2, 'day').startOf('day').format('YYYY-MM-DD HH:mm'));
+          this.fecha1 = moment(moment().startOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm');
+          this.fecha2 = moment(moment().endOf('month').subtract(1, 'month')).add(2, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
           break;
         }
         case '8': {
-          console.log(moment().startOf('month').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
-          this.fecha1 = moment().startOf('month').format('YYYY-MM-DD HH:mm');
-          this.fecha2 = moment().format('YYYY-MM-DD HH:mm');
+          console.log(moment(moment().startOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm'));
+          console.log(moment(moment().endOf('year').subtract(1, 'year')).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm'));
+          this.fecha1 = moment(moment().startOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm');
+          this.fecha2 = moment(moment().endOf('year').subtract(1, 'year')).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
           break;
         }
         case '9': {
-          console.log(moment(moment().startOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm'));
-          console.log(moment(moment().endOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm'));
-          this.fecha1 = moment(moment().startOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm');
-          this.fecha2 = moment(moment().endOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm');
-          break;
-        }
-        case '10': {
-          console.log(moment(moment().startOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm'));
-          console.log(moment(moment().endOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm'));
-          this.fecha1 = moment(moment().startOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm');
-          this.fecha2 = moment(moment().endOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm');
-          break;
-        }
-        case '11': {
           this.fecha1 = this.fechas[0];
           this.fecha2 = this.fechas[1];
 
@@ -418,8 +418,8 @@ export class ResumenFacturacionComponent implements OnInit {
   }
 
   changeFecha(event: any) {
-    console.log('Entro Resumen.')
-    this.habilitarfecha = (event == 11) ? false : true;
+    //console.log('Entro Resumen.')
+    this.habilitarfecha = (event == 9) ? false : true;
   }
 
 }

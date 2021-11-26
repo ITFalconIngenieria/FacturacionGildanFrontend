@@ -1,1 +1,38 @@
-<p>lecturas works!</p>
+<nz-layout>
+    <nz-header>
+        <div nz-row>
+            <div nz-col nzSpan="20">
+                <h1> Lecturas </h1>
+            </div>
+            <div nz-col nzSpan="4">
+                <button nz-button nzType="primary"><i nz-icon nzType="search"></i>Mostrat</button>
+            </div>
+        </div>
+    </nz-header>
+    <nz-content>
+        <div class="tabla">
+            <nz-table #basicTable [nzData]="listOfData" nzShowSizeChanger nzBordered [nzPageSize]="10">
+                <thead>
+                  <tr>
+                    <th style="text-align: center;" nzWidth="12%">
+                        Acciones
+                    </th>
+                    <!-- <th
+                        *ngFor="let column of listOfColumns"
+                        [nzSortOrder]="column.sortOrder"
+                        [nzSortFn]="column.sortFn"
+                        [nzSortDirections]="column.sortDirections"
+                    >
+                        {{ column.name }}
+                    </th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </nz-table>
+        </div>
+    </nz-content>
+</nz-layout>

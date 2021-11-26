@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LecturasComponent implements OnInit {
 
+  listOfData: any;
+
   constructor() { }
 
   ngOnInit(): void {

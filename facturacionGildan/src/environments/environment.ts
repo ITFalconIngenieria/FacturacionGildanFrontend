@@ -5,10 +5,10 @@
 export const environment = {
   production: false,
   //Servidor Gildan
-  //apiUrl: 'http://rio-sppme1:3000/'
-  //apiUrl: 'http://10.120.60.224:3000/'
+  //apiUrl: 'https://rio-sppme1:3000'
+  //apiUrl: 'http://10.120.60.224:3000'
   //Maquina local German
-  apiUrl: 'http://desktop-gnjg7c6:3000'
+  apiUrl: 'https://desktop-gnjg7c6:3000'
 };
 
 /*
