@@ -86,8 +86,8 @@ export class FacturaComponent implements OnInit {
   totalConsumo: number = 0;
   dataExport: any[] = [];
   habilitarfecha: boolean = true;
-  fechaInicio: any;
-  fechaFin: any;
+  fechaInicio: any = new Date;;
+  fechaFin: any = new Date;;
   fechas: any = null;
 
   constructor(
@@ -190,73 +190,73 @@ export class FacturaComponent implements OnInit {
     } else {
 
       switch (this.tiempo) {
-        case '1': {
-          console.log(moment().startOf('day').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
-          this.fechaInicio = moment().startOf('day').format('YYYY-MM-DD HH:mm');
-          this.fechaFin = moment().format('YYYY-MM-DD HH:mm');
+        // case '1': {
+        //   console.log(moment().startOf('day').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
+        //   this.fechaInicio = moment().startOf('day').format('YYYY-MM-DD HH:mm');
+        //   this.fechaFin = moment().format('YYYY-MM-DD HH:mm');
 
+        //   break;
+        // }
+        // case '2': {
+        //   console.log(moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm'), moment().add(-1, 'day').endOf('day').format('YYYY-MM-DD HH:mm'));
+        //   this.fechaInicio = moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
+        //   this.fechaFin = moment().add(-1, 'day').endOf('day').format('YYYY-MM-DD HH:mm');
+
+        //   break;
+        // }
+        case '1': {
+          console.log(moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm'), moment().startOf('day').format('YYYY-MM-DD HH:mm'));
+          this.fechaInicio = moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
+          this.fechaFin = moment().startOf('day').format('YYYY-MM-DD HH:mm')
           break;
         }
         case '2': {
-          console.log(moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm'), moment().add(-1, 'day').endOf('day').format('YYYY-MM-DD HH:mm'));
-          this.fechaInicio = moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
-          this.fechaFin = moment().add(-1, 'day').endOf('day').format('YYYY-MM-DD HH:mm');
-
+          console.log(moment(moment().startOf('week')).format('YYYY-MM-DD HH:mm'), moment().startOf('day').format('YYYY-MM-DD HH:mm'));
+          this.fechaInicio = moment(moment().startOf('week')).format('YYYY-MM-DD HH:mm');
+          this.fechaFin = moment().startOf('day').format('YYYY-MM-DD HH:mm');
           break;
         }
         case '3': {
-          console.log(moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
-          this.fechaInicio = moment().add(-1, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
-          this.fechaFin = moment().format('YYYY-MM-DD HH:mm')
+          console.log(moment().startOf('year').format('YYYY-MM-DD HH:mm'), moment().startOf('day').format('YYYY-MM-DD HH:mm'));
+          this.fechaInicio = moment().startOf('year').format('YYYY-MM-DD HH:mm');
+          this.fechaFin = moment().startOf('day').format('YYYY-MM-DD HH:mm');
           break;
         }
         case '4': {
-          console.log(moment(moment().startOf('week')).add(1, 'day').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
-          this.fechaInicio = moment(moment().startOf('week')).add(1, 'day').format('YYYY-MM-DD HH:mm');
-          this.fechaFin = moment().format('YYYY-MM-DD HH:mm');
+          console.log(moment(moment().startOf('week').subtract(1, 'week')).format('YYYY-MM-DD HH:mm'));
+          console.log(moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm'));
+          this.fechaInicio = moment(moment().startOf('week').subtract(1, 'week')).format('YYYY-MM-DD HH:mm');
+          this.fechaFin = moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
           break;
         }
         case '5': {
-          console.log(moment().startOf('year').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
-          this.fechaInicio = moment().startOf('year').format('YYYY-MM-DD HH:mm');
-          this.fechaFin = moment().format('YYYY-MM-DD HH:mm');
+          console.log(moment(moment().startOf('week').subtract(2, 'week')).format('YYYY-MM-DD HH:mm'));
+          console.log(moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm'));
+          this.fechaInicio = moment(moment().startOf('week').subtract(2, 'week')).format('YYYY-MM-DD HH:mm');
+          this.fechaFin = moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
           break;
         }
         case '6': {
-          console.log(moment(moment().startOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
-          console.log(moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
-          this.fechaInicio = moment(moment().startOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm')
-          this.fechaFin = moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm')
+          console.log(moment().startOf('month').format('YYYY-MM-DD HH:mm'), moment().startOf('day').format('YYYY-MM-DD HH:mm'));
+          this.fechaInicio = moment().startOf('month').format('YYYY-MM-DD HH:mm');
+          this.fechaFin = moment().startOf('day').format('YYYY-MM-DD HH:mm');
           break;
         }
         case '7': {
-          console.log(moment(moment().startOf('week').subtract(2, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
-          console.log(moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm'));
-          this.fechaInicio = moment(moment().startOf('week').subtract(2, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm');
-          this.fechaFin = moment(moment().endOf('week').subtract(1, 'week')).add(1, 'day').format('YYYY-MM-DD HH:mm');
+          console.log(moment(moment().startOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm'));
+          console.log(moment(moment().endOf('month').subtract(1, 'month')).add(2, 'day').startOf('day').format('YYYY-MM-DD HH:mm'));
+          this.fechaInicio = moment(moment().startOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm');
+          this.fechaFin = moment(moment().endOf('month').subtract(1, 'month')).add(2, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
           break;
         }
         case '8': {
-          console.log(moment().startOf('month').format('YYYY-MM-DD HH:mm'), moment().format('YYYY-MM-DD HH:mm'));
-          this.fechaInicio = moment().startOf('month').format('YYYY-MM-DD HH:mm');
-          this.fechaFin = moment().format('YYYY-MM-DD HH:mm');
+          console.log(moment(moment().startOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm'));
+          console.log(moment(moment().endOf('year').subtract(1, 'year')).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm'));
+          this.fechaInicio = moment(moment().startOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm');
+          this.fechaFin = moment(moment().endOf('year').subtract(1, 'year')).add(1, 'day').startOf('day').format('YYYY-MM-DD HH:mm');
           break;
         }
         case '9': {
-          console.log(moment(moment().startOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm'));
-          console.log(moment(moment().endOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm'));
-          this.fechaInicio = moment(moment().startOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm');
-          this.fechaFin = moment(moment().endOf('month').subtract(1, 'month')).format('YYYY-MM-DD HH:mm');
-          break;
-        }
-        case '10': {
-          console.log(moment(moment().startOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm'));
-          console.log(moment(moment().endOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm'));
-          this.fechaInicio = moment(moment().startOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm');
-          this.fechaFin = moment(moment().endOf('year').subtract(1, 'year')).format('YYYY-MM-DD HH:mm');
-          break;
-        }
-        case '11': {
           this.fechaInicio = this.fechas[0];
           this.fechaFin = this.fechas[1];
 
@@ -278,7 +278,7 @@ export class FacturaComponent implements OnInit {
         .toPromise()
         .then((data: any) => {
 
-          //console.log(data);
+          console.log(data);
 
           this.diasPeriodo = moment(this.fechaFin).diff(moment(this.fechaInicio), 'days');
 
@@ -293,20 +293,13 @@ export class FacturaComponent implements OnInit {
 
           let d = new Date();
           
-          console.log(this.historicoConsumo.map(m => m.fecha));
-          console.log(this.historicoConsumo.map(m => moment(d).format()));
-          console.log(this.historicoConsumo.map(m => moment(m.fecha).format('MMMM')));
+          //console.log(this.historicoConsumo.map(m => m.fecha));
+          //console.log(this.historicoConsumo.map(m => moment(m.fecha).add(1, 'months').format('MMMM')));
+          //console.log(this.historicoConsumo.map(m => moment(d).format()));
+          //console.log(this.historicoConsumo.map(m => moment(m.fecha).format('MMMM')));
 
-          this.ChartLabels = [...this.historicoConsumo.map(m => moment(m.fecha).format('MMMM'))].reverse();
+          this.ChartLabels = [...this.historicoConsumo.map(m => moment(m.fecha).add(1, 'months').format('MMMM'))].reverse();
           this.ChartData = [
-            {
-              data: [...this.historicoConsumo.map(v => v.energiaActiva)].reverse(),
-              label: 'kWh',
-              type: 'bar',
-              backgroundColor: ['#4799dc', '#4799dc', '#4799dc', '#4799dc', '#4799dc', '#4799dc', '#fa4646'],
-              borderColor: '#003d6f',
-              yAxisID: 'A'
-            },
             {
               data: [...this.historicoConsumo.map(v => v.demanda)].reverse(),
               label: 'kW',
@@ -314,7 +307,16 @@ export class FacturaComponent implements OnInit {
               backgroundColor: '#ffcfcfb6',
               borderColor: '#f50b0b',
               yAxisID: 'B',
+            },
+            {
+              data: [...this.historicoConsumo.map(v => v.energiaActiva)].reverse(),
+              label: 'kWh',
+              type: 'bar',
+              backgroundColor: ['#4799dc', '#4799dc', '#4799dc', '#4799dc', '#4799dc', '#4799dc', '#fa4646'],
+              borderColor: '#003d6f',
+              yAxisID: 'A'
             }
+            
           ];
 
           // tslint:disable-next-line: max-line-length
@@ -323,8 +325,8 @@ export class FacturaComponent implements OnInit {
           this.dataExport = [
             {
               ' ': 'Medidor',
-              'LECTURA ACTUAL': moment(this.fechas[0]).format('YYYY-MM-DD HH:mm a'),
-              'LECTURA ANTERIOR': moment(this.fechas[1]).format('YYYY-MM-DD HH:mm a'),
+              'LECTURA ACTUAL': new Date(moment(this.fechaInicio).subtract(6,'hours').format()).toISOString(),
+              'LECTURA ANTERIOR': new Date(moment(this.fechaFin).subtract(6,'hours').format()).toISOString(),
               '  ': 'Diferencia',
               '   ': 'Consumo',
             }];
@@ -503,7 +505,7 @@ export class FacturaComponent implements OnInit {
 
   changeFecha(event: any) {
     console.log('Entro Factura.')
-    this.habilitarfecha = (event == 11) ? false : true;
+    this.habilitarfecha = (event == 9) ? false : true;
   }
 
 }

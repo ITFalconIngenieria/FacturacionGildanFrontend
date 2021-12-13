@@ -47,17 +47,17 @@
         <h6>Tiempo a facturar</h6>
         <nz-input-group nzAddOnBefore="Rango tiempo" nzSize="small">
             <nz-select nzSize="small" [(ngModel)]="tiempo" (ngModelChange)="changeFecha($event)">
-                <nz-option nzLabel="Hoy" nzValue="1"></nz-option>
-                <nz-option nzLabel="Ayer" nzValue="2"></nz-option>
-                <nz-option nzLabel="Desde ayer" nzValue="3"></nz-option>
-                <nz-option nzLabel="Semana hasta la fecha" nzValue="4"></nz-option>
-                <nz-option nzLabel="Año hasta la fecha" nzValue="5"></nz-option>
-                <nz-option nzLabel="Ultima semana" nzValue="6"></nz-option>
-                <nz-option nzLabel="Ultimas 2 semanas" nzValue="7"></nz-option>
-                <nz-option nzLabel="Este mes" nzValue="8"></nz-option>
-                <nz-option nzLabel="Ultimo mes" nzValue="9"></nz-option>
-                <nz-option nzLabel="Ultimo año" nzValue="10"></nz-option>
-                <nz-option nzLabel="Rango de fecha" nzValue="11"></nz-option>
+                <!-- <nz-option nzLabel="Hoy" nzValue="1"></nz-option> -->
+                <!-- <nz-option nzLabel="Ayer" nzValue="2"></nz-option> -->
+                <nz-option nzLabel="Ayer" nzValue="1"></nz-option>
+                <nz-option nzLabel="Semana hasta la fecha" nzValue="2"></nz-option>
+                <nz-option nzLabel="Año hasta la fecha" nzValue="3"></nz-option>
+                <nz-option nzLabel="Ultima semana" nzValue="4"></nz-option>
+                <nz-option nzLabel="Ultimas 2 semanas" nzValue="5"></nz-option>
+                <nz-option nzLabel="Este mes" nzValue="6"></nz-option>
+                <nz-option nzLabel="Ultimo mes" nzValue="7"></nz-option>
+                <nz-option nzLabel="Ultimo año" nzValue="8"></nz-option>
+                <nz-option nzLabel="Rango de fecha" nzValue="9"></nz-option>
             </nz-select>
         </nz-input-group>
         <nz-input-group nzAddOnBefore="Fechas" nzSize="small">
@@ -222,7 +222,6 @@
             </table>
         </div>
         <p class="titulo-separador"> CÁLCULO DE CONSUMO DE ENERGÍA </p>
-        <br>
         <div class="container-grafico">
             <div style="height: 100%; display: flex; align-items: center;">
                 <table class="table table-sm">
@@ -274,9 +273,7 @@
                     </tfoot>
                 </table>
             </div>
-            <div style="display: block;
-            width: 555px;
-            height: 313px;">
+            <div style="display: flex; align-items: center; width: auto; height: 313px; margin: 2px 50px 50px 50px;">
                 <canvas baseChart [datasets]="ChartData" [labels]="ChartLabels" [options]="ChartOptions" [legend]="ChartLegend" [chartType]="ChartType">
                 </canvas>
             </div>
