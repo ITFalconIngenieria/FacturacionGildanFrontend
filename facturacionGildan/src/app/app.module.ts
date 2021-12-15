@@ -68,6 +68,7 @@ import { RolloverComponent } from './pages/rollover/rollover.component';
 import { LecturasComponent } from './pages/lecturas/lecturas.component';
 import { ConsumibleComponent } from './pages/consumible/consumible.component';
 import { MedidorPipe } from './pipes/medidor.pipe';
+import { BalanceAguaComponent } from './pages/balance-agua/balance-agua.component';
 
 registerLocaleData(en);
 
@@ -87,7 +88,8 @@ registerLocaleData(en);
     RolloverComponent,
     LecturasComponent,
     ConsumibleComponent,
-    MedidorPipe
+    MedidorPipe,
+    BalanceAguaComponent
   ],
   imports: [
     BrowserModule,

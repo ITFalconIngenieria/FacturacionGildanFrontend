@@ -15,6 +15,7 @@ import { CuentaComponent } from './pages/cuenta/cuenta.component';
 import { RolloverComponent } from './pages/rollover/rollover.component';
 import { LecturasComponent } from './pages/lecturas/lecturas.component';
 import { ConsumibleComponent } from './pages/consumible/consumible.component';
+import { BalanceAguaComponent } from './pages/balance-agua/balance-agua.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/login' },
@@ -36,6 +37,7 @@ const routes: Routes = [
       { path: 'cuentas', component: CuentaComponent },
       { path: 'rollOver', component: RolloverComponent },
       { path: 'lecturas', component: LecturasComponent },
+      { path: 'balanceAgua', component: BalanceAguaComponent },
     ]
   }
 ]
