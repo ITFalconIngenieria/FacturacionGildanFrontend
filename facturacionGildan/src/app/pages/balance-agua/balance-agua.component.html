@@ -33,14 +33,14 @@
     <div class="centrarObjetos" nz-row>
         <button nz-button class="margenesFiltros" style="background-color: #009bca; border-color: #009bca;" nzType="primary" nzSize="small"><i nz-icon nzType="search"></i>Mostrar</button>
         <button nz-button class="margenesFiltros" style="background-color: #439d16; border-color: #439d16;" nzType="primary" nzSize="small"><i nz-icon nzType="file-excel"></i>Excel</button>
-        <button nz-button class="margenesFiltros" style="background-color: #c41a1a; border-color: #c41a1a;" nzType="primary" nzSize="small"><i nz-icon nzType="printer"></i>Imprimir</button>
+        <button nz-button class="margenesFiltros" (click)="imprimir()" style="background-color: #c41a1a; border-color: #c41a1a;" nzType="primary" nzSize="small"><i nz-icon nzType="printer"></i>Imprimir</button>
     </div>
 
 </div>
 
 <!-- REPORTE -->
 
-<div>
+<div id="content">
 
     <div nz-row>
         <div style="display: flex; justify-content: center;" nz-col nzSpan="24">
@@ -102,7 +102,7 @@
 
     <div nz-row>
 
-        <div nz-col nzSpan="12" style="padding-left: 15px;">
+        <div nz-col nzSpan="12" style="padding-left: 15px; padding-right: 8px;">
 
             <div class="card">
 
@@ -124,7 +124,7 @@
 
         </div>
 
-        <div nz-col nzSpan="12" style="padding-left: 15px; padding-right: 15px;">
+        <div nz-col nzSpan="12" style="padding-left: 7px; padding-right: 15px;">
 
             <div class="card">
 
@@ -147,4 +147,14 @@
         </div>
     </div>
 
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
 </div>
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate-multiple" [fullScreen] = "true">
+    <p style="color: white" > Loading... </p>
+</ngx-spinner>

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Chart } from 'chart.js'
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 interface Person {
   id: number;
@@ -48,7 +51,9 @@ export class BalanceAguaComponent implements OnInit {
   chartConsumo: any = [];
   chartProduccion: any = [];
 
-  constructor() { }
+  constructor(
+    private spinner: NgxSpinnerService
+  ) { }
 
   ngOnInit(): void {
 
@@ -180,5 +185,37 @@ export class BalanceAguaComponent implements OnInit {
   //     },
   //   });
   // }
+
+  imprimir(): void {
+    this.spinner.show();
+    console.log('imprimir');
+    const div: any = document.getElementById('content');
+
+    const options = {
+      background: 'white',
+      scale: 3
+    };
+
+    // const divs: any[] = [div, anexo];
+    const doc = new jsPDF('p', 'mm', 'a4', true);
+
+    html2canvas(div, options).then((canvas) => {
+      const img = canvas.toDataURL('image/PNG');
+      // Add image Canvas to PDF
+      const bufferX = 5;
+      const bufferY = 5;
+      const imgProps = (<any>doc).getImageProperties(img);
+      const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      (doc as any).addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
+
+      return doc;
+    }).then((doc) => {
+      doc.save(`Balance de Agua.pdf`);
+      this.spinner.hide();
+    });
+
+  }
 
 }

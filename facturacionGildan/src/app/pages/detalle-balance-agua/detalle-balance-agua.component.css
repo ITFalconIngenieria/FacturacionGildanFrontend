@@ -1,8 +1,17 @@
 nz-select {
-    width: 100%;
+    width: 95%;
 }
 
+nz-range-picker {
+    width: 95%;
+}
+
+
 .margenesFiltros {
+    margin-bottom: 20px;
+}
+
+.margenesBotones {
     margin-right: 10px;
     margin-bottom: 20px;
 }
@@ -18,13 +27,12 @@ nz-select {
 
 .card{
     width: 100%;
-    /*box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.377);*/
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.377);
     border-radius: 5px 5px 5px 5px;  
 }
 
 .card-header{
     border-radius: 5px 5px 0px 0px;
-    border: 1px solid #cbcccf;
     background: #aad6fd;
 }
 
@@ -35,9 +43,6 @@ nz-select {
 }
 
 .card-body{
-    border-bottom: 1px solid #cbcccf;
-    border-right: 1px solid #cbcccf;
-    border-left: 1px solid #cbcccf;
     border-radius: 0px 0px 5px 5px;
     padding-left: 30px;
     padding-right: 30px;
@@ -48,9 +53,6 @@ nz-select {
 }
 
 .card-body-Grafico{
-    border-bottom: 1px solid #cbcccf;
-    border-right: 1px solid #cbcccf;
-    border-left: 1px solid #cbcccf;
     border-radius: 0px 0px 5px 5px;
     padding-left: 30px;
     padding-right: 30px;
@@ -65,21 +67,17 @@ table {
     width: 100%;
  }
 
-table tr:nth-child(odd) {
+table tr {
     background-color: white;
 }
 
-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
 .headerTable{
-    border-bottom: 1px solid #000;
+    /* border-bottom: 1px solid #000; */
+    background-color: #e3e3e3;
 }
 
-.footTable{
-    border-top: 1px solid #000;
-    background-color: #e2e3e5;
+.tdLine{
+    border-bottom: 1px solid #e3e3e3;
 }
 
  th {

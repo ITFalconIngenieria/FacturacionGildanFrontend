@@ -69,6 +69,8 @@ import { LecturasComponent } from './pages/lecturas/lecturas.component';
 import { ConsumibleComponent } from './pages/consumible/consumible.component';
 import { MedidorPipe } from './pipes/medidor.pipe';
 import { BalanceAguaComponent } from './pages/balance-agua/balance-agua.component';
+import { DetalleBalanceAguaComponent } from './pages/detalle-balance-agua/detalle-balance-agua.component';
+import { FacturaExampleComponent } from './pages/factura-example/factura-example.component';
 
 registerLocaleData(en);
 
@@ -89,7 +91,9 @@ registerLocaleData(en);
     LecturasComponent,
     ConsumibleComponent,
     MedidorPipe,
-    BalanceAguaComponent
+    BalanceAguaComponent,
+    DetalleBalanceAguaComponent,
+    FacturaExampleComponent
   ],
   imports: [
     BrowserModule,

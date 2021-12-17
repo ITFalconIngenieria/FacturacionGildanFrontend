@@ -16,6 +16,7 @@ import { RolloverComponent } from './pages/rollover/rollover.component';
 import { LecturasComponent } from './pages/lecturas/lecturas.component';
 import { ConsumibleComponent } from './pages/consumible/consumible.component';
 import { BalanceAguaComponent } from './pages/balance-agua/balance-agua.component';
+import { DetalleBalanceAguaComponent } from './pages/detalle-balance-agua/detalle-balance-agua.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/login' },
@@ -38,6 +39,7 @@ const routes: Routes = [
       { path: 'rollOver', component: RolloverComponent },
       { path: 'lecturas', component: LecturasComponent },
       { path: 'balanceAgua', component: BalanceAguaComponent },
+      { path: 'detalleBalanceAgua', component: DetalleBalanceAguaComponent },
     ]
   }
 ]
