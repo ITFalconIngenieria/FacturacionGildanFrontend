@@ -52,6 +52,7 @@ import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { NzStepsModule } from 'ng-zorro-antd/steps';
 
 ///////////////////////////////////
 import { MenuComponent } from './pages/menu/menu.component';
@@ -71,6 +72,9 @@ import { MedidorPipe } from './pipes/medidor.pipe';
 import { BalanceAguaComponent } from './pages/balance-agua/balance-agua.component';
 import { DetalleBalanceAguaComponent } from './pages/detalle-balance-agua/detalle-balance-agua.component';
 import { FacturaExampleComponent } from './pages/factura-example/factura-example.component';
+import { PlantaPipe } from './pipes/planta.pipe';
+import { JerarquiaPipe } from './pipes/jerarquia.pipe';
+import { CentroCostosPipe } from './pipes/centro-costos.pipe';
 
 registerLocaleData(en);
 
@@ -93,7 +97,10 @@ registerLocaleData(en);
     MedidorPipe,
     BalanceAguaComponent,
     DetalleBalanceAguaComponent,
-    FacturaExampleComponent
+    FacturaExampleComponent,
+    PlantaPipe,
+    JerarquiaPipe,
+    CentroCostosPipe
   ],
   imports: [
     BrowserModule,
@@ -141,6 +148,7 @@ registerLocaleData(en);
     NzCalendarModule,
     NzToolTipModule,
     NzSkeletonModule,
+    NzStepsModule,
     ScrollingModule,
     NzPopconfirmModule
   ],

@@ -8,7 +8,7 @@ export const environment = {
   //apiUrl: 'https://rio-sppme1:3000'
   //apiUrl: 'http://10.120.60.224:3000'
   //Maquina local German
-  apiUrl: 'https://desktop-gnjg7c6:3000'
+  apiUrl: 'http://desktop-gnjg7c6:3000'
 };
 
 /*
