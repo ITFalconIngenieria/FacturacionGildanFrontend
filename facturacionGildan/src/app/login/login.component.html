@@ -3,19 +3,14 @@
         <img class="imagen" src="assets/Gildan_logo.png" alt="" srcset="">
         <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
             <nz-form-item>
-                <nz-form-control nzErrorTip="Por favor digite un usuario">
+                <nz-form-control nzHasFeedback nzErrorTip="Por favor digite un usuario">
                     <nz-input-group nzPrefixIcon="user">
-                        <input type="text" nz-input formControlName="email" placeholder="Usuario" />
+                        <input type="text" nz-input autocomplete="off" formControlName="email" id="email" placeholder="Usuario" />
                     </nz-input-group>
                 </nz-form-control>
             </nz-form-item>
             <nz-form-item>
-                <!-- <nz-form-control nzErrorTip="Por favor digite una contraseña">
-                    <nz-input-group nzPrefixIcon="lock">
-                        <input type="password" nz-input formControlName="password" placeholder="Contraseña" />
-                    </nz-input-group>
-                </nz-form-control> -->
-                <nz-form-control nzErrorTip="Por favor digite una contraseña">
+                <nz-form-control nzHasFeedback nzErrorTip="Por favor digite una contraseña">
                     <nz-input-group nzPrefixIcon="lock" [nzSuffix]="suffixTemplate">
                         <input [type]="passwordVisible ? 'text' : 'password'" placeholder="Contraseña" nz-input id="password" formControlName="password" />
                     </nz-input-group>
@@ -27,13 +22,20 @@
                     <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'" (click)="passwordVisible = !passwordVisible"></i>
                 </ng-template>
             </nz-form-item>
+
             <nz-form-item>
                 <nz-form-control>
-                    <a class="login-form-forgot" class="login-form-forgot">Olvidó su contraseña</a>
-                    <button nz-button class="login-form-button" (click)="validar()" [nzType]="'primary'">Iniciar sesión</button> O
-                    <a routerLink="/registro">regístrate ahora!</a>
+                    <!-- <a class="login-form-forgot">Olvidó su contraseña</a> -->
+                    <!-- <label nz-checkbox [(ngModel)]="checked">Usar mis credenciales de Windows</label> -->
+                    <label nz-checkbox style="margin-bottom: 10px;" formControlName="checked" id="checked">Usar mis credenciales de Windows</label>
+                    <button nz-button class="login-form-button" [nzType]="'primary'">Iniciar sesión</button> 
+                    <!-- <a routerLink="/registro">regístrate ahora!</a> -->
                 </nz-form-control>
             </nz-form-item>
         </form>
     </div>
 </div>
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-clip-rotate-multiple" [fullScreen] = "true">
+    <p style="color: white" > Loading... </p>
+</ngx-spinner>
